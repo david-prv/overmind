@@ -12,7 +12,6 @@
  * @author David Dewes <hello@david-dewes.de>
  */
 
-
 include_once "./app/core.php";
 
 if (isset($_GET["page"]))
