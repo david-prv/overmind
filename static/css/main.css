@@ -1,0 +1,3 @@
+.btn-check:focus+.btn-primary, .btn-primary:focus, .btn-check:focus+.btn-secondary, .btn-secondary:focus {
+    box-shadow: none!important;
+}

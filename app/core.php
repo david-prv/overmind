@@ -1,17 +1,14 @@
-<?php 
+<?php
 
 /**
- * ---------------------------------------------------------
- * Core
- * ---------------------------------------------------------
- * 
+ * Class Core
+ *
  * This file is responsible for parsing the tools,
  * preparing them to show in the frontend, verifying their
  * integrity and finally issuing scan reports for the user.
- * 
- * @author David Dewes <hello@david-dewes.de> 
+ *
+ * @author David Dewes <hello@david-dewes.de>
  */
-
 class Core {
 
     private static $instance = null;
@@ -74,7 +71,7 @@ class Core {
      *
      * @param $view
      */
-    function render($view = null) {
+    public function render($view = null) {
         if ($this->argv !== null && $view === null) {
             $view = $this->argv["page"];
         }

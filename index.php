@@ -1,9 +1,7 @@
 <?php
 
 /**
- * ---------------------------------------------------------
- * AUTOLOADER
- * ---------------------------------------------------------
+ * Autoloader
  *
  * This file is responsible for rendering the app view
  * of this project.
