@@ -1,3 +1,18 @@
 .btn-check:focus+.btn-primary, .btn-primary:focus, .btn-check:focus+.btn-secondary, .btn-secondary:focus {
     box-shadow: none!important;
 }
+
+#protocol {
+    background: transparent;
+    border: transparent;
+}
+
+.blinking {
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}

@@ -3,33 +3,37 @@
     "id": "0",
     "name": "Wordpress-scanner",
     "engine": "php",
-    "location": "/tools/wordpress-scanner",
+    "index": "wordpress-scanner/app.php",
+    "args": "-u %URL% -d",
     "description": "A Wordpress Scanner written in PHP, focus on vulnerability assessment and security audit of misconfiguration in the Wordpress installation",
-    "index": "app.php",
     "version": "3.1.0",
     "author": "Wphackedhelp",
-    "url": "https://github.com/Wphackedhelp/Wordpress-scanner"
+    "url": "https://github.com/Wphackedhelp/Wordpress-scanner",
+    "ignore": false
   },
   {
     "id": "1",
     "name": "RED HAWK",
     "engine": "php",
-    "location": "/tools/rhawk",
+    "index": "rhawk/rhawk.php",
+    "args": "%URL%",
     "description": "All in one tool for Information Gathering and Vulnerability Scanning",
-    "index": "rhawk.php",
     "version": "2.0.0",
     "author": "Tuhinshubhra",
-    "url": "https://github.com/Tuhinshubhra/RED_HAWK"
+    "url": "https://github.com/Tuhinshubhra/RED_HAWK",
+    "ignore": false
   },
   {
     "id": "2",
     "name": "CMSeeK",
     "engine": "python3",
+    "index": "cmseek.py",
+    "args": "",
     "location": "/tools/cmseek",
     "description": "A content management system (CMS) manages the creation and modification of digital content",
-    "index": "cmseek.py",
     "version": "1.1.3",
     "author": "Tuhinshubhra",
-    "url": "https://github.com/Tuhinshubhra/CMSeeK"
+    "url": "https://github.com/Tuhinshubhra/CMSeeK",
+    "ignore": true
   }
 ]

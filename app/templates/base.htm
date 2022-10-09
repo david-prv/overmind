@@ -32,7 +32,7 @@
             <small class="text-muted">%PROJECT_VERSION%</small>
         </div>
         <form class="d-flex">
-            <button id="launchAll" class="btn btn-primary" type="submit"><i class="fa fa-gears"></i> Launch All</button>
+            <button data-bs-toggle="modal" data-bs-target="#launchModal" id="launchAll" class="btn btn-primary" type="submit"><i class="fa fa-gears"></i> Launch Scanners</button>
             <button data-bs-toggle="modal" data-bs-target="#helpModal" class="btn btn-secondary ms-1" type="button"><i class="fa fa-life-ring"></i> Help</button>
         </form>
     </div>
@@ -69,6 +69,53 @@
 </div>
 <!-- End Help Modal -->
 
+<!-- Launch Modal -->
+<div class="modal fade" id="launchModal" tabindex="-1" aria-labelledby="launchModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="launchModalLabel">Launch Preparation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="target-url" class="form-label">Your target URL</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">
+                        <select name="protocol" id="protocol" value="https">
+                          <option value="https">https://</option>
+                          <option value="http">http://</option>
+                        </select>
+                    </span>
+                    <input type="text" class="form-control" id="target-url" aria-describedby="basic-addon3">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Start</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Launch Modal -->
+
+<!-- Result Modal -->
+<div class="modal fade" id="resModal" tabindex="-1" aria-labelledby="resModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resModalLabel">Scan Results</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <div id="result-content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Result Modal -->
+
 </body>
 
 <footer>
@@ -76,6 +123,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <!-- Runtime JS -->
+    <script type="text/javascript">
+        const DATA = JSON.parse('%TOOLS_JSON%');
+    </script>
     <script src="/static/js/main.js"></script>
 </footer>
 </html>

@@ -12,11 +12,11 @@
  * @author David Dewes <hello@david-dewes.de>
  */
 
-include_once "./app/core.php";
+include_once "./app/Core.php";
 
 if (isset($_GET["page"]))
-    // process GET information
     Core::getInstance()->withParams($_GET)->render();
+elseif (isset($_GET["run"]))
+    Core::getInstance()->withParams($_GET)->scan();
 else
-    // pre-defined render template
     Core::getInstance()->render("base");

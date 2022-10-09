@@ -13,7 +13,6 @@ if( strtolower(php_sapi_name()) != 'cli' ) {
 
 require_once(ROOT_PATH . '/base/load.php');
 
-Banner();
 CheckRequirement();
 
 $argv = parseArgs($argv);
