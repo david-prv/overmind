@@ -17,7 +17,6 @@ include_once "./app/Core.php";
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-
 class Main {
 
     function __construct()
