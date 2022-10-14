@@ -98,6 +98,12 @@ class Core {
                     array("%TOOLS_JSON%", $this->getToolsObject(true))
                 );
                 break;
+            case 'TEST':
+                $FILENAME = "test.htm";
+                $PLACEHOLDERS = array(
+                    array("%PROJECT_NAME%", $this->getProjectName())
+                );
+                break;
             default:
                 throw new \http\Exception\InvalidArgumentException();
                 break;
