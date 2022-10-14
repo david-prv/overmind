@@ -118,7 +118,10 @@ class Core {
         echo $html;
     }
 
-    public function scan() {
+    /**
+     * Builds the Runnable and executes it
+     */
+    public function scan(): void {
         if ($this->argv === NULL) {
             echo("no arguments provided");
             return;
@@ -134,7 +137,7 @@ class Core {
             return;
         }
 
-        $runner = (new \Runner())
+        $runner = (new Runner())
             ->viaEngine(Engine::fromString($engine))
             ->useCWD($this->APP_PATH)
             ->atPath($app)
