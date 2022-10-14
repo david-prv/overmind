@@ -7,9 +7,11 @@ spl_autoload_register(function ($class_name) {
 /**
  * Class Core
  *
+ * <p>
  * This file is responsible for parsing the tools,
  * preparing them to show in the frontend, verifying their
  * integrity and finally issuing scan reports for the user.
+ * </p>
  *
  * @author David Dewes <hello@david-dewes.de>
  */
@@ -131,8 +133,6 @@ class Core {
             ->useCWD($this->APP_PATH)
             ->atPath($app)
             ->withArguments($args)->identifiedBy($id);
-
-        var_dump($runner);
 
         if ($runner->run()) echo("done");
         else echo("error");
