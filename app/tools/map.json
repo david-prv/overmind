@@ -26,7 +26,7 @@
   {
     "id": "2",
     "name": "WP_Scanner",
-    "engine": "python3",
+    "engine": "py3",
     "index": "wp_scanner/WP_Scanner.py",
     "args": "%URL%",
     "description": "WordPress Website Scanner Tool",

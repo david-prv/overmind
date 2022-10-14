@@ -76,13 +76,14 @@ function finished(index, max) {
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
         resultModal.show();
         $("#launchAll").html("<i class=\"fa fa-gears\"></i> Launch Scanners");
+        counter = 0;
     }
 }
 
 function getText(id) {
     // read text from URL location
     var request = new XMLHttpRequest();
-    request.open('GET', 'http://localhost:8080/report_' + id + '.txt', true);
+    request.open('GET', 'http://localhost:8080/reports/report_' + id + '.txt', true);
     request.send(null);
     request.onreadystatechange = function (event, k=id) {
         if (request.readyState === 4 && request.status === 200) {

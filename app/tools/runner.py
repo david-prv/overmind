@@ -33,7 +33,7 @@ def main():
         except UnicodeDecodeError:
             print("UnicodeDecodeError")
 
-    f = open("report_" + str(id) + ".txt", "w", encoding="utf-8")
+    f = open("./reports/report_" + str(id) + ".txt", "w", encoding="utf-8")
     f.write(r)
     f.close()
 

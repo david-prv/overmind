@@ -1,5 +1,9 @@
 <?php
 
+spl_autoload_register(function ($class_name) {
+    include "{$class_name}.php";
+});
+
 /**
  * Class Core
  *
@@ -11,19 +15,19 @@
  */
 class Core {
 
-    private static $instance = null;
+    private static ?Core $instance = NULL;
 
-    private $argv;
+    private ?Array $argv = NULL;
     private $TOOLS_OBJECT;
 
-    private $APP_PATH;
-    private $VIEW_PATH;
-    private $TOOLS_PATH;
+    private String $APP_PATH;
+    private String $VIEW_PATH;
+    private String $TOOLS_PATH;
 
-    private $PROJECT_NAME = "WP Scanner Bundle";
-    private $PROJECT_AUTHOR = "David Dewes";
-    private $PROJECT_VERSION = "1.0.0";
-    private $PROJECT_DESCRIPTION =
+    private String $PROJECT_NAME = "WP Scanner Bundle";
+    private String $PROJECT_AUTHOR = "David Dewes";
+    private string $PROJECT_VERSION = "1.0.0";
+    private String $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of wordpress page.";
 
@@ -33,11 +37,11 @@ class Core {
      * @param null $tp
      * @param null $tip
      */
-    private function __construct($tp = null, $tip = null) {
+    private function __construct($tp = NULL, $tip = NULL) {
         $this->APP_PATH = getcwd();
         $this->VIEW_PATH = $this->APP_PATH."/app/templates";
-        $this->TOOLS_PATH = ($tp === null) ? $this->APP_PATH."/app/tools" : $tp;
-        $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === null) ? $this->APP_PATH."/app/tools/map.json" : $tip), false);
+        $this->TOOLS_PATH = ($tp === NULL) ? $this->APP_PATH."/app/tools" : $tp;
+        $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL) ? $this->APP_PATH."/app/tools/map.json" : $tip), false);
 
         foreach($this->TOOLS_OBJECT as $key => $value) {
             if ($value->ignore) unset($this->TOOLS_OBJECT[$key]);
@@ -47,10 +51,10 @@ class Core {
     /**
      * Creates an Instance
      *
-     * @return Core|null
+     * @return Core
      */
     public static function getInstance() {
-        if (self::$instance === null) {
+        if (self::$instance === NULL) {
             self::$instance = new Core();
         }
         return self::$instance;
@@ -62,7 +66,7 @@ class Core {
      * GET or POST params
      *
      * @param $params
-     * @return null
+     * @return Core
      */
     public function withParams($params) {
         $this->argv = $params;
@@ -75,8 +79,8 @@ class Core {
      *
      * @param $view
      */
-    public function render($view = null) {
-        if ($this->argv !== null && $view === null) {
+    public function render($view = NULL) {
+        if ($this->argv !== NULL && $view === NULL) {
             $view = $this->argv["page"];
         }
 
@@ -107,30 +111,32 @@ class Core {
     }
 
     public function scan() {
-        if ($this->argv === null) {
-            // render error to frontend,
-            // because javascript has to catch it
-            echo "no arguments provided";
+        if ($this->argv === NULL) {
+            echo("no arguments provided");
             return;
         }
 
-        $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : null;
-        $app = (isset($this->argv["index"])) ? $this->argv["index"] : null;
-        $args = (isset($this->argv["args"])) ? $this->argv["args"] : null;
-        $id = (isset($this->argv["id"])) ? $this->argv["id"] : null;
+        $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : NULL;
+        $app = (isset($this->argv["index"])) ? $this->argv["index"] : NULL;
+        $args = (isset($this->argv["args"])) ? $this->argv["args"] : NULL;
+        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
         if (is_null($engine) || is_null($app) || is_null($args) || is_null($id)) {
-            // same here
             echo "invalid arguments or incomplete arg set";
             return;
         }
 
-        shell_exec("python3 " . $this->APP_PATH . "/app/tools/runner.py " .
-            $engine . " " . $this->APP_PATH . "/app/tools/" . $app . " " . $args . " " . $id);
+        $runner = (new \Runner())
+            ->viaEngine(Engine::fromString($engine))
+            ->useCWD($this->APP_PATH)
+            ->atPath($app)
+            ->withArguments($args)->identifiedBy($id);
 
-        // send success message to frontend
-        echo "done";
-        return;
+        var_dump($runner);
+
+        if ($runner->run()) echo("done");
+        else echo("error");
+
     }
 
     /**
