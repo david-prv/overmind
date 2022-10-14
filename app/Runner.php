@@ -84,7 +84,8 @@ class Runner implements Runnable
     /**
      * Runs the python runner and sends the final
      * result as HTTP response. This is because the javascript
-     * runtime script needs to know the termination status
+     * runtime script needs to know the termination status.
+     * This is secure because no user input can be provided.
      *
      * @return bool
      */
