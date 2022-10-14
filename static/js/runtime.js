@@ -43,10 +43,12 @@ function invokeLaunchAll(event) {
     }
 }
 
+var counter = 0;
 function finished(index, max) {
-    console.log("[INFO] Finished task " + (index+1) + " out of " + max);
+    counter++;
+    console.log("[INFO] Finished task " + (index+1) + " (" + counter + " / " + max + ")");
 
-    if(index === max-1) {
+    if(counter === max) {
         let resContent = document.getElementById("result-content");
 
         let html = "<div class=\"accordion accordion-flush\" id=\"accordion\">";
