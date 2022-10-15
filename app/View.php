@@ -35,14 +35,15 @@ class View
      * @param View $view
      * @return bool
      */
-    public static function render(View $view): bool {
+    public static function render(View $view): bool
+    {
         if (!$view->isComplete()) {
             return false;
         }
 
         $html = file_get_contents($view->getViewPath() . "/" . $view->getFileName());
 
-        foreach($view->getPlaceholders() as $key => $value) {
+        foreach ($view->getPlaceholders() as $key => $value) {
             $placeholder = (string)$value[0];
             $realValue = (string)$value[1];
             $html = str_replace($placeholder, $realValue, $html);
@@ -58,8 +59,9 @@ class View
      *
      * @param string $template
      */
-    public function setTemplate(string $template): void {
-        $this->filename = strtolower($template).".htm";
+    public function setTemplate(string $template): void
+    {
+        $this->filename = strtolower($template) . ".htm";
     }
 
     /**
@@ -70,7 +72,8 @@ class View
      *
      * @param array $placeholders
      */
-    public function setPlaceholders(array $placeholders): void {
+    public function setPlaceholders(array $placeholders): void
+    {
         $this->placeholders = $placeholders;
     }
 
@@ -80,7 +83,8 @@ class View
      *
      * @param bool $value
      */
-    public function setError(bool $value): void {
+    public function setError(bool $value): void
+    {
         $this->error = $value;
     }
 
@@ -89,7 +93,8 @@ class View
      *
      * @return string
      */
-    public function getViewPath(): string {
+    public function getViewPath(): string
+    {
         return $this->viewPath;
     }
 
@@ -98,7 +103,8 @@ class View
      *
      * @return array
      */
-    public function getPlaceholders(): array {
+    public function getPlaceholders(): array
+    {
         return $this->placeholders;
     }
 
@@ -108,7 +114,8 @@ class View
      *
      * @return string
      */
-    public function getFileName(): string {
+    public function getFileName(): string
+    {
         return $this->filename;
     }
 
@@ -119,7 +126,8 @@ class View
      *
      * @return bool
      */
-    public function isComplete(): bool {
+    public function isComplete(): bool
+    {
         return !$this->error;
     }
 }

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- FontAwesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -25,7 +26,8 @@
         <h1>Scanner Integration</h1>
         <div>
             <label for="name" class="form-label">Name</label>
-            <input name="name" type="text" class="form-control" id="name" placeholder="e.g. Wordpress Scanner Tool" required>
+            <input name="name" type="text" class="form-control" id="name" placeholder="e.g. Wordpress Scanner Tool"
+                   required>
         </div>
         <div>
             <label for="author" class="form-label">Creator</label>
@@ -33,30 +35,49 @@
         </div>
         <div>
             <label for="url" class="form-label">Creator's URL</label>
-            <input name="url" type="text" class="form-control" id="url" placeholder="e.g. https://github.com/david-prv" required>
+            <input name="url" type="text" class="form-control" id="url" placeholder="e.g. https://github.com/david-prv"
+                   required>
         </div>
         <div>
             <label for="version" class="form-label">Current Version</label>
             <input name="version" id="version" type="text" class="form-control" placeholder="e.g. 1.0.0" required>
         </div>
         <div>
+            <label for="engine" class="form-label">Used Engine</label>
+            <p class="text-muted">
+                (Use <code>py2</code>, <code>py3</code>, <code>php</code>, <code>php-inline</code>, and so on as
+                abbreviations)
+            </p>
+            <input name="engine" id="engine" type="text" class="form-control" placeholder="e.g. py3" required>
+        </div>
+        <div>
+            <label for="index" class="form-label">Index File</label>
+            <input name="index" id="index" type="text" class="form-control" placeholder="e.g. app.py"
+                   required>
+        </div>
+        <div>
             <label for="cmdLine" class="form-label">CommandLine Arguments</label>
             <p class="text-muted">
                 (Use <code>%URL%</code> as a placeholder for the target URL)
             </p>
-            <input name="cmdline" id="cmdLine" type="text" class="form-control" placeholder="e.g. %URL% --scan=true" required>
+            <input name="cmdline" id="cmdLine" type="text" class="form-control" placeholder="e.g. %URL% --scan=true"
+                   required>
         </div>
         <div>
             <label for="description" class="form-label">Description</label>
-            <textarea name="description" class="form-control" id="description" rows="3" placeholder="e.g. Lorem ipsum" required></textarea>
+            <textarea name="description" class="form-control" id="description" rows="3" placeholder="e.g. Lorem ipsum"
+                      required></textarea>
         </div>
         <div>
+            <p class="text-muted">
+                (Please make sure that the zip name does not contain any whitespaces!)
+            </p>
             <label for="file" class="form-label">Select scanner files (.zip)</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="30000">
             <input name="file" accept=".zip" class="form-control form-control" id="file" type="file" required>
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-plus-circle"></i> Add to bundle</button>
+            <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-plus-circle"></i> Add to bundle
+            </button>
         </div>
     </form>
 </div>

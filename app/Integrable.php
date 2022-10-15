@@ -55,7 +55,6 @@ interface Integrable
 
     /**
      * Defines the startup arguments used for the Runnable
-     * (this overloads the withArguments method from a Runnable)
      *
      * @param string $args
      * @return Integrable
@@ -70,6 +69,15 @@ interface Integrable
      * @return Integrable
      */
     public function viaEngine(string $engine): Integrable;
+
+    /**
+     * Defines the current working directory
+     * for the integration process
+     *
+     * @param string $cwd
+     * @return Integrable
+     */
+    public function useCWD(string $cwd): Integrable;
 
     /**
      * Defines the tool description

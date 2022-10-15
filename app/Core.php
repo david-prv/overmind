@@ -168,14 +168,19 @@ class Core
         $version = (isset($this->argv["version"])) ? $this->argv["version"] : NULL;
         $cmdline = (isset($this->argv["cmdline"])) ? $this->argv["cmdline"] : NULL;
         $description = (isset($this->argv["description"])) ? $this->argv["description"] : NULL;
+        $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : NULL;
+        $index = (isset($this->argv["index"])) ? $this->argv["index"] : NULL;
 
         if (is_null($name) || is_null($creator) || is_null($url) || is_null($version) || is_null($cmdline)
-            || is_null($description) || !isset($_FILES)) {
+            || is_null($description) || is_null($engine) || is_null($index) || !isset($_FILES)) {
             echo "invalid arguments or incomplete arg set";
             return;
         }
 
         $scanner = (new Scanner())
+            ->useCWD($this->TOOLS_PATH)
+            ->atPath($index)
+            ->viaEngine($engine)
             ->hasName($name)
             ->fromCreator($creator)
             ->setCreatorURL($url)
@@ -184,8 +189,8 @@ class Core
             ->describedBy($description)
             ->fileData($_FILES);
 
-        if ($scanner->integrate()) echo "done";
-        else echo "error";
+        if ($scanner->integrate()) die("<h1>Scanner Integration successfully finished.</h1>");
+        else die("<h1>Something went wrong! Please try again.</h1>");
     }
 
     /**
@@ -267,7 +272,7 @@ class Core
             </div>
             <p class=\"mb-1\">$tool->description</p>
             <div class=\"d-flex w-100 justify-content-between\">
-                <small>Author: <a href=''>$tool->author</a></small>
+                <small>Author: <a href='$tool->url'>$tool->author</a></small>
                 <small id='report-$tool->id'></small>
             </div>
         </div>";

@@ -13,7 +13,8 @@
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-abstract class Engine {
+abstract class Engine
+{
 
     const Python3 = "python3";
     const Python2 = "python2";
@@ -28,10 +29,13 @@ abstract class Engine {
      * @param $value
      * @return String
      */
-    public static function fromString($value): String {
-        switch(strtolower($value)) {
+    public static function fromString($value): string
+    {
+        switch (strtolower($value)) {
+            case "python3":
             case "py3":
                 return Engine::Python3;
+            case "python2":
             case "py2":
                 return Engine::Python2;
             case "php":
