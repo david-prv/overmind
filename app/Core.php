@@ -11,11 +11,12 @@
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-class Core {
+class Core
+{
 
     private static ?Core $instance = NULL;
 
-    private ?Array $argv = NULL;
+    private ?array $argv = NULL;
     private $TOOLS_OBJECT;
 
     private string $APP_PATH;
@@ -35,13 +36,14 @@ class Core {
      * @param NULL $tp
      * @param NULL $tip
      */
-    private function __construct($tp = NULL, $tip = NULL) {
+    private function __construct($tp = NULL, $tip = NULL)
+    {
         $this->APP_PATH = getcwd();
-        $this->VIEW_PATH = $this->APP_PATH."/app/templates";
-        $this->TOOLS_PATH = ($tp === NULL) ? $this->APP_PATH."/app/tools" : $tp;
-        $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL) ? $this->APP_PATH."/app/tools/map.json" : $tip), false);
+        $this->VIEW_PATH = $this->APP_PATH . "/app/templates";
+        $this->TOOLS_PATH = ($tp === NULL) ? $this->APP_PATH . "/app/tools" : $tp;
+        $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL) ? $this->APP_PATH . "/app/tools/map.json" : $tip), false);
 
-        foreach($this->TOOLS_OBJECT as $key => $value) {
+        foreach ($this->TOOLS_OBJECT as $key => $value) {
             if ($value->ignore) unset($this->TOOLS_OBJECT[$key]);
         }
     }
@@ -51,7 +53,8 @@ class Core {
      *
      * @return Core
      */
-    public static function getInstance(): Core {
+    public static function getInstance(): Core
+    {
         if (self::$instance === NULL) {
             self::$instance = new Core();
         }
@@ -66,7 +69,8 @@ class Core {
      * @param $params
      * @return Core
      */
-    public function withParams($params): Core {
+    public function withParams($params): Core
+    {
         $this->argv = $params;
         return self::$instance;
     }
@@ -78,14 +82,15 @@ class Core {
      * @param $view
      * @return void
      */
-    public function render($view = NULL): void {
+    public function render($view = NULL): void
+    {
         if ($this->argv !== NULL && $view === NULL) {
             $view = $this->argv["page"];
         }
 
         $viewObj = new View($this->VIEW_PATH);
 
-        switch(strtoupper($view)) {
+        switch (strtoupper($view)) {
             case 'BASE':
                 $viewObj->setTemplate(strtolower($view));
                 $placeholders = array(
@@ -118,7 +123,8 @@ class Core {
     /**
      * Builds the Runnable and executes it
      */
-    public function scan(): void {
+    public function scan(): void
+    {
         if ($this->argv === NULL) {
             echo "no arguments provided";
             return;
@@ -149,9 +155,37 @@ class Core {
     /**
      * Integrates a new tool to the bundle locally
      */
-    public function integrate(): void {
-        // TODO
-        die("Not implemented yet");
+    public function integrate(): void
+    {
+        if ($this->argv === NULL) {
+            echo "no arguments provided";
+            return;
+        }
+
+        $name = (isset($this->argv["name"])) ? $this->argv["name"] : NULL;
+        $creator = (isset($this->argv["author"])) ? $this->argv["author"] : NULL;
+        $url = (isset($this->argv["url"])) ? $this->argv["url"] : NULL;
+        $version = (isset($this->argv["version"])) ? $this->argv["version"] : NULL;
+        $cmdline = (isset($this->argv["cmdline"])) ? $this->argv["cmdline"] : NULL;
+        $description = (isset($this->argv["description"])) ? $this->argv["description"] : NULL;
+
+        if (is_null($name) || is_null($creator) || is_null($url) || is_null($version) || is_null($cmdline)
+            || is_null($description) || !isset($_FILES)) {
+            echo "invalid arguments or incomplete arg set";
+            return;
+        }
+
+        $scanner = (new Scanner())
+            ->hasName($name)
+            ->fromCreator($creator)
+            ->setCreatorURL($url)
+            ->inVersion($version)
+            ->withArguments($cmdline)
+            ->describedBy($description)
+            ->fileData($_FILES);
+
+        if ($scanner->integrate()) echo "done";
+        else echo "error";
     }
 
     /**
@@ -159,7 +193,8 @@ class Core {
      *
      * @return array
      */
-    private function getToolsObject(): array {
+    private function getToolsObject(): array
+    {
         return $this->TOOLS_OBJECT;
     }
 
@@ -168,7 +203,8 @@ class Core {
      *
      * @return string
      */
-    private function getToolsJson(): string {
+    private function getToolsJson(): string
+    {
         return json_encode($this->TOOLS_OBJECT);
     }
 
@@ -177,7 +213,8 @@ class Core {
      *
      * @return string
      */
-    private function getProjectAuthor(): string {
+    private function getProjectAuthor(): string
+    {
         return $this->PROJECT_AUTHOR;
     }
 
@@ -186,7 +223,8 @@ class Core {
      *
      * @return string
      */
-    private function getProjectName(): string {
+    private function getProjectName(): string
+    {
         return $this->PROJECT_NAME;
     }
 
@@ -195,7 +233,8 @@ class Core {
      *
      * @return string
      */
-    private function getProjectVersion(): string {
+    private function getProjectVersion(): string
+    {
         return $this->PROJECT_VERSION;
     }
 
@@ -204,7 +243,8 @@ class Core {
      *
      * @return string
      */
-    private function getProjectDescription(): string {
+    private function getProjectDescription(): string
+    {
         return $this->PROJECT_DESCRIPTION;
     }
 
@@ -213,9 +253,10 @@ class Core {
      *
      * @return string
      */
-    private function renderToolsAsHtml(): string {
+    private function renderToolsAsHtml(): string
+    {
         $html = "";
-        foreach($this->getToolsObject() as $tool) {
+        foreach ($this->getToolsObject() as $tool) {
             if ($tool->ignore) continue;
             $engine = Engine::fromString($tool->engine);
 

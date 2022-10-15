@@ -25,47 +25,47 @@ interface Runnable
      * Defines the running engine used
      * as interpreter by the python runner
      *
-     * @param $engine
-     * @return Scanner
+     * @param string $engine
+     * @return Runnable
      */
-    public function viaEngine(string $engine): Scanner;
+    public function viaEngine(string $engine): Runnable;
 
     /**
      * Defines the current working directory
      * (or short CWD) for the execution
      *
-     * @param $cwd
-     * @return Scanner
+     * @param string $cwd
+     * @return Runnable
      */
-    public function useCWD(string $cwd): Scanner;
+    public function useCWD(string $cwd): Runnable;
 
     /**
      * Defines, after the CWD, where exactly
      * the tool is located in the projects structure
      *
-     * @param $appPath
-     * @return Scanner
+     * @param string $appPath
+     * @return Runnable
      */
-    public function atPath(string $appPath): Scanner;
+    public function atPath(string $appPath): Runnable;
 
     /**
      * Defines which start-up arguments will be
      * used by the python runner
      *
-     * @param $cmdLineString
-     * @return Scanner
+     * @param string $cmdLineString
+     * @return Runnable
      */
-    public function withArguments(string $cmdLineString): Scanner;
+    public function withArguments(string $cmdLineString): Runnable;
 
     /**
      * Defines the scanner application id which
      * then will be used to identify the result report
      * later on
      *
-     * @param $id
-     * @return Scanner
+     * @param string $id
+     * @return Runnable
      */
-    public function identifiedBy(string $id): Scanner;
+    public function identifiedBy(string $id): Runnable;
 
     /**
      * Runs the python runner and sends the final

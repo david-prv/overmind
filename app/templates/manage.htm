@@ -21,41 +21,42 @@
 </head>
 <body>
 <div class="container p-3">
-    <form class="row g-3">
+    <form class="row g-3" enctype="multipart/form-data" action="/index.php?upload" method="POST">
         <h1>Scanner Integration</h1>
         <div>
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="e.g. Wordpress Scanner Tool" required>
+            <input name="name" type="text" class="form-control" id="name" placeholder="e.g. Wordpress Scanner Tool" required>
         </div>
         <div>
             <label for="author" class="form-label">Creator</label>
-            <input type="text" class="form-control" id="author" placeholder="e.g. L33tH4ck3r" required>
+            <input name="author" type="text" class="form-control" id="author" placeholder="e.g. L33tH4ck3r" required>
         </div>
         <div>
             <label for="url" class="form-label">Creator's URL</label>
-            <input type="text" class="form-control" id="url" placeholder="e.g. https://github.com/david-prv" required>
+            <input name="url" type="text" class="form-control" id="url" placeholder="e.g. https://github.com/david-prv" required>
         </div>
         <div>
             <label for="version" class="form-label">Current Version</label>
-            <input id="version" type="text" class="form-control" placeholder="e.g. 1.0.0" required>
+            <input name="version" id="version" type="text" class="form-control" placeholder="e.g. 1.0.0" required>
         </div>
         <div>
             <label for="cmdLine" class="form-label">CommandLine Arguments</label>
             <p class="text-muted">
                 (Use <code>%URL%</code> as a placeholder for the target URL)
             </p>
-            <input id="cmdLine" type="text" class="form-control" placeholder="e.g. %URL% --scan=true" required>
+            <input name="cmdline" id="cmdLine" type="text" class="form-control" placeholder="e.g. %URL% --scan=true" required>
         </div>
         <div>
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" rows="3" placeholder="e.g. Lorem ipsum" required></textarea>
+            <textarea name="description" class="form-control" id="description" rows="3" placeholder="e.g. Lorem ipsum" required></textarea>
         </div>
         <div>
             <label for="file" class="form-label">Select scanner files (.zip)</label>
-            <input class="form-control form-control" id="file" type="file" required>
+            <input type="hidden" name="MAX_FILE_SIZE" value="30000">
+            <input name="file" accept=".zip" class="form-control form-control" id="file" type="file" required>
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="button"><i class="fa fa-plus-circle"></i> Add to bundle</button>
+            <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-plus-circle"></i> Add to bundle</button>
         </div>
     </form>
 </div>
