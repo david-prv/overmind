@@ -1,7 +1,7 @@
 <?php
 
 /**
- * App Main
+ * Class App
  *
  * <p>
  * This class is responsible for rendering the app view
