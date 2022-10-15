@@ -12,7 +12,7 @@ spl_autoload_register(function ($class_name) {
 });
 
 /**
- * Class Main
+ * App Main
  *
  * <p>
  * This class is responsible for rendering the app view
@@ -26,9 +26,9 @@ spl_autoload_register(function ($class_name) {
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-class Main {
+class App {
 
-    function __construct()
+    public function load()
     {
         if (isset($_GET["page"]))
             Core::getInstance()->withParams($_GET)->render();
@@ -40,4 +40,5 @@ class Main {
 
 }
 
-new Main();
+$app = new App();
+$app->load();
