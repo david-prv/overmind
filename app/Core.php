@@ -138,7 +138,8 @@ class Core {
             ->viaEngine(Engine::fromString($engine))
             ->useCWD($this->APP_PATH)
             ->atPath($app)
-            ->withArguments($args)->identifiedBy($id);
+            ->withArguments($args)
+            ->identifiedBy($id);
 
         if ($runner->run()) echo("done");
         else echo("error");
