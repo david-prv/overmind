@@ -1,9 +1,5 @@
 <?php
 
-spl_autoload_register(function ($class_name) {
-    include "{$class_name}.php";
-});
-
 /**
  * Class Core
  *
@@ -22,22 +18,22 @@ class Core {
     private ?Array $argv = NULL;
     private $TOOLS_OBJECT;
 
-    private String $APP_PATH;
-    private String $VIEW_PATH;
-    private String $TOOLS_PATH;
+    private string $APP_PATH;
+    private string $VIEW_PATH;
+    private string $TOOLS_PATH;
 
-    private String $PROJECT_NAME = "WP Scanner Bundle";
-    private String $PROJECT_AUTHOR = "David Dewes";
+    private string $PROJECT_NAME = "WP Scanner Bundle";
+    private string $PROJECT_AUTHOR = "David Dewes";
     private string $PROJECT_VERSION = "1.0.0";
-    private String $PROJECT_DESCRIPTION =
+    private string $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of wordpress page.";
 
     /**
-     * Private Constructor
+     * Core constructor.
      *
-     * @param null $tp
-     * @param null $tip
+     * @param NULL $tp
+     * @param NULL $tip
      */
     private function __construct($tp = NULL, $tip = NULL) {
         $this->APP_PATH = getcwd();
@@ -55,7 +51,7 @@ class Core {
      *
      * @return Core
      */
-    public static function getInstance() {
+    public static function getInstance(): Core {
         if (self::$instance === NULL) {
             self::$instance = new Core();
         }
@@ -70,7 +66,7 @@ class Core {
      * @param $params
      * @return Core
      */
-    public function withParams($params) {
+    public function withParams($params): Core {
         $this->argv = $params;
         return self::$instance;
     }
@@ -80,46 +76,47 @@ class Core {
      * a list of placeholders with given values
      *
      * @param $view
+     * @return void
      */
-    public function render($view = NULL) {
+    public function render($view = NULL): void {
         if ($this->argv !== NULL && $view === NULL) {
             $view = $this->argv["page"];
         }
 
+        $viewObj = new View($this->VIEW_PATH);
+
         switch(strtoupper($view)) {
             case 'BASE':
-                $FILENAME = "base.htm";
-                $PLACEHOLDERS = array(
-                    array("%TOOLS_LIST%", $this->renderTools()),
+                $viewObj->setTemplate(strtolower($view));
+                $placeholders = array(
+                    array("%TOOLS_LIST%", $this->renderToolsAsHtml()),
                     array("%PROJECT_NAME%", $this->getProjectName()),
                     array("%PROJECT_VERSION%", $this->getProjectVersion()),
                     array("%PROJECT_AUTHOR%", $this->getProjectAuthor()),
                     array("%PROJECT_DESCRIPTION%", $this->getProjectDescription()),
-                    array("%TOOLS_JSON%", $this->getToolsObject(true))
+                    array("%TOOLS_JSON%", $this->getToolsJson())
                 );
+                $viewObj->setPlaceholders($placeholders);
                 break;
             case 'TEST':
-                $FILENAME = "test.htm";
-                $PLACEHOLDERS = array(
+                $viewObj->setTemplate(strtolower($view));
+                $placeholders = array(
                     array("%PROJECT_NAME%", $this->getProjectName())
                 );
+                $viewObj->setPlaceholders($placeholders);
                 break;
             default:
                 throw new \http\Exception\InvalidArgumentException();
                 break;
         }
 
-        $html = file_get_contents($this->VIEW_PATH . "/" . $FILENAME);
-
-        foreach($PLACEHOLDERS as $key => $value) {
-            $html = str_replace($value[0], $value[1], $html);
-        }
-
-        echo $html;
+        View::render($viewObj);
     }
 
     /**
      * Builds the Runnable and executes it
+     *
+     * @return void
      */
     public function scan(): void {
         if ($this->argv === NULL) {
@@ -137,7 +134,7 @@ class Core {
             return;
         }
 
-        $runner = (new Runner())
+        $runner = (new Scanner())
             ->viaEngine(Engine::fromString($engine))
             ->useCWD($this->APP_PATH)
             ->atPath($app)
@@ -151,11 +148,18 @@ class Core {
     /**
      * Getter for tools object
      *
-     * @param bool $asJson
-     * @return mixed
+     * @return array
      */
-    private function getToolsObject($asJson = false) {
-        if (!$asJson) return $this->TOOLS_OBJECT;
+    private function getToolsObject(): array {
+        return $this->TOOLS_OBJECT;
+    }
+
+    /**
+     * Getter for tools object json encoded
+     *
+     * @return string
+     */
+    private function getToolsJson(): string {
         return json_encode($this->TOOLS_OBJECT);
     }
 
@@ -164,7 +168,7 @@ class Core {
      *
      * @return string
      */
-    private function getProjectAuthor() {
+    private function getProjectAuthor(): string {
         return $this->PROJECT_AUTHOR;
     }
 
@@ -173,7 +177,7 @@ class Core {
      *
      * @return string
      */
-    private function getProjectName() {
+    private function getProjectName(): string {
         return $this->PROJECT_NAME;
     }
 
@@ -182,7 +186,7 @@ class Core {
      *
      * @return string
      */
-    private function getProjectVersion() {
+    private function getProjectVersion(): string {
         return $this->PROJECT_VERSION;
     }
 
@@ -191,22 +195,24 @@ class Core {
      *
      * @return string
      */
-    private function getProjectDescription() {
+    private function getProjectDescription(): string {
         return $this->PROJECT_DESCRIPTION;
     }
 
     /**
      * Renders tools object to html
      *
-     * @return mixed
+     * @return string
      */
-    private function renderTools() {
+    private function renderToolsAsHtml(): string {
         $html = "";
         foreach($this->getToolsObject() as $tool) {
             if ($tool->ignore) continue;
+            $engine = Engine::fromString($tool->engine);
+
             $html .= "<div id='tool-$tool->id' class=\"list-group-item list-group-item-action\" aria-current=\"true\">
             <div class=\"d-flex w-100 justify-content-between\">
-                <h5 class=\"mb-1\">$tool->name <span class=\"badge rounded-pill bg-secondary\">$tool->engine</span></h5>
+                <h5 class=\"mb-1\">$tool->name <span class=\"badge rounded-pill bg-secondary\">$engine</span></h5>
                 <small id='state-$tool->id' class='fst-italic'>Idling...</small>
             </div>
             <p class=\"mb-1\">$tool->description</p>

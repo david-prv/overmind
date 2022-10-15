@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Class Runner
+ * Class Scanner
  *
  * <p>
- * Implements a Runnable. A Runner is used to wrap
+ * Implements a Runnable. A Scanner is used to wrap
  * the python runner in an abstract PHP based model we can
  * extend and work with. It can be seen as a String Builder for
  * the final shell_exec call.
@@ -12,7 +12,7 @@
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-class Runner implements Runnable
+class Scanner implements Runnable
 {
     private String $engine;
     private String $path;
@@ -25,9 +25,9 @@ class Runner implements Runnable
      * as interpreter by the python runner
      *
      * @param $engine
-     * @return Runner
+     * @return Scanner
      */
-    public function viaEngine($engine): Runner {
+    public function viaEngine(string $engine): Scanner {
         $this->engine = $engine;
         return $this;
     }
@@ -37,9 +37,9 @@ class Runner implements Runnable
      * (or short CWD) for the execution
      *
      * @param $cwd
-     * @return Runner
+     * @return Scanner
      */
-    public function useCWD($cwd): Runner {
+    public function useCWD(string $cwd): Scanner {
         $this->cwd = $cwd;
         return $this;
     }
@@ -49,9 +49,9 @@ class Runner implements Runnable
      * the tool is located in the projects structure
      *
      * @param $appPath
-     * @return Runner
+     * @return Scanner
      */
-    public function atPath($appPath): Runner {
+    public function atPath(string $appPath): Scanner {
         $this->path = $appPath;
         return $this;
     }
@@ -61,9 +61,9 @@ class Runner implements Runnable
      * used by the python runner
      *
      * @param $cmdLineString
-     * @return Runner
+     * @return Scanner
      */
-    public function withArguments($cmdLineString): Runner {
+    public function withArguments(string $cmdLineString): Scanner {
         $this->cmdline = $cmdLineString;
         return $this;
     }
@@ -74,9 +74,9 @@ class Runner implements Runnable
      * later on
      *
      * @param $id
-     * @return Runner
+     * @return Scanner
      */
-    public function identifiedBy($id): Runner {
+    public function identifiedBy(string $id): Scanner {
         $this->id = $id;
         return $this;
     }

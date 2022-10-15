@@ -13,7 +13,7 @@
  * <p>
  * In our case, a Runnable contains some sort of building methods.
  * These methods define what specific knowledge the python runner needs
- * about the now running scanner. All methods return Runner to make all
+ * about the now running scanner. All methods return Scanner to make all
  * methods available in a call chain.
  * </p>
  *
@@ -26,36 +26,36 @@ interface Runnable
      * as interpreter by the python runner
      *
      * @param $engine
-     * @return Runner
+     * @return Scanner
      */
-    public function viaEngine($engine): Runner;
+    public function viaEngine(string $engine): Scanner;
 
     /**
      * Defines the current working directory
      * (or short CWD) for the execution
      *
      * @param $cwd
-     * @return Runner
+     * @return Scanner
      */
-    public function useCWD($cwd): Runner;
+    public function useCWD(string $cwd): Scanner;
 
     /**
      * Defines, after the CWD, where exactly
      * the tool is located in the projects structure
      *
      * @param $appPath
-     * @return Runner
+     * @return Scanner
      */
-    public function atPath($appPath): Runner;
+    public function atPath(string $appPath): Scanner;
 
     /**
      * Defines which start-up arguments will be
      * used by the python runner
      *
      * @param $cmdLineString
-     * @return Runner
+     * @return Scanner
      */
-    public function withArguments($cmdLineString): Runner;
+    public function withArguments(string $cmdLineString): Scanner;
 
     /**
      * Defines the scanner application id which
@@ -63,9 +63,9 @@ interface Runnable
      * later on
      *
      * @param $id
-     * @return Runner
+     * @return Scanner
      */
-    public function identifiedBy($id): Runner;
+    public function identifiedBy(string $id): Scanner;
 
     /**
      * Runs the python runner and sends the final

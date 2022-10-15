@@ -1,6 +1,15 @@
 <?php
 
-include_once "./app/Core.php";
+/**
+ * Autoloader.
+ */
+spl_autoload_register(function ($class_name) {
+    if (file_exists("{$class_name}.php")) {
+        include "{$class_name}.php";
+    } else {
+        include "./app/" . "{$class_name}.php";
+    }
+});
 
 /**
  * Class Main
