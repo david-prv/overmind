@@ -16,6 +16,7 @@ class View
     private string $filename;
     private string $viewPath;
     private array $placeholders;
+    private bool $error;
 
     /**
      * View constructor.
@@ -25,6 +26,7 @@ class View
     function __construct(string $viewPath)
     {
         $this->viewPath = $viewPath;
+        $this->error = false;
     }
 
     /**
@@ -34,6 +36,10 @@ class View
      * @return bool
      */
     public static function render(View $view): bool {
+        if (!$view->isComplete()) {
+            return false;
+        }
+
         $html = file_get_contents($view->getViewPath() . "/" . $view->getFileName());
 
         foreach($view->getPlaceholders() as $key => $value) {
@@ -60,12 +66,22 @@ class View
      * Defines the two-dimensional array of placeholders
      * and their corresponding values. Placeholders can be expressed in a template
      * with a percentage symbol, followed by the placeholder name and then
-     * closed with another percentage symbol.
+     * closed with another percentage symbol
      *
      * @param array $placeholders
      */
     public function setPlaceholders(array $placeholders): void {
         $this->placeholders = $placeholders;
+    }
+
+    /**
+     * Indicates that an error occurred in the caller.
+     * Prevents the render method to perform
+     *
+     * @param bool $value
+     */
+    public function setError(bool $value): void {
+        $this->error = $value;
     }
 
     /**
@@ -94,5 +110,16 @@ class View
      */
     public function getFileName(): string {
         return $this->filename;
+    }
+
+    /**
+     * Returns whether an error occurred in the caller
+     * or not, what means analogously if the view was constructed
+     * successfully or not
+     *
+     * @return bool
+     */
+    public function isComplete(): bool {
+        return !$this->error;
     }
 }

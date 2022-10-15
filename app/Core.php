@@ -106,7 +106,8 @@ class Core {
                 $viewObj->setPlaceholders($placeholders);
                 break;
             default:
-                throw new \http\Exception\InvalidArgumentException();
+                echo "Not found";
+                $viewObj->setError(true);
                 break;
         }
 
@@ -120,7 +121,7 @@ class Core {
      */
     public function scan(): void {
         if ($this->argv === NULL) {
-            echo("no arguments provided");
+            echo "no arguments provided";
             return;
         }
 
@@ -141,8 +142,8 @@ class Core {
             ->withArguments($args)
             ->identifiedBy($id);
 
-        if ($runner->run()) echo("done");
-        else echo("error");
+        if ($runner->run()) echo "done";
+        else echo "error";
 
     }
 
