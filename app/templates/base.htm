@@ -32,9 +32,19 @@
             <small class="text-muted">%PROJECT_VERSION%</small>
         </div>
         <form class="d-flex">
-            <button data-bs-toggle="modal" data-bs-target="#launchModal" id="launchAll" class="btn btn-primary" type="submit"><i class="fa fa-forward"></i> Launch All</button>
-            <button onclick="window.location.href='index.php?page=manage';" class="btn btn-secondary ms-1" type="button"><i class="fa fa-gears"></i> Manage Scanners</button>
-            <button data-bs-toggle="modal" data-bs-target="#helpModal" class="btn btn-secondary ms-1" type="button"><i class="fa fa-life-ring"></i> Help</button>
+            <div class="input-group mb-3">
+                <button data-bs-toggle="modal" data-bs-target="#launchModal" id="launchAll" class="btn btn-primary" type="submit"><i class="fa fa-forward"></i> Launch All</button>
+                <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Launch single</a></li>
+                    <li><a class="dropdown-item" href="#">Launch group</a></li>
+                    <li><a class="dropdown-item" href="#">Launch with exception</a></li>
+                </ul>
+                <button onclick="window.location.href='index.php?page=manage';" class="btn btn-secondary ms-1" type="button"><i class="fa fa-gears"></i> Manage Scanners</button>
+                <button data-bs-toggle="modal" data-bs-target="#helpModal" class="btn btn-secondary ms-1" type="button"><i class="fa fa-life-ring"></i> Help</button>
+            </div>
         </form>
     </div>
 </nav>

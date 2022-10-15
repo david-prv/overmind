@@ -1,4 +1,4 @@
-.btn-check:focus+.btn-primary, .btn-primary:focus, .btn-check:focus+.btn-secondary, .btn-secondary:focus {
+.btn-check:focus+.btn-primary, .btn-primary:focus, .btn-check:focus+.btn-secondary, .btn-secondary:focus, .dropdown-toggle {
     box-shadow: none!important;
 }
 
