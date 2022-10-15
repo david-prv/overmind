@@ -1,17 +1,6 @@
 <?php
 
 /**
- * Autoloader.
- */
-spl_autoload_register(function ($class_name) {
-    if (file_exists("{$class_name}.php")) {
-        include "{$class_name}.php";
-    } else {
-        include "./app/" . "{$class_name}.php";
-    }
-});
-
-/**
  * App Main
  *
  * <p>
@@ -29,9 +18,23 @@ spl_autoload_register(function ($class_name) {
 class App {
 
     /**
+     * App constructor.
+     */
+    function __construct()
+    {
+        spl_autoload_register(function ($class_name) {
+            if (file_exists("{$class_name}.php")) {
+                include "{$class_name}.php";
+            } else {
+                include "./app/" . "{$class_name}.php";
+            }
+        });
+    }
+
+    /**
      * Loads application core
      */
-    public function load()
+    public function load(): void
     {
         if (isset($_GET["page"]))
             Core::getInstance()->withParams($_GET)->render();
@@ -40,7 +43,6 @@ class App {
         else
             Core::getInstance()->render("base");
     }
-
 }
 
 $app = new App();
