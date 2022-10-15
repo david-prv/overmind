@@ -98,6 +98,7 @@ class Core {
                 );
                 $viewObj->setPlaceholders($placeholders);
                 break;
+            case 'MANAGE':
             case 'TEST':
                 $viewObj->setTemplate(strtolower($view));
                 $placeholders = array(
