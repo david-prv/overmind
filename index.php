@@ -40,6 +40,8 @@ class App {
             Core::getInstance()->withParams($_GET)->render();
         elseif (isset($_GET["run"]))
             Core::getInstance()->withParams($_GET)->scan();
+        elseif (isset($_GET["upload"]))
+            Core::getInstance()->withParams($_POST)->integrate();
         else
             Core::getInstance()->render("base");
     }

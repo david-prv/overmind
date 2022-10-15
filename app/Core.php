@@ -117,8 +117,6 @@ class Core {
 
     /**
      * Builds the Runnable and executes it
-     *
-     * @return void
      */
     public function scan(): void {
         if ($this->argv === NULL) {
@@ -146,6 +144,14 @@ class Core {
         if ($runner->run()) echo "done";
         else echo "error";
 
+    }
+
+    /**
+     * Integrates a new tool to the bundle locally
+     */
+    public function integrate(): void {
+        // TODO
+        die("Not implemented yet");
     }
 
     /**
