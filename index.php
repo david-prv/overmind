@@ -28,6 +28,9 @@ spl_autoload_register(function ($class_name) {
  */
 class App {
 
+    /**
+     * Loads application core
+     */
     public function load()
     {
         if (isset($_GET["page"]))
