@@ -100,6 +100,27 @@
                     </span>
                     <input type="text" class="form-control" id="target-url" aria-describedby="basic-addon3">
                 </div>
+                <div class="form-check">
+                    <input onclick="if($('#wExclusion').is(':visible')) { $('#wExclusion').toggle('hidden'); }" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Without Exceptions
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input onclick="if(!$('#wExclusion').is(':visible')) { $('#wExclusion').toggle('hidden'); }" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Exclude Scanners
+                    </label>
+                    <div class="hidden" id="wExclusion">
+                        <label class="text-muted" for="exclusion">Exclude...</label>
+                        <input oninput="if($('#exclusion').val().indexOf('*') !== -1) { $('#wWhitelist').toggle('hidden'); }
+                                        else if($('#wWhitelist').is(':visible') && $('#exclusion').val().indexOf('*') === -1) { $('#wWhitelist').toggle('hidden'); }" id="exclusion" class="form-control" type="text" placeholder="e.g. 1,3,5 or * to exclude all">
+                    </div>
+                    <div class="hidden" id="wWhitelist">
+                        <label class="text-muted" for="whitelist">But except...</label>
+                        <input id="whitelist" class="form-control" type="text" placeholder="e.g. 2,4">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Start</button>

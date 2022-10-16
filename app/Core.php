@@ -112,7 +112,6 @@ class Core
                 $viewObj->setPlaceholders($placeholders);
                 break;
             default:
-                echo "Not found";
                 $viewObj->setError(true);
                 break;
         }
@@ -126,8 +125,7 @@ class Core
     public function scan(): void
     {
         if ($this->argv === NULL) {
-            echo "no arguments provided";
-            return;
+            die("no arguments provided");
         }
 
         $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : NULL;
@@ -136,8 +134,7 @@ class Core
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
         if (is_null($engine) || is_null($app) || is_null($args) || is_null($id)) {
-            echo "invalid arguments or incomplete arg set";
-            return;
+            die("invalid arguments or incomplete arg set");
         }
 
         $runner = (new Scanner())
@@ -147,8 +144,8 @@ class Core
             ->withArguments($args)
             ->identifiedBy($id);
 
-        if ($runner->run()) echo "done";
-        else echo "error";
+        if ($runner->run()) die("done");
+        else die("error");
 
     }
 
@@ -158,8 +155,7 @@ class Core
     public function integrate(): void
     {
         if ($this->argv === NULL) {
-            echo "no arguments provided";
-            return;
+            die("no arguments provided");
         }
 
         $name = (isset($this->argv["name"])) ? $this->argv["name"] : NULL;
@@ -173,8 +169,7 @@ class Core
 
         if (is_null($name) || is_null($creator) || is_null($url) || is_null($version) || is_null($cmdline)
             || is_null($description) || is_null($engine) || is_null($index) || !isset($_FILES)) {
-            echo "invalid arguments or incomplete arg set";
-            return;
+            die("invalid arguments or incomplete arg set");
         }
 
         $scanner = (new Scanner())
@@ -273,7 +268,7 @@ class Core
             <p class=\"mb-1\">$tool->description</p>
             <div class=\"d-flex w-100 justify-content-between\">
                 <small>Author: <a href='$tool->url'>$tool->author</a></small>
-                <small id='report-$tool->id'></small>
+                <small id='scanner-$tool->id'>ID: $tool->id</small>
             </div>
         </div>";
         }

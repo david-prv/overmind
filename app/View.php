@@ -38,7 +38,7 @@ class View
     public static function render(View $view): bool
     {
         if (!$view->isComplete()) {
-            return false;
+            die("View could not be constructed");
         }
 
         $html = file_get_contents($view->getViewPath() . "/" . $view->getFileName());
