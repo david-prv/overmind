@@ -14,6 +14,15 @@
     let launchModal = document.getElementById("launchModal");
     launchModal.addEventListener('hidden.bs.modal', invokeLaunchAll)
 
+    $('#launch-all').on("click", () => {
+        $('#furtherFlags').show();
+        (new bootstrap.Modal(launchModal, {})).show();
+    });
+    $('#launch-selected').on("click", () => {
+        invokeLaunchSelected();
+        $('#furtherFlags').hide();
+        (new bootstrap.Modal(launchModal, {})).show();
+    });
 })();
 
 // invokes all methods needed for the launchAll event
@@ -41,6 +50,21 @@ function invokeLaunchAll(event) {
             callback(id, max);
         });
     }
+}
+
+function invokeLaunchSelected(event) {
+    let queue = [];
+    let target = $("#target-url").val();
+    if (target === '' || target === null || target === undefined) {
+        console.error("[ERROR] Missing target...");
+        return;
+    }
+    if (target.indexOf("://") === -1) target = $("#protocol").val() + "://" + target;
+
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
+
+    let selected = $('.selection');
+    console.log(selected);
 }
 
 var counter = 0;

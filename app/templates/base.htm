@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- FontAwesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -24,7 +25,8 @@
 <!-- Controls -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarToggler">
@@ -33,18 +35,24 @@
         </div>
         <form class="d-flex">
             <div class="input-group mb-3">
-                <button data-bs-toggle="modal" data-bs-target="#launchModal" id="launchAll" class="btn btn-primary" type="submit"><i class="fa fa-forward"></i> Launch All</button>
-                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <button data-bs-toggle="modal" data-bs-target="#launchModal" id="launchAll" class="btn btn-primary"
+                        type="submit"><i class="fa fa-forward"></i> Launch All
+                </button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="visually-hidden">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu">
-                    <h6 class="dropdown-header">Select preset:</h6>
-                    <li><a class="dropdown-item" href="#">Launch single</a></li>
-                    <li><a class="dropdown-item" href="#">Launch group</a></li>
-                    <li><a class="dropdown-item" href="#">Launch with exception</a></li>
+                    <h6 class="dropdown-header">Choose mode:</h6>
+                    <li><a id="launch-selected" class="dropdown-item" href="#">Launch Selected</a></li>
+                    <li><a id="launch-all" class="dropdown-item" href="#">Launch All</a></li>
                 </ul>
-                <button onclick="window.location.href='index.php?page=manage';" class="btn btn-secondary ms-1" type="button"><i class="fa fa-gears"></i> Manage Scanners</button>
-                <button data-bs-toggle="modal" data-bs-target="#helpModal" class="btn btn-secondary ms-1" type="button"><i class="fa fa-life-ring"></i> Help</button>
+                <button onclick="window.location.href='index.php?page=manage';" class="btn btn-secondary ms-1"
+                        type="button"><i class="fa fa-gears"></i> Manage Scanners
+                </button>
+                <button data-bs-toggle="modal" data-bs-target="#helpModal" class="btn btn-secondary ms-1" type="button">
+                    <i class="fa fa-life-ring"></i> Help
+                </button>
             </div>
         </form>
     </div>
@@ -100,25 +108,35 @@
                     </span>
                     <input type="text" class="form-control" id="target-url" aria-describedby="basic-addon3">
                 </div>
-                <div class="form-check">
-                    <input onclick="if($('#wExclusion').is(':visible')) { $('#wExclusion').toggle('hidden'); }" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Without Exceptions
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input onclick="if(!$('#wExclusion').is(':visible')) { $('#wExclusion').toggle('hidden'); }" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Exclude Scanners
-                    </label>
-                    <div class="hidden" id="wExclusion">
-                        <label class="text-muted" for="exclusion">Exclude...</label>
-                        <input oninput="if($('#exclusion').val().indexOf('*') !== -1) { $('#wWhitelist').toggle('hidden'); }
-                                        else if($('#wWhitelist').is(':visible') && $('#exclusion').val().indexOf('*') === -1) { $('#wWhitelist').toggle('hidden'); }" id="exclusion" class="form-control" type="text" placeholder="e.g. 1,3,5 or * to exclude all">
+                <div id="furtherFlags">
+                    <div class="form-check">
+                        <input onclick="if($('#wExclusion').is(':visible'))
+                                        { $('#wExclusion').toggle('hidden'); $('#wWhitelist').hide(); }"
+                               class="form-check-input" type="radio"
+                               name="flag-exceptions" id="without-exceptions" checked>
+                        <label class="form-check-label" for="without-exceptions">
+                            Without Exceptions
+                        </label>
                     </div>
-                    <div class="hidden" id="wWhitelist">
-                        <label class="text-muted" for="whitelist">But except...</label>
-                        <input id="whitelist" class="form-control" type="text" placeholder="e.g. 2,4">
+                    <div class="form-check">
+                        <input onclick="if(!$('#wExclusion').is(':visible'))
+                                        { $('#wExclusion').toggle('hidden'); }" class="form-check-input" type="radio"
+                               name="flag-exceptions" id="with-exceptions">
+                        <label class="form-check-label" for="with-exceptions">
+                            Exclude Scanners
+                        </label>
+                        <div class="hidden" id="wExclusion">
+                            <label class="text-muted" for="exclusion">Exclude...</label>
+                            <input oninput="if($('#exclusion').val().indexOf('*') !== -1)
+                                            { $('#wWhitelist').toggle('hidden'); }
+                                            else if($('#wWhitelist').is(':visible') && $('#exclusion').val().indexOf('*') === -1)
+                                            { $('#wWhitelist').toggle('hidden'); }" id="exclusion" class="form-control"
+                                   type="text" placeholder="e.g. 1,3,5 or * to exclude all">
+                        </div>
+                        <div class="hidden" id="wWhitelist">
+                            <label class="text-muted" for="whitelist">But except...</label>
+                            <input id="whitelist" class="form-control" type="text" placeholder="e.g. 2,4">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,7 +157,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               <div id="result-content"></div>
+                <div id="result-content"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -153,7 +171,9 @@
 
 <footer>
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 
     <!-- Runtime JS -->
     <script type="text/javascript">

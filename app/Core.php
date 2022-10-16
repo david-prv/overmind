@@ -260,7 +260,7 @@ class Core
             if ($tool->ignore) continue;
             $engine = Engine::fromString($tool->engine);
 
-            $html .= "<div id='tool-$tool->id' class=\"list-group-item list-group-item-action\" aria-current=\"true\">
+            $html .= "<div onclick='$(this).toggleClass(`selection`)' id='tool-$tool->id' class=\"list-group-item list-group-item-action tool\" aria-current=\"true\">
             <div class=\"d-flex w-100 justify-content-between\">
                 <h5 class=\"mb-1\">$tool->name <span class=\"badge rounded-pill bg-secondary\">$engine</span></h5>
                 <small id='state-$tool->id' class='fst-italic'>Idling...</small>

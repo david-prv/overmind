@@ -20,3 +20,15 @@
 .hidden {
     display:none;
 }
+
+.selection {
+    background: rgba(13, 110, 253, 0.1);
+}
+
+.selection:hover {
+    background: rgba(13, 110, 253, 0.1)!important;
+}
+
+.tool {
+    user-select: none!important;
+}
