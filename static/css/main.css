@@ -2,7 +2,7 @@
     box-shadow: none!important;
 }
 
-#protocol {
+#protocol, #protocol-alt {
     background: transparent;
     border: transparent;
 }
@@ -31,4 +31,8 @@
 
 .tool {
     user-select: none!important;
+}
+
+#selection-list li::marker {
+    color: transparent;
 }

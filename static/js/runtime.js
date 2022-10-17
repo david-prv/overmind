@@ -11,19 +11,84 @@
         event.stopPropagation();
         event.preventDefault();
     });
+    let launchSelectedOption = document.getElementById("launch-selected");
+    launchSelectedOption.addEventListener("click", prepareSelectedModal);
+
     let launchModal = document.getElementById("launchModal");
     launchModal.addEventListener('hidden.bs.modal', invokeLaunchAll)
 
+    let selectedModal = document.getElementById("selectedModal");
+    selectedModal.addEventListener('hidden.bs.modal', invokeLaunchSelected);
+
     $('#launch-all').on("click", () => {
-        $('#furtherFlags').show();
         (new bootstrap.Modal(launchModal, {})).show();
     });
     $('#launch-selected').on("click", () => {
-        invokeLaunchSelected();
-        $('#furtherFlags').hide();
-        (new bootstrap.Modal(launchModal, {})).show();
+        (new bootstrap.Modal(selectedModal, {})).show();
     });
 })();
+
+// prepares the modal for the launchSelected event
+function prepareSelectedModal(event) {
+    // all selected elements
+    let selected = $('.selection');
+
+    // define and clear list
+    let list = document.getElementById("selection-list");
+    list.innerHTML = "";
+
+    // clean up keys
+    delete(selected["length"]);
+    delete(selected["prevObject"]);
+
+    // iterate through tools
+    let keys = Object.keys(selected);
+    if(keys.length === 0) {
+        list.innerHTML = "<li style='font-style: italic'>Empty</li>";
+        $('#btn-start-selected').attr("disabled", true);
+        return;
+    }
+    $('#btn-start-selected').removeAttr("disabled");
+    for (let i = 0; i < keys.length; i++) {
+        let tool = selected[keys[i]];
+
+        let newListElement = document.createElement("li");
+        newListElement.id = "list-" + $(tool).attr("id");
+        newListElement.innerHTML = `<input class=\"form-check-input me-1\" type=\"checkbox\" value=\"${$(tool).attr("id").replace("tool-", "")}\" checked>
+                                        ${document.getElementById('title-' + $(tool).attr("id").split("-")[1]).innerText}`;
+
+        list.appendChild(newListElement);
+    }
+}
+
+// invokes all methods needed for the launchSelected event
+function invokeLaunchSelected(event) {
+    let queue = [];
+    let target = $("#target-url").val();
+    if (target === '' || target === null || target === undefined) {
+        console.error("[ERROR] Missing target...");
+        return;
+    }
+    if (target.indexOf("://") === -1) target = $("#protocol").val() + "://" + target;
+
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
+
+    // TODO: check for selected tools and only run them!
+
+    for(let i = 0; i < DATA.length; i++) {
+        let currentTool = DATA[i];
+        $("#state-" + i).innerText = "Waiting...";
+        queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\"" + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]);
+    }
+
+    for(let j = 0; j < queue.length; j++) {
+        $("#state-" + j).html("<span class='blinking'>Running...</span>");
+        $.get("/index.php" + queue[j], function(data, status, xhr, id=j, callback=finished, max=queue.length) {
+            $("#state-" + j).html("<span style='color:green!important;'>Finished</span>");
+            callback(id, max);
+        });
+    }
+}
 
 // invokes all methods needed for the launchAll event
 function invokeLaunchAll(event) {
@@ -52,21 +117,7 @@ function invokeLaunchAll(event) {
     }
 }
 
-function invokeLaunchSelected(event) {
-    let queue = [];
-    let target = $("#target-url").val();
-    if (target === '' || target === null || target === undefined) {
-        console.error("[ERROR] Missing target...");
-        return;
-    }
-    if (target.indexOf("://") === -1) target = $("#protocol").val() + "://" + target;
-
-    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
-
-    let selected = $('.selection');
-    console.log(selected);
-}
-
+// handles the current progress state
 var counter = 0;
 function finished(index, max) {
     counter++;
@@ -104,6 +155,7 @@ function finished(index, max) {
     }
 }
 
+// fetches text from a .txt report
 function getText(id) {
     // read text from URL location
     var request = new XMLHttpRequest();

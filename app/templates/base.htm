@@ -89,6 +89,38 @@
 </div>
 <!-- End Help Modal -->
 
+<!-- Selected Modal -->
+<div class="modal fade" id="selectedModal" tabindex="-1" aria-labelledby="selectedModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectedModalLabel">Launch Flags (Selected)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="target-url-alt" class="form-label">Your target URL</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                        <select name="protocol" id="protocol-alt" value="https">
+                          <option value="https">https://</option>
+                          <option value="http">http://</option>
+                        </select>
+                    </span>
+                    <input type="text" class="form-control" id="target-url-alt" aria-describedby="basic-addon3">
+                </div>
+
+                <label for="selection-list" class="form-label">Your selected tools</label>
+                <ul id="selection-list" class="list-group">
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-start-selected" type="button" class="btn btn-primary" data-bs-dismiss="modal">Start</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Selected Modal -->
+
 <!-- Launch Modal -->
 <div class="modal fade" id="launchModal" tabindex="-1" aria-labelledby="launchModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -100,7 +132,7 @@
             <div class="modal-body">
                 <label for="target-url" class="form-label">Your target URL</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3">
+                    <span class="input-group-text" id="basic-addon2">
                         <select name="protocol" id="protocol" value="https">
                           <option value="https">https://</option>
                           <option value="http">http://</option>
