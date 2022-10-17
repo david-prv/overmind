@@ -64,28 +64,34 @@ function prepareSelectedModal(event) {
 // invokes all methods needed for the launchSelected event
 function invokeLaunchSelected(event) {
     let queue = [];
-    let target = $("#target-url").val();
+    let target = $("#target-url-alt").val();
     if (target === '' || target === null || target === undefined) {
         console.error("[ERROR] Missing target...");
         return;
     }
-    if (target.indexOf("://") === -1) target = $("#protocol").val() + "://" + target;
+    if (target.indexOf("://") === -1) target = $("#protocol-alt").val() + "://" + target;
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
 
-    // TODO: check for selected tools and only run them!
+    let inputs = $('#selection-list input');
+    let selectedInputs = inputs
+        .filter(function(index) { return $(inputs[index]).is(':checked'); });
+    selectedInputs = selectedInputs.map(function(index) { return selectedInputs[index].value; });
 
     for(let i = 0; i < DATA.length; i++) {
         let currentTool = DATA[i];
+        if(!Object.values(selectedInputs).includes(currentTool["id"])) { continue; }
         $("#state-" + i).innerText = "Waiting...";
         queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\"" + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]);
     }
 
+    console.log(queue);
+
     for(let j = 0; j < queue.length; j++) {
-        $("#state-" + j).html("<span class='blinking'>Running...</span>");
-        $.get("/index.php" + queue[j], function(data, status, xhr, id=j, callback=finished, max=queue.length) {
-            $("#state-" + j).html("<span style='color:green!important;'>Finished</span>");
-            callback(id, max);
+        $("#state-" + selectedInputs[j]).html("<span class='blinking'>Running...</span>");
+        $.get("/index.php" + queue[j], function(data, status, xhr, id=selectedInputs[j], callback=finishedSelected, max=queue.length) {
+            $("#state-" + selectedInputs[j]).html("<span style='color:green!important;'>Finished</span>");
+            callback(id, selectedInputs);
         });
     }
 }
@@ -117,11 +123,54 @@ function invokeLaunchAll(event) {
     }
 }
 
+var counterS = 0;
+var finishedIDs = [];
+function finishedSelected(index, selected) {
+    counterS++;
+    console.log("[INFO] Finished task (" + counterS + " / " + selected.length + ")");
+
+    if(counterS === selected.length) {
+        let resContent = document.getElementById("result-content");
+
+        let html = "<div class=\"accordion accordion-flush\" id=\"accordion\">";
+        for(let i = 0; i < DATA.length; i++) {
+            let tool = DATA[i];
+            if(!Object.values(selected).includes(tool["id"])) { continue; }
+
+            html += "<div class=\"accordion-item\">" +
+                "    <h2 class=\"accordion-header\" id=\"flush-heading-" + i + "\">" +
+                "      <button class=\"accordion-button collapsed\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#flush-collapse" + i + "\" aria-expanded=\"false\" aria-controls=\"flush-collapse" + i + "\">" +
+                "        " + tool["name"] +
+                "      </button>" +
+                "    </h2>" +
+                "    <div id=\"flush-collapse" + i + "\" class=\"accordion-collapse collapse\" aria-labelledby=\"flush-heading" + i + "\" data-bs-parent=\"#accordion\">" +
+                "      <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
+                "    </div>" +
+                "  </div>";
+            finishedIDs.push(tool["id"]);
+        }
+        html += "</div>";
+
+        console.log(finishedIDs);
+        $(resContent).html(html);
+
+        for(let j = 0; j < finishedIDs.length; j++) {
+            getText(finishedIDs[j]);
+        }
+
+        let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
+        resultModal.show();
+        $("#launchAll").html("<i class=\"fa fa-gears\"></i> Launch Scanners");
+        counterS = 0;
+        finishedIDs = [];
+    }
+}
+
 // handles the current progress state
 var counter = 0;
 function finished(index, max) {
     counter++;
-    console.log("[INFO] Finished task " + (index+1) + " (" + counter + " / " + max + ")");
+    console.log("[INFO] Finished task (" + counter + " / " + max + ")");
 
     if(counter === max) {
         let resContent = document.getElementById("result-content");
@@ -157,6 +206,9 @@ function finished(index, max) {
 
 // fetches text from a .txt report
 function getText(id) {
+
+    console.log("[INFO] Fetching report", id, 'http://localhost:8080/reports/report_' + id + '.txt');
+
     // read text from URL location
     var request = new XMLHttpRequest();
     request.open('GET', 'http://localhost:8080/reports/report_' + id + '.txt', true);
