@@ -82,10 +82,9 @@ function invokeLaunchSelected(event) {
         let currentTool = DATA[i];
         if(!Object.values(selectedInputs).includes(currentTool["id"])) { continue; }
         $("#state-" + i).innerText = "Waiting...";
-        queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\"" + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]);
+        queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\""
+            + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]);
     }
-
-    console.log(queue);
 
     for(let j = 0; j < queue.length; j++) {
         $("#state-" + selectedInputs[j]).html("<span class='blinking'>Running...</span>");
@@ -114,7 +113,44 @@ function invokeLaunchAll(event) {
         queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\"" + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]);
     }
 
+    let skip = [];
+    let exclusion = $('#exclusion').val();
+    let whitelist = $('#whitelist').val();
+    if(exclusion.trim() !== '*' && whitelist.indexOf(",") !== -1) {
+        whitelist = whitelist.split(",").map(i => { return parseInt(i); });
+    } else {
+        whitelist = [parseInt(whitelist)];
+    }
+
+    if(exclusion.trim() === "*") {
+        for(let i = 0; i < DATA.length; i++) {
+            if(!whitelist.includes(i)) skip.push(i);
+        }
+    } else {
+        if(exclusion.indexOf(",") !== -1) {
+            skip = exclusion.split(",").map(i => { return parseInt(i); });
+        } else {
+            if (exclusion !== "" && exclusion !== undefined) {
+                skip.push(parseInt(exclusion));
+            }
+        }
+    }
+
+    if(skip.length === queue.length) {
+        console.error("[ERROR] All tools skipped...");
+        $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
+        return;
+    }
+
+    $('#exclusion').val("");
+    $('#whitelist').val("");
+
     for(let j = 0; j < queue.length; j++) {
+        if(skip.includes(j)) {
+            finished(j, queue.length);
+            continue;
+        }
+
         $("#state-" + j).html("<span class='blinking'>Running...</span>");
         $.get("/index.php" + queue[j], function(data, status, xhr, id=j, callback=finished, max=queue.length) {
             $("#state-" + j).html("<span style='color:green!important;'>Finished</span>");
@@ -160,7 +196,7 @@ function finishedSelected(index, selected) {
 
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
         resultModal.show();
-        $("#launchAll").html("<i class=\"fa fa-gears\"></i> Launch Scanners");
+        $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
         counterS = 0;
         finishedIDs = [];
     }
@@ -199,7 +235,7 @@ function finished(index, max) {
 
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
         resultModal.show();
-        $("#launchAll").html("<i class=\"fa fa-gears\"></i> Launch Scanners");
+        $("#launchAll").html("<i class=\"fa fa-gears\"></i> Launch All");
         counter = 0;
     }
 }
