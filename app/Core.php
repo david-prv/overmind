@@ -255,7 +255,7 @@ class Core
      */
     private function renderToolsAsHtml(): string
     {
-        $html = "";
+        $html = (count($this->getToolsObject()) === 0) ? "<h2 class='text-muted text-center'>No tools found</h2>" : "";
         foreach ($this->getToolsObject() as $tool) {
             if ($tool->ignore) continue;
             $engine = Engine::fromString($tool->engine);
@@ -268,21 +268,21 @@ class Core
                     <div class=\"d-grid gap-2 d-md-block\">
                       <button onclick='(function(event) {
                           event.stopPropagation();
-                          editTool($tool->id);
+                          editTool($tool->id)
                       })(event);' class=\"btn btn-sm btn-outline-secondary\" data-bs-toggle=\"modal\" data-bs-target=\"#editModal\" type=\"button\"><i class=\"fa fa-pencil\"></i></button>
                       <button onclick='(function(event) {
                           event.stopPropagation();
-                          deleteTool($tool->id);
+                          deleteTool($tool->id)
                       })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\"><i class=\"fa fa-trash\"></i></button>
                     </div>
                 </div>
-            </div>
-            <p id='description-$tool->id' class=\"mb-1\">$tool->description</p>
-            <div class=\"d-flex w-100 justify-content-between\">
-                <small>Author: <a href='$tool->url'>$tool->author</a></small>
-                <small id='scanner-$tool->id'>ID: $tool->id</small>
-            </div>
-        </div>";
+                </div>
+                <p id='description-$tool->id' class=\"mb-1\">$tool->description</p>
+                <div class=\"d-flex w-100 justify-content-between\">
+                    <small>Author: <a href='$tool->url'>$tool->author</a></small>
+                    <small id='scanner-$tool->id'>ID: $tool->id</small>
+                </div>
+            </div>";
         }
         return $html;
     }

@@ -209,12 +209,13 @@ class Scanner implements Runnable, Integrable
         }
 
         if (!$lastTool) {
-            $lastTool = array();
-            $lastTool["id"] = "-1";
+            $newID = "0";
+        } else {
+            $newID = (string)((int)$lastTool->id + 1);
         }
 
         $newTool = array(
-            "id" => (string)((int)$lastTool->id + 1),
+            "id" => $newID,
             "name" => $this->name,
             "engine" => Engine::fromString($this->engine),
             "index" => $namespace . "/" . $this->path,
