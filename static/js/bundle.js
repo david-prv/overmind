@@ -54,7 +54,46 @@ function deleteTool(id) {
 
 // handler for tool edit button
 function editTool(id) {
+    $('#edit-id').val(id);
+    $('#edit-name').val(DATA[id]["name"]);
+    $('#edit-creator').val(DATA[id]["author"]);
+    $('#edit-url').val(DATA[id]["url"]);
+    $('#edit-version').val(DATA[id]["version"]);
+    $('#edit-engine').val(DATA[id]["engine"]);
+    $('#edit-index').val(DATA[id]["index"]);
+    $('#edit-args').val(DATA[id]["args"]);
+    $('#edit-description').val(DATA[id]["description"]);
+}
 
+// reads values from form and submits them to backend
+function submitEdit() {
+    let name, creator, url, version, engine, index, args, description, id;
+
+    id = $('#edit-id').val();
+    name = $('#edit-name').val();
+    creator = $('#edit-creator').val();
+    url = $('#edit-url').val();
+    version = $('#edit-version').val();
+    engine = $('#edit-engine').val();
+    index = $('#edit-index').val();
+    args = $('#edit-args').val();
+    description = $('#edit-description').val();
+
+    let json = {
+        "id": id,
+        "name": name,
+        "author": creator,
+        "url": url,
+        "version": version,
+        "engine": engine,
+        "index": index,
+        "args": args,
+        "description": description
+    }
+
+    $.get('index.php?edit&json=' + JSON.stringify(json), function(data) {
+        console.log(data);
+    });
 }
 
 // reset tool states after finished run

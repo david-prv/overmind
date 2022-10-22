@@ -4,8 +4,8 @@
  * Interface Integrable
  *
  * <p>
- * An Integrable is a class which is able to integrate itself
- * into the scanner bundle set. The Scanner for example implements both,
+ * An Integrable is a class which is able to integrate/delete/update itself
+ * into/from/in the scanner bundle set. The Scanner for example implements both,
  * the Runnable and the Integrable, since a Scanner can run and integrate
  * itself, without any helper classes.
  * </p>
@@ -101,4 +101,20 @@ interface Integrable
      * @return bool
      */
     public function integrate(): bool;
+
+    /**
+     * Deletes the given tool/scanner from the
+     * bundle using the given ID
+     *
+     * @return bool
+     */
+    public function delete(): bool;
+
+    /**
+     * Updates the given fields for the given
+     * tool/scanner, which is identified by the ID
+     *
+     * @return bool
+     */
+    public function update(): bool;
 }

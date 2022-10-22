@@ -54,11 +54,11 @@ class App {
             };
         } elseif (isset($_GET["delete"])) {
             return function() {
-                die("Not yet implemented");
+                Core::getInstance()->withParams($_GET)->delete();
             };
         } elseif (isset($_GET["edit"])) {
             return function() {
-                die("Not yet implemented");
+                Core::getInstance()->withParams($_GET)->edit();
             };
         } else {
             return function() {

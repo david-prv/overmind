@@ -212,10 +212,51 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <textarea class="form-control" id="edit-content" rows="5"></textarea>
+                <div class="row">
+                    <div class="col">
+                        <label for="edit-name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="edit-name">
+                    </div>
+                    <div class="col">
+                        <label for="edit-creator" class="form-label">Creator</label>
+                        <input type="text" class="form-control" id="edit-creator">
+                    </div>
+                    <div class="col">
+                        <label for="edit-url" class="form-label">Creator's URL</label>
+                        <input type="text" class="form-control" id="edit-url">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="edit-id" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="edit-id" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="edit-version" class="form-label">Version</label>
+                        <input type="text" class="form-control" id="edit-version">
+                    </div>
+                    <div class="col">
+                        <label for="edit-engine" class="form-label">Engine</label>
+                        <input type="text" class="form-control" id="edit-engine">
+                    </div>
+                    <div class="col">
+                        <label for="edit-index" class="form-label">Index File</label>
+                        <input type="text" class="form-control" id="edit-index">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="edit-args" class="form-label">CommandLine Arguments</label>
+                        <input type="text" class="form-control" id="edit-args">
+                    </div>
+                    <div class="col">
+                        <label for="edit-description" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="edit-description">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-download"></i> Save</button>
+                <button onclick="submitEdit()" type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-download"></i> Save</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>

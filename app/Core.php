@@ -189,6 +189,71 @@ class Core
     }
 
     /**
+     * Deletes an existing tool from the bundle
+     */
+    public function delete(): void
+    {
+        if ($this->argv === NULL) {
+            die("no arguments provided");
+        }
+
+        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
+
+        if (is_null($id)) {
+            die("invalid arguments or incomplete arg set");
+        }
+
+        $scanner = (new Scanner())->identifiedBy($id);
+
+        if ($scanner->delete()) die("done");
+        else die("error");
+    }
+
+    /**
+     * Updates an existing tool in the bundle
+     */
+    public function edit(): void
+    {
+        $jsonObj = (isset($this->argv["json"])) ? $this->argv["json"] : NULL;
+
+        if (is_null($jsonObj)) {
+            die("no json object found");
+        }
+
+        $jsonObj = json_decode($jsonObj);
+
+        $id  = (isset($jsonObj->id)) ? $jsonObj->id : NULL;
+        $name = (isset($jsonObj->name)) ? $jsonObj->name : NULL;
+        $creator = (isset($jsonObj->author)) ? $jsonObj->author : NULL;
+        $url = (isset($jsonObj->url)) ? $jsonObj->url : NULL;
+        $version = (isset($jsonObj->version)) ? $jsonObj->version : NULL;
+        $cmdline = (isset($jsonObj->args)) ? $jsonObj->args : NULL;
+        $description = (isset($jsonObj->description)) ? $jsonObj->description : NULL;
+        $engine = (isset($jsonObj->engine)) ? $jsonObj->engine : NULL;
+        $index = (isset($jsonObj->index)) ? $jsonObj->index : NULL;
+
+        if (is_null($id) || is_null($name) || is_null($creator) || is_null($url) || is_null($version)
+            || is_null($cmdline) || is_null($description) || is_null($engine) || is_null($index)) {
+            die("invalid arguments or incomplete arg set");
+        }
+
+        $scanner = (new Scanner())
+            ->useCWD($this->TOOLS_PATH)
+            ->atPath($index)
+            ->viaEngine($engine)
+            ->hasName($name)
+            ->fromCreator($creator)
+            ->setCreatorURL($url)
+            ->inVersion($version)
+            ->withArguments($cmdline)
+            ->describedBy($description)
+            ->identifiedBy($id);
+
+        if ($scanner->update()) die("done");
+        else die("error");
+    }
+
+    /**
      * Getter for tools object
      *
      * @return array

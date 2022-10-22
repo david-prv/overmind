@@ -255,4 +255,49 @@ class Scanner implements Runnable, Integrable
 
         return true;
     }
+
+    /**
+     * Deletes the given tool/scanner from the
+     * bundle using the given ID
+     *
+     * @return bool
+     */
+    public function delete(): bool
+    {
+        die("Not implemented yet");
+    }
+
+    /**
+     * Updates the given fields for the given
+     * tool/scanner, which is identified by the ID
+     *
+     * @return bool
+     */
+    public function update(): bool
+    {
+        $mapPath = $this->cwd . "/map.json";
+
+        if (!file_exists($mapPath))
+        {
+            return false;
+        }
+
+        $newTool = array(
+            "id" => $this->id,
+            "name" => $this->name,
+            "engine" => Engine::fromString($this->engine),
+            "index" => $this->path,
+            "args" => $this->cmdline,
+            "description" => $this->description,
+            "version" => $this->version,
+            "author" => $this->creator,
+            "url" => $this->creatorURL,
+            "ignore" => false
+        );
+
+        $currentMap = json_decode(file_get_contents($mapPath));
+        $currentMap[$this->id] = $newTool;
+
+        return file_put_contents($mapPath, json_encode($currentMap));
+    }
 }
