@@ -1,3 +1,5 @@
 /.idea
 *.min.css
 *.min.js
+/vendor/*
+/reports/*.txt
