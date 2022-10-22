@@ -264,8 +264,20 @@ class Core
             <div class=\"d-flex w-100 justify-content-between\">
                 <h5 class=\"mb-1\"><span id=\"title-$tool->id\">$tool->name</span> <span class=\"badge rounded-pill bg-secondary\">$engine</span></h5>
                 <small id='state-$tool->id' class='fst-italic'>Idling...</small>
+                <div class='hidden' id='options-tool-$tool->id'>
+                    <div class=\"d-grid gap-2 d-md-block\">
+                      <button onclick='(function(event) {
+                          event.stopPropagation();
+                          editTool($tool->id);
+                      })(event);' class=\"btn btn-sm btn-outline-secondary\" data-bs-toggle=\"modal\" data-bs-target=\"#editModal\" type=\"button\"><i class=\"fa fa-pencil\"></i></button>
+                      <button onclick='(function(event) {
+                          event.stopPropagation();
+                          deleteTool($tool->id);
+                      })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\"><i class=\"fa fa-trash\"></i></button>
+                    </div>
+                </div>
             </div>
-            <p class=\"mb-1\">$tool->description</p>
+            <p id='description-$tool->id' class=\"mb-1\">$tool->description</p>
             <div class=\"d-flex w-100 justify-content-between\">
                 <small>Author: <a href='$tool->url'>$tool->author</a></small>
                 <small id='scanner-$tool->id'>ID: $tool->id</small>

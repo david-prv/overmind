@@ -1,16 +1,30 @@
 /**
  *  Bundle of all main functions and handlers
  *  this application needs during runtime
+ *
+ *  Version: 1.0.0
+ *  Author: David Dewes <hello@david-dewes.de>
  */
 
+// temp variable declarations
+var counter = 0;
+var counterS = 0;
+var finishedIDs = [];
+
+// code ignition
 (function() {
-    // register launch components
+    /*
+     * Registration of all necessary
+     * EventListeners
+     */
+
     let launchAll = document.getElementById("launchAll");
     launchAll.addEventListener("click", function(event) {
         event.stopImmediatePropagation();
         event.stopPropagation();
         event.preventDefault();
     });
+
     let launchSelectedOption = document.getElementById("launch-selected");
     launchSelectedOption.addEventListener("click", prepareSelectedModal);
 
@@ -20,13 +34,44 @@
     let selectedModal = document.getElementById("selectedModal");
     selectedModal.addEventListener('hidden.bs.modal', invokeLaunchSelected);
 
+    let resultModal = document.getElementById("resModal");
+    resultModal.addEventListener('hidden.bs.modal', resetStates);
+
     $('#launch-all').on("click", () => {
         (new bootstrap.Modal(launchModal, {})).show();
     });
+
     $('#launch-selected').on("click", () => {
         (new bootstrap.Modal(selectedModal, {})).show();
     });
+
 })();
+
+// handler for tool deletion button
+function deleteTool(id) {
+
+}
+
+// handler for tool edit button
+function editTool(id) {
+
+}
+
+// reset tool states after finished run
+function resetStates() {
+    for (let i = 0; i < DATA.length; i++) {
+        $(`#state-${i}`)[0].innerText = "Idling...";
+    }
+}
+
+// show edit tools
+function editTools() {
+    $('#launchAll, #launchOptions').prop('disabled', (i, v) => !v);
+    for (let i = 0; i < DATA.length; i++) {
+        $(`#options-tool-${i}`).toggleClass("hidden");
+        $(`#state-${i}`).toggleClass("hidden");
+    }
+}
 
 // prepares the modal for the launchSelected event
 function prepareSelectedModal(event) {
@@ -159,8 +204,7 @@ function invokeLaunchAll(event) {
     }
 }
 
-var counterS = 0;
-var finishedIDs = [];
+// handles the current progress state for launchSelected event
 function finishedSelected(index, selected) {
     counterS++;
     console.log("[INFO] Finished task (" + counterS + " / " + selected.length + ")");
@@ -203,7 +247,6 @@ function finishedSelected(index, selected) {
 }
 
 // handles the current progress state
-var counter = 0;
 function finished(index, max) {
     counter++;
     console.log("[INFO] Finished task (" + counter + " / " + max + ")");

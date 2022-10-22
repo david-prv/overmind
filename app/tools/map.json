@@ -41,7 +41,7 @@
     "engine": "python3",
     "index": "Test\/app.py",
     "args": "%URL%",
-    "description": "Dies ist eine Test Anwendung",
+    "description": "Dies ist eine Test-Anwendung",
     "version": "1.0.0",
     "author": "David Dewes",
     "url": "https:\/\/david-dewes.de",

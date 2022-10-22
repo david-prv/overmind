@@ -1,4 +1,5 @@
-.btn-check:focus+.btn-primary, .btn-primary:focus, .btn-check:focus+.btn-secondary, .btn-secondary:focus, .dropdown-toggle {
+.btn-check:focus+.btn-primary, .btn-primary:focus, .btn-check:focus+.btn-secondary, .btn-secondary:focus, .dropdown-toggle,
+.btn-outline-secondary {
     box-shadow: none!important;
 }
 
@@ -35,4 +36,12 @@
 
 #selection-list li::marker {
     color: transparent;
+}
+
+.btn-navbar {
+    border-radius: initial!important;
+}
+
+.hr {
+    opacity: 5%;
 }
