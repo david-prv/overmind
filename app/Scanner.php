@@ -208,6 +208,11 @@ class Scanner implements Runnable, Integrable
             return false;
         }
 
+        if (!$lastTool) {
+            $lastTool = array();
+            $lastTool["id"] = "-1";
+        }
+
         $newTool = array(
             "id" => (string)((int)$lastTool->id + 1),
             "name" => $this->name,
