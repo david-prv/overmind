@@ -49,7 +49,11 @@ var finishedIDs = [];
 
 // handler for tool deletion button
 function deleteTool(id) {
-
+    $.get('index.php?delete&id=' + id, function(data) {
+        if (data === "done") {
+            $('#tool-' + id).remove();
+        }
+    });
 }
 
 // handler for tool edit button
@@ -92,7 +96,11 @@ function submitEdit() {
     }
 
     $.get('index.php?edit&json=' + JSON.stringify(json), function(data) {
-        console.log(data);
+        if(data === "done") {
+            document.getElementById("edit-result").innerHTML = "<span style='color:green;'>Successfully saved.</span>";
+        } else {
+            document.getElementById("edit-result").innerHTML = "<span style='color:red;'>Could not be saved.</span>";
+        }
     });
 }
 

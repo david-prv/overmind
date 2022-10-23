@@ -184,7 +184,7 @@ class Core
             ->describedBy($description)
             ->fileData($_FILES);
 
-        if ($scanner->integrate()) die("<h1>Scanner Integration successfully finished.</h1>");
+        if ($scanner->create()) die("<h1>Scanner Integration successfully finished.</h1>");
         else die("<h1>Something went wrong! Please try again.</h1>");
     }
 
@@ -203,7 +203,7 @@ class Core
             die("invalid arguments or incomplete arg set");
         }
 
-        $scanner = (new Scanner())->identifiedBy($id);
+        $scanner = (new Scanner())->useCWD($this->TOOLS_PATH)->identifiedBy($id);
 
         if ($scanner->delete()) die("done");
         else die("error");

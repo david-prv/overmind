@@ -4,10 +4,9 @@
  * Class Scanner
  *
  * <p>
- * Implements a Runnable. A Scanner is used to wrap
+ * Implements a Runnable and Integrable. A Scanner is used to wrap
  * the python runner in an abstract PHP based model we can
- * extend and work with. It can be seen as a String Builder for
- * the final shell_exec call.
+ * extend and work with.
  * </p>
  *
  * @author David Dewes <hello@david-dewes.de>
@@ -186,11 +185,70 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
+     * Searches for a specific tool in a json object
+     * and returns its index
+     *
+     * @param array $json
+     * @param int $id
+     * @return int
+     */
+    private function getToolIndexById(array $json, int $id): int {
+        $index = 0;
+        foreach ($json as $element) {
+            if ((int)$element->id === (int)$id) {
+                return $index;
+            } else $index++;
+        }
+        return -1;
+    }
+
+    /**
+     * Searches for a specific tool in a json object
+     * and returns its currently saved path (relative to cwd)
+     *
+     * @param array $json
+     * @param int $id
+     * @return string
+     */
+    private function getToolPathById(array $json, int $id): string {
+        foreach ($json as $element) {
+            if ((int)$element->id === (int)$id) {
+                $indexExplode = explode("/", (string)$element->index);
+                if (!$indexExplode) return "";
+                else return $indexExplode[0];
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Deletes a folder and all of its sub directories
+     * and containing files
+     *
+     * @param $dir
+     * @return bool
+     */
+    private function delToolsFolder($dir): bool
+    {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir."/".$object) == "dir")
+                        $this->delToolsFolder($dir."/".$object);
+                    else unlink($dir."/".$object);
+                }
+            }
+            return rmdir($dir);
+        } else return false;
+    }
+
+    /**
      * Performs the final integration
      *
      * @return bool
      */
-    public function integrate(): bool
+    public function create(): bool
     {
         $mapPath = $this->cwd . "/map.json";
 
@@ -264,7 +322,26 @@ class Scanner implements Runnable, Integrable
      */
     public function delete(): bool
     {
-        die("Not implemented yet");
+        $mapPath = $this->cwd . "/map.json";
+
+        if (!file_exists($mapPath))
+        {
+            return false;
+        }
+
+        $currentMap = json_decode(file_get_contents($mapPath));
+
+        $mapIndex = $this->getToolIndexById($currentMap, $this->id);
+        if ($mapIndex === -1) return false;
+
+        $namespace = $this->getToolPathById($currentMap, $this->id);
+        if ($namespace === "" || !is_dir($this->cwd . "/" . $namespace)) return false;
+
+        $workspace = $this->cwd . "/" . $namespace;
+        unset($currentMap[$mapIndex]);
+
+        return $this->delToolsFolder($workspace)
+            && file_put_contents($mapPath, json_encode($currentMap));
     }
 
     /**
@@ -296,7 +373,11 @@ class Scanner implements Runnable, Integrable
         );
 
         $currentMap = json_decode(file_get_contents($mapPath));
-        $currentMap[$this->id] = $newTool;
+        $mapIndex = $this->getToolIndexById($currentMap, $this->id);
+
+        if ($mapIndex === -1) return false;
+
+        $currentMap[$mapIndex] = $newTool;
 
         return file_put_contents($mapPath, json_encode($currentMap));
     }
