@@ -39,7 +39,12 @@
 }
 
 .btn-navbar {
-    border-radius: initial!important;
+    /* border-radius: initial!important; */
+}
+
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
 }
 
 .hr {
