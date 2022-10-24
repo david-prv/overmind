@@ -16,6 +16,8 @@
  * uses the inputs in the given order as inputs. This is especially useful
  * for tools, which allow user-generated input.
  * </p>
+ *
+ * @author David Dewes <hello@david-dewes.de>
  */
 abstract class Schedule
 {
@@ -29,8 +31,9 @@ abstract class Schedule
      * @param string $for
      * @return string
      */
-    public static function html(string $cwd, string $for): string {
-        $schedulePlan = $cwd. "/app/tools/interactions.json";
+    public static function html(string $cwd, string $for): string
+    {
+        $schedulePlan = $cwd . "/app/tools/interactions.json";
 
         if (!file_exists($schedulePlan)) {
             die("<h1>A fatal error occurred. $schedulePlan</h1>");
@@ -40,7 +43,7 @@ abstract class Schedule
 
         $html = "<ul id='interactions' class=\"list-group\">";
 
-        if(isset($interactions[$for]) && count($interactions[$for]) >= 1) {
+        if (isset($interactions[$for]) && count($interactions[$for]) >= 1) {
             $pos = 0;
             foreach ($interactions[$for] as $interaction) {
                 $html .= "<li id='$pos' class=\"list-group-item d-flex justify-content-between align-items-center interaction\">
@@ -70,5 +73,21 @@ abstract class Schedule
 
         $html .= "</ul>";
         return $html;
+    }
+
+    /**
+     * Takes the current working directory and a JSON formatted
+     * schedule, which will be written into the interactions.json
+     * file, located in the tools folder. The old schedule will be
+     * overwritten entirely
+     *
+     * @param string $cwd
+     * @param string $schedule
+     * @return bool
+     */
+    public static function put(string $cwd, string $schedule): bool
+    {
+        // TODO
+        return true;
     }
 }
