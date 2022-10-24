@@ -366,41 +366,14 @@ class Core
     }
 
     /**
-     * Getter for scheduled interactions
+     * Renders scheduled interactions to html
+     * for given tool ID
      *
      * @param string $id
      * @return string
      */
     private function renderScheduleAsHtml(string $id): string
     {
-        $schedulePlan = $this->APP_PATH . "/app/tools/interactions.json";
-
-        if (!file_exists($schedulePlan)) {
-            die("<h1>A fatal error occurred. $schedulePlan</h1>");
-        }
-
-        $interactions = json_decode(file_get_contents($schedulePlan), true);
-
-        $html = "<ul id='interactions' class=\"list-group\">";
-
-        // TODO: Add click handler (new js file)
-        if(isset($interactions[$id]) && count($interactions[$id]) >= 1) {
-            $pos = 0;
-            foreach ($interactions[$id] as $interaction) {
-                $html .= "<li class=\"list-group-item d-flex justify-content-between align-items-center\">
-                            #$pos \"$interaction\"
-                            <button onclick='(function(event) {
-                                  event.stopPropagation();
-                                  console.log(\"[DEBUG] click!\");
-                              })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\">
-                                <i class=\"fa fa-trash\"></i>
-                            </button>
-                          </li>";
-                $pos++;
-            }
-        } else $html .= "<h2 class='text-muted text-center'>No interactions found</h2>";
-
-        $html .= "</ul>";
-        return $html;
+        return Scheduler::html($this->APP_PATH, $id);
     }
 }

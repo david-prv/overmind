@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- FontAwesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -20,13 +21,58 @@
     <title>%PROJECT_NAME%</title>
 </head>
 <body>
+
 <div class="container p-3">
     <h1>Scheduled Interactions</h1>
+
     %INTERACTIONS_LIST%
 
     <div class="d-grid gap-2 mt-2">
-        <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-plus"></i> Add new interaction</button>
+        <button onclick="createNew()" class="btn btn-primary"
+                type="button" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fa fa-plus"></i> Add new interaction
+        </button>
     </div>
 </div>
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Create Interaction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Define a new input below. You can use <code>%URL%</code> as a placeholder for the current
+                    targeted website URL.
+                </p>
+                <p>
+                    <strong>Note: </strong> Please make sure, that the order as shown by the position indexes,
+                    starting with "#", is correct for your simulated situation. The program cannot detect any
+                    mistakes.
+                </p>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="e.g. 'full' to select the mode">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Create Modal -->
+
 </body>
+<footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <!-- Runtime JS -->
+    <script src="/static/js/schedule.min.js"></script>
+</footer>
 </html>
