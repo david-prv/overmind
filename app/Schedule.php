@@ -17,7 +17,7 @@
  * for tools, which allow user-generated input.
  * </p>
  */
-class Schedule
+abstract class Schedule
 {
     /**
      * Takes the current working directory and the
