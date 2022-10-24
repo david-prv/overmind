@@ -383,6 +383,7 @@ class Core
 
         $html = "<ul id='interactions' class=\"list-group\">";
 
+        // TODO: Add click handler (new js file)
         if(isset($interactions[$id]) && count($interactions[$id]) >= 1) {
             $pos = 0;
             foreach ($interactions[$id] as $interaction) {

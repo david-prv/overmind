@@ -16,6 +16,8 @@ use MatthiasMullie\Minify;
  *
  */
 
+// TODO: add new js file "schedule.js" (create it first!)
+
 $path = getcwd();
 $js_files = array("bundle");
 $css_files = array("main");
