@@ -23,47 +23,19 @@
 <body>
 
 <div class="container p-3">
-    <h1>Scheduled Interactions</h1>
+    <h1>Input Schedule</h1>
 
     %INTERACTIONS_LIST%
 
-    <div class="d-grid gap-2 mt-2">
-        <button onclick="createNew()" class="btn btn-primary"
-                type="button" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fa fa-plus"></i> Add new interaction
+    <div class="input-group mt-4">
+        <input type="text" class="form-control" placeholder="Input" aria-label="Recipient's username"
+               aria-describedby="button-addon">
+        <button style="border-top-left-radius: 0!important;border-bottom-left-radius: 0!important;"
+                class="btn btn-primary" type="button" id="button-addon"><i class="fa fa-plus"></i> Enqueue Input
         </button>
     </div>
+    <p class="mt-2 text-muted">Hint: Use <code>%URL%</code> as placeholder for the currently set target</p>
 </div>
-
-<!-- Create Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create Interaction</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>
-                    Define a new input below. You can use <code>%URL%</code> as a placeholder for the current
-                    targeted website URL.
-                </p>
-                <p>
-                    <strong>Note: </strong> Please make sure, that the order as shown by the position indexes,
-                    starting with "#", is correct for your simulated situation. The program cannot detect any
-                    mistakes.
-                </p>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="e.g. 'full' to select the mode">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Create Modal -->
 
 </body>
 <footer>

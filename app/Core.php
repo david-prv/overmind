@@ -374,6 +374,6 @@ class Core
      */
     private function renderScheduleAsHtml(string $id): string
     {
-        return Scheduler::html($this->APP_PATH, $id);
+        return Schedule::html($this->APP_PATH, $id);
     }
 }

@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Class Scheduler
+ * Class Schedule
  *
  * <p>
- * The Scheduler class is responsible for updating/setting
+ * The Schedule class is responsible for updating/setting
  * new interaction schedules for specific tools.
  * This feature will be used mainly by the Core class, which
  * processes back-end HTTP requests.
  * </p>
  *
  * <p>
- * The use of the Scheduler is to keep a list of
+ * The use of the Schedule is to keep a list of
  * inputs/commands for runner.py. The runner script then
  * uses the inputs in the given order as inputs. This is especially useful
  * for tools, which allow user-generated input.
  * </p>
  */
-class Scheduler
+class Schedule
 {
     /**
      * Takes the current working directory and the
@@ -45,12 +45,24 @@ class Scheduler
             foreach ($interactions[$for] as $interaction) {
                 $html .= "<li id='$pos' class=\"list-group-item d-flex justify-content-between align-items-center interaction\">
                             #$pos \"$interaction\"
-                            <button onclick='(function(event) {
+                            <span><button onclick='(function(event) {
                                   event.stopPropagation();
                                   removeInteraction($pos)
                               })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\">
                                 <i class=\"fa fa-trash\"></i>
                             </button>
+                            <button onclick='(function(event) {
+                                  event.stopPropagation();
+                                  // TODO
+                              })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\">
+                                <i class=\"fa fa-arrow-up\"></i>
+                            </button>
+                            <button onclick='(function(event) {
+                                  event.stopPropagation();
+                                  // TODO
+                              })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\">
+                                <i class=\"fa fa-arrow-down\"></i>
+                            </button></span>
                           </li>";
                 $pos++;
             }
