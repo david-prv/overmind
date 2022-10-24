@@ -228,19 +228,36 @@ class Scanner implements Runnable, Integrable
      * @param $dir
      * @return bool
      */
-    private function delToolsFolder($dir): bool
+    private function deleteToolFolder($dir): bool
     {
         if (is_dir($dir)) {
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
                     if (filetype($dir."/".$object) == "dir")
-                        $this->delToolsFolder($dir."/".$object);
+                        $this->deleteToolFolder($dir."/".$object);
                     else unlink($dir."/".$object);
                 }
             }
             return rmdir($dir);
         } else return false;
+    }
+
+    /**
+     * Removes a specific tool from map.
+     * Selection uses the tool's ID
+     *
+     * @param array $map
+     * @param string $id
+     * @return array
+     */
+    private function removeToolFrom(array $map, string $id) {
+        $newMap = array();
+        foreach ($map as $tool) {
+            if ((string)$tool->id === (string)$id) continue;
+            array_push($newMap, $tool);
+        }
+        return $newMap;
     }
 
     /**
@@ -338,9 +355,9 @@ class Scanner implements Runnable, Integrable
         if ($namespace === "" || !is_dir($this->cwd . "/" . $namespace)) return false;
 
         $workspace = $this->cwd . "/" . $namespace;
-        unset($currentMap[$mapIndex]);
+        $currentMap = $this->removeToolFrom($currentMap, $this->id);
 
-        return $this->delToolsFolder($workspace)
+        return $this->deleteToolFolder($workspace)
             && file_put_contents($mapPath, json_encode($currentMap));
     }
 

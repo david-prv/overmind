@@ -47,6 +47,16 @@ var finishedIDs = [];
 
 })();
 
+// helper method to get the right index from json map
+function getToolIndexById(id) {
+    for(let i = 0; i < DATA.length; i++) {
+        if(DATA[i]["id"] === id.toString()) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 // handler for tool deletion button
 function deleteTool(id) {
     $.get('index.php?delete&id=' + id, function(data) {
@@ -58,15 +68,21 @@ function deleteTool(id) {
 
 // handler for tool edit button
 function editTool(id) {
+    let tool = getToolIndexById(id);
+    if(tool === -1) {
+        console.error("[ERROR] Could not find tool in map.");
+        return;
+    }
+
     $('#edit-id').val(id);
-    $('#edit-name').val(DATA[id]["name"]);
-    $('#edit-creator').val(DATA[id]["author"]);
-    $('#edit-url').val(DATA[id]["url"]);
-    $('#edit-version').val(DATA[id]["version"]);
-    $('#edit-engine').val(DATA[id]["engine"]);
-    $('#edit-index').val(DATA[id]["index"]);
-    $('#edit-args').val(DATA[id]["args"]);
-    $('#edit-description').val(DATA[id]["description"]);
+    $('#edit-name').val(DATA[tool]["name"]);
+    $('#edit-creator').val(DATA[tool]["author"]);
+    $('#edit-url').val(DATA[tool]["url"]);
+    $('#edit-version').val(DATA[tool]["version"]);
+    $('#edit-engine').val(DATA[tool]["engine"]);
+    $('#edit-index').val(DATA[tool]["index"]);
+    $('#edit-args').val(DATA[tool]["args"]);
+    $('#edit-description').val(DATA[tool]["description"]);
 }
 
 // reads values from form and submits them to backend
@@ -115,8 +131,8 @@ function resetStates() {
 function editTools() {
     $('#launchAll, #launchOptions').prop('disabled', (i, v) => !v);
     for (let i = 0; i < DATA.length; i++) {
-        $(`#options-tool-${i}`).toggleClass("hidden");
-        $(`#state-${i}`).toggleClass("hidden");
+        $(`#options-tool-${DATA[i]["id"]}`).toggleClass("hidden");
+        $(`#state-${DATA[i]["id"]}`).toggleClass("hidden");
     }
 }
 
