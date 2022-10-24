@@ -96,11 +96,13 @@ interface Integrable
     public function fileData(array $data): Integrable;
 
     /**
-     * Performs the final integration
+     * Performs the final integration.
+     * Returns -1 for failed creation or the ID
+     * if the integration was successful
      *
-     * @return bool
+     * @return int
      */
-    public function create(): bool;
+    public function create(): int;
 
     /**
      * Deletes the given tool/scanner from the
@@ -117,4 +119,12 @@ interface Integrable
      * @return bool
      */
     public function update(): bool;
+
+    /**
+     * Stores a new interaction schedule for the given
+     * tool/scanner, which is identified by the ID
+     *
+     * @return bool
+     */
+    public function schedule(): bool;
 }

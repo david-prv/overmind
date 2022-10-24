@@ -261,11 +261,13 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Performs the final integration
+     * Performs the final integration.
+     * Returns -1 for failed creation or the ID
+     * if the integration was successful
      *
-     * @return bool
+     * @return int
      */
-    public function create(): bool
+    public function create(): int
     {
         $mapPath = $this->cwd . "/map.json";
 
@@ -280,7 +282,7 @@ class Scanner implements Runnable, Integrable
         $fileType = $fileExploded[1];
 
         if (strtolower($fileType) !== "zip") {
-            return false;
+            return -1;
         }
 
         if (!$lastTool) {
@@ -306,29 +308,29 @@ class Scanner implements Runnable, Integrable
 
         $targetFile = $this->cwd . "/" . basename($_FILES["file"]["name"]);
         if (move_uploaded_file($this->fileData["file"]["tmp_name"], $targetFile) === false) {
-            return false;
+            return -1;
         }
 
         $zip = new ZipArchive();
         $res = $zip->open($this->cwd . "/" . basename($_FILES["file"]["name"]));
         if ($res === true) {
             if (mkdir($this->cwd . "/" . $namespace . "/", 0755, true) === false) {
-                return false;
+                return -1;
             }
             $zip->extractTo($this->cwd . "/" . $namespace . "/");
             $zip->close();
             if (!unlink($this->cwd . "/" . basename($_FILES["file"]["name"]))) {
-                return false;
+                return -1;
             }
 
             if (file_put_contents($mapPath, json_encode($currentMap)) === false) {
-                return false;
+                return -1;
             }
         } else {
-            return false;
+            return -1;
         }
 
-        return true;
+        return (int)$newID;
     }
 
     /**
@@ -397,5 +399,17 @@ class Scanner implements Runnable, Integrable
         $currentMap[$mapIndex] = $newTool;
 
         return file_put_contents($mapPath, json_encode($currentMap));
+    }
+
+    /**
+     * Stores a new interaction schedule for the given
+     * tool/scanner, which is identified by the ID
+     *
+     * @return bool
+     */
+    public function schedule(): bool
+    {
+        // TODO: Implement schedule() method.
+        return true;
     }
 }

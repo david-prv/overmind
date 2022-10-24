@@ -103,6 +103,14 @@ class Core
                 );
                 $viewObj->setPlaceholders($placeholders);
                 break;
+            case 'SCHEDULE':
+                $viewObj->setTemplate(strtolower($view));
+                $placeholders = array(
+                    array("%PROJECT_NAME%", $this->getProjectName()),
+                    array("%INTERACTIONS_LIST%", $this->renderScheduleAsHtml($this->argv["edit"]))
+                );
+                $viewObj->setPlaceholders($placeholders);
+                break;
             case 'INTEGRATE':
             case 'TEST':
                 $viewObj->setTemplate(strtolower($view));
@@ -184,7 +192,8 @@ class Core
             ->describedBy($description)
             ->fileData($_FILES);
 
-        if ($scanner->create()) die("<h1>Scanner Integration successfully finished.</h1>");
+        $res = $scanner->create();
+        if ($res !== -1) header("Location: index.php?page=schedule&edit=$res");
         else die("<h1>Something went wrong! Please try again.</h1>");
     }
 
@@ -222,7 +231,7 @@ class Core
 
         $jsonObj = json_decode($jsonObj);
 
-        $id  = (isset($jsonObj->id)) ? $jsonObj->id : NULL;
+        $id = (isset($jsonObj->id)) ? $jsonObj->id : NULL;
         $name = (isset($jsonObj->name)) ? $jsonObj->name : NULL;
         $creator = (isset($jsonObj->author)) ? $jsonObj->author : NULL;
         $url = (isset($jsonObj->url)) ? $jsonObj->url : NULL;
@@ -331,6 +340,10 @@ class Core
                 <small id='state-$tool->id' class='fst-italic'>Idling...</small>
                 <div class='hidden' id='options-tool-$tool->id'>
                     <div class=\"d-grid gap-2 d-md-block\">
+                     <button onclick='(function(event) {
+                          event.stopPropagation();
+                          window.open(\"index.php?page=schedule&edit=$tool->id\", \"_blank\");
+                      })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\"><i class=\"fa fa-clock-o\"></i></button>
                       <button onclick='(function(event) {
                           event.stopPropagation();
                           editTool($tool->id)
@@ -349,6 +362,44 @@ class Core
                 </div>
             </div>";
         }
+        return $html;
+    }
+
+    /**
+     * Getter for scheduled interactions
+     *
+     * @param string $id
+     * @return string
+     */
+    private function renderScheduleAsHtml(string $id): string
+    {
+        $schedulePlan = $this->APP_PATH . "/app/tools/interactions.json";
+
+        if (!file_exists($schedulePlan)) {
+            die("<h1>A fatal error occurred. $schedulePlan</h1>");
+        }
+
+        $interactions = json_decode(file_get_contents($schedulePlan), true);
+
+        $html = "<ul id='interactions' class=\"list-group\">";
+
+        if(isset($interactions[$id]) && count($interactions[$id]) >= 1) {
+            $pos = 0;
+            foreach ($interactions[$id] as $interaction) {
+                $html .= "<li class=\"list-group-item d-flex justify-content-between align-items-center\">
+                            #$pos \"$interaction\"
+                            <button onclick='(function(event) {
+                                  event.stopPropagation();
+                                  console.log(\"[DEBUG] click!\");
+                              })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\">
+                                <i class=\"fa fa-trash\"></i>
+                            </button>
+                          </li>";
+                $pos++;
+            }
+        } else $html .= "<h2 class='text-muted text-center'>No interactions found</h2>";
+
+        $html .= "</ul>";
         return $html;
     }
 }
