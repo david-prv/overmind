@@ -137,16 +137,18 @@ class Core
             die("no arguments provided");
         }
 
+        $target = (isset($this->argv["target"])) ? $this->argv["target"] : NULL;
         $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : NULL;
         $app = (isset($this->argv["index"])) ? $this->argv["index"] : NULL;
         $args = (isset($this->argv["args"])) ? $this->argv["args"] : NULL;
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
-        if (is_null($engine) || is_null($app) || is_null($args) || is_null($id)) {
+        if (is_null($target) || is_null($engine) || is_null($app) || is_null($args) || is_null($id)) {
             die("invalid arguments or incomplete arg set");
         }
 
         $runner = (new Scanner())
+            ->target($target)
             ->viaEngine(Engine::fromString($engine))
             ->useCWD($this->APP_PATH)
             ->atPath($app)
@@ -371,7 +373,7 @@ class Core
                     <div class=\"d-grid gap-2 d-md-block\">
                      <button onclick='(function(event) {
                           event.stopPropagation();
-                          window.open(\"index.php?page=schedule&edit=$tool->id\", \"_blank\");
+                          window.location.href = \"index.php?page=schedule&edit=$tool->id\";
                       })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\"><i class=\"fa fa-clock-o\"></i></button>
                       <button onclick='(function(event) {
                           event.stopPropagation();
@@ -403,6 +405,6 @@ class Core
      */
     private function renderScheduleAsHtml(string $id): string
     {
-        return Schedule::html($this->APP_PATH, $id);
+        return Schedule::render($this->APP_PATH, $id);
     }
 }

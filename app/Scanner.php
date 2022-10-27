@@ -18,6 +18,7 @@ class Scanner implements Runnable, Integrable
     private string $cmdline;
     private string $id;
     private string $cwd;
+    private string $target;
 
     private string $name;
     private string $creator;
@@ -27,7 +28,21 @@ class Scanner implements Runnable, Integrable
     private array $interactions;
     private array $fileData;
 
-    // RUNNABLE METHODS
+    //////////////////////
+    // RUNNABLE METHODS //
+    //////////////////////
+
+    /**
+     * Defines the target
+     *
+     * @param string $url
+     * @return Runnable
+     */
+    public function target(string $url): Runnable
+    {
+        $this->target = $url;
+        return $this;
+    }
 
     /**
      * Defines the running engine used
@@ -108,14 +123,16 @@ class Scanner implements Runnable, Integrable
         if (Schedule::isPresent($this->cwd, $this->id)) {
             return shell_exec("python3 " . $this->cwd . "/app/tools/interactive.py " .
                     $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
-                    " " . $this->cmdline . " " . $this->id) !== NULL;
+                    " " . $this->cmdline . " " . $this->id . " " . $this->target) !== NULL;
         }
         return shell_exec("python3 " . $this->cwd . "/app/tools/runner.py " .
                 $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
-                " " . $this->cmdline . " " . $this->id) !== NULL;
+                " " . $this->cmdline . " " . $this->id . " " . $this->target) !== NULL;
     }
 
-    // INTEGRABLE METHODS
+    ////////////////////////
+    // INTEGRABLE METHODS //
+    ////////////////////////
 
     /**
      * Defines the scanner name

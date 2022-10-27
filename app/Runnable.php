@@ -22,6 +22,14 @@
 interface Runnable
 {
     /**
+     * Defines the target
+     *
+     * @param string $url
+     * @return Runnable
+     */
+    public function target(string $url): Runnable;
+
+    /**
      * Defines the running engine used
      * as interpreter by the python runner
      *

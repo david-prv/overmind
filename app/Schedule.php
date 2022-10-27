@@ -31,7 +31,7 @@ abstract class Schedule
      * @param string $for
      * @return string
      */
-    public static function html(string $cwd, string $for): string
+    public static function render(string $cwd, string $for): string
     {
         $schedulePlan = $cwd . "/app/tools/interactions.json";
 

@@ -22,6 +22,7 @@ def main() -> None:
     app = sys.argv[2]
     cmd = sys.argv[3]
     id = sys.argv[4]
+    target = sys.argv[5]
 
     if not id in data:
         print("ERROR: No interactive data found")
@@ -34,7 +35,9 @@ def main() -> None:
     args = [engine, app]
     args.extend(cmd.split(" "))
 
-    used_data = str.encode("\n".join(data[id]) + "\n")
+    tmp = "\n".join(data[id]) + "\n"
+    tmp = tmp.replace("%URL%", target)
+    used_data = str.encode(tmp)
 
     print(args, used_data)
 

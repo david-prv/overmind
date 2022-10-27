@@ -191,7 +191,7 @@ function invokeLaunchSelected(event) {
         if(!Object.values(selectedInputs).includes(currentTool["id"])) { continue; }
         $("#state-" + i).innerText = "Waiting...";
         queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\""
-            + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]);
+            + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"] + "&target=" + target);
     }
 
     for(let j = 0; j < queue.length; j++) {
@@ -218,7 +218,9 @@ function invokeLaunchAll(event) {
     for(let i = 0; i < DATA.length; i++) {
         let currentTool = DATA[i];
         $("#state-" + i).innerText = "Waiting...";
-        queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\"" + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]);
+        queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"]
+            + "&args=\"" + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]
+            + "&target=" + target);
     }
 
     let skip = [];
