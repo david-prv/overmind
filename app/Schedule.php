@@ -46,7 +46,7 @@ abstract class Schedule
         if (isset($interactions[$for]) && count($interactions[$for]) >= 1) {
             $pos = 0;
             foreach ($interactions[$for] as $interaction) {
-                $html .= "<li id='$pos' class=\"list-group-item d-flex justify-content-between align-items-center interaction\">
+                $html .= "<li value='$interaction' id='$pos' class=\"list-group-item d-flex justify-content-between align-items-center interaction\">
                             #$pos \"$interaction\"
                             <span><button onclick='(function(event) {
                                   event.stopPropagation();
@@ -56,13 +56,13 @@ abstract class Schedule
                             </button>
                             <button onclick='(function(event) {
                                   event.stopPropagation();
-                                  // TODO
+                                  moveUp($pos)
                               })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\">
                                 <i class=\"fa fa-arrow-up\"></i>
                             </button>
                             <button onclick='(function(event) {
                                   event.stopPropagation();
-                                  // TODO
+                                  moveDown($pos)
                               })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\">
                                 <i class=\"fa fa-arrow-down\"></i>
                             </button></span>
@@ -122,7 +122,13 @@ abstract class Schedule
             return false;
         }
 
-        $stored[$for] = $schedule;
+        var_dump($schedule);
+
+        if (count($schedule) === 1 && $schedule[0] === "") {
+            unset($stored[$for]);
+        } else {
+            $stored[$for] = $schedule;
+        }
 
         return file_put_contents($schedulePlan, json_encode($stored));
     }

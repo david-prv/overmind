@@ -107,7 +107,8 @@ class Core
                 $viewObj->setTemplate(strtolower($view));
                 $placeholders = array(
                     array("%PROJECT_NAME%", $this->getProjectName()),
-                    array("%INTERACTIONS_LIST%", $this->renderScheduleAsHtml($this->argv["edit"]))
+                    array("%INTERACTIONS_LIST%", $this->renderScheduleAsHtml($this->argv["edit"])),
+                    array("%ID%", $this->argv["edit"])
                 );
                 $viewObj->setPlaceholders($placeholders);
                 break;
