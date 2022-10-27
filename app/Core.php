@@ -333,10 +333,11 @@ class Core
         foreach ($this->getToolsObject() as $tool) {
             if ($tool->ignore) continue;
             $engine = Engine::fromString($tool->engine);
+            $interactive = (Schedule::isPresent($this->APP_PATH, $tool->id)) ? "<i title=\"Interactive Script\" class=\"fa fa-magic\"></i>" : "";
 
             $html .= "<div onclick='$(this).toggleClass(`selection`)' id='tool-$tool->id' class=\"list-group-item list-group-item-action tool\" aria-current=\"true\">
             <div class=\"d-flex w-100 justify-content-between\">
-                <h5 class=\"mb-1\"><span id=\"title-$tool->id\">$tool->name</span> <span class=\"badge rounded-pill bg-secondary\">$engine</span></h5>
+                <h5 class=\"mb-1\"><span id=\"title-$tool->id\">$tool->name</span> <span class=\"badge rounded-pill bg-secondary\">$engine</span> $interactive</h5>
                 <small id='state-$tool->id' class='fst-italic'>Idling...</small>
                 <div class='hidden' id='options-tool-$tool->id'>
                     <div class=\"d-grid gap-2 d-md-block\">

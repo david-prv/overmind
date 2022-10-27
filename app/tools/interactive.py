@@ -1,9 +1,17 @@
 from subprocess import Popen, PIPE, STDOUT
 import os, sys, json
 
+"""
+This script is an alternative runner script
+for tools/scanners which use interactive shell inputs.
+The interactive runner reads the interactions.json file and
+decides whether there are interactions or not. If so,
+it loads the pre-defined answers and communicates them to the running tool.
+"""
+
 def main() -> None:
     try:
-        j = open('interactions.json')
+        j = open('./app/tools/interactions.json')
     except FileNotFoundError:
         print("ERROR: File was not found")
         return

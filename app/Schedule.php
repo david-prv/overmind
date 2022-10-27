@@ -76,6 +76,28 @@ abstract class Schedule
     }
 
     /**
+     * Takes the current working directory and
+     * the current tool ID. It searches in the schedule
+     * json file for stores interactions. If present
+     * the method will return true, otherwise false
+     *
+     * @param string $cwd
+     * @param string $for
+     * @return bool
+     */
+    public static function isPresent(string $cwd, string $for): bool
+    {
+        $schedulePlan = $cwd . "/app/tools/interactions.json";
+
+        if (!file_exists($schedulePlan)) {
+            return false;
+        }
+
+        $interactions = json_decode(file_get_contents($schedulePlan), true);
+        return isset($interactions[$for]) && count($interactions[$for]) > 0;
+    }
+
+    /**
      * Takes the current working directory and a JSON formatted
      * schedule, which will be written into the interactions.json
      * file, located in the tools folder. The old schedule will be
