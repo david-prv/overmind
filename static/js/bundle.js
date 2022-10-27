@@ -63,6 +63,9 @@ function deleteTool(id) {
     $.get('index.php?delete&id=' + id, function(data) {
         if (data === "done") {
             $('#tool-' + id).remove();
+            if (($('.list-group').children()).length <= 0) {
+                $('.list-group').html("<h2 class=\"text-muted text-center\">No tools found</h2>");
+            }
         }
     });
 }
@@ -253,8 +256,6 @@ function invokeLaunchAll(event) {
         }
     }
 
-    console.log(skip, whitelist);
-
     if(skip.length === queue.length) {
         console.error("[ERROR] All tools skipped...");
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
@@ -309,7 +310,6 @@ function finishedSelected(index, selected) {
         }
         html += "</div>";
 
-        console.log(finishedIDs);
         $(resContent).html(html);
 
         for(let j = 0; j < finishedIDs.length; j++) {
@@ -323,16 +323,6 @@ function finishedSelected(index, selected) {
         finishedIDs = [];
     }
 }
-
-function getToolById(id) {
-    for (let i = 0; i < DATA.length; i++) {
-        if (DATA[i]["id"].toString() === id.toString()) {
-            return i;
-        }
-    }
-    return -1;
-}
-
 // handles the current progress state
 function finished(index, max) {
     counter++;
@@ -343,9 +333,7 @@ function finished(index, max) {
 
         let html = "<div class=\"accordion accordion-flush\" id=\"accordion\">";
         for(let i = 0; i < temp.length; i++) {
-            console.log(temp, temp[i], getToolIndexById(temp[i]));
             let tool = DATA[getToolIndexById(temp[i])];
-            console.log(tool);
             html += "<div class=\"accordion-item\">" +
                 "    <h2 class=\"accordion-header\" id=\"flush-heading" + i + "\">" +
                 "      <button class=\"accordion-button collapsed\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#flush-collapse" + i + "\" aria-expanded=\"false\" aria-controls=\"flush-collapse" + i + "\">" +
