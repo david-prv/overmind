@@ -10,6 +10,7 @@
 var counter = 0;
 var counterS = 0;
 var finishedIDs = [];
+var temp = [];
 
 // code ignition
 (function() {
@@ -123,7 +124,13 @@ function submitEdit() {
 // reset tool states after finished run
 function resetStates() {
     for (let i = 0; i < DATA.length; i++) {
-        $(`#state-${i}`)[0].innerText = "Idling...";
+        let el = $(`#state-${i}`)[0];
+        console.log("[DEBUG] Resetting for ID " + i + " has started...");
+        if(!el) {
+            console.log("[DEBUG] State Reset for ID " + i + " was skipped");
+            continue;
+        }
+        el.innerText = "Idling...";
     }
 }
 
@@ -226,7 +233,7 @@ function invokeLaunchAll(event) {
     let skip = [];
     let exclusion = $('#exclusion').val();
     let whitelist = $('#whitelist').val();
-    if(exclusion.trim() !== '*' && whitelist.indexOf(",") !== -1) {
+    if(exclusion.trim() === '*' && whitelist.indexOf(",") !== -1) {
         whitelist = whitelist.split(",").map(i => { return parseInt(i); });
     } else {
         whitelist = [parseInt(whitelist)];
@@ -234,7 +241,7 @@ function invokeLaunchAll(event) {
 
     if(exclusion.trim() === "*") {
         for(let i = 0; i < DATA.length; i++) {
-            if(!whitelist.includes(i)) skip.push(i);
+            if(!whitelist.includes(parseInt(DATA[i]["id"]))) skip.push(parseInt(DATA[i]["id"]));
         }
     } else {
         if(exclusion.indexOf(",") !== -1) {
@@ -246,6 +253,8 @@ function invokeLaunchAll(event) {
         }
     }
 
+    console.log(skip, whitelist);
+
     if(skip.length === queue.length) {
         console.error("[ERROR] All tools skipped...");
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
@@ -256,15 +265,19 @@ function invokeLaunchAll(event) {
     $('#whitelist').val("");
 
     for(let j = 0; j < queue.length; j++) {
-        if(skip.includes(j)) {
+        let id = DATA[j]["id"];
+        if(skip.includes(parseInt(id))) {
             finished(j, queue.length);
             continue;
         }
 
-        $("#state-" + j).html("<span class='blinking'>Running...</span>");
-        $.get("/index.php" + queue[j], function(data, status, xhr, id=j, callback=finished, max=queue.length) {
-            $("#state-" + j).html("<span style='color:green!important;'>Finished</span>");
-            callback(id, max);
+        console.log("[DEBUG] Running Tool with ID", id);
+
+        $("#state-" + id).html("<span class='blinking'>Running...</span>");
+        $.get("/index.php" + queue[j], function(data, status, xhr, identity=id, callback=finished, max=queue.length) {
+            $("#state-" + identity).html("<span style='color:green!important;'>Finished</span>");
+            temp.push(identity);
+            callback(identity, max);
         });
     }
 }
@@ -311,6 +324,15 @@ function finishedSelected(index, selected) {
     }
 }
 
+function getToolById(id) {
+    for (let i = 0; i < DATA.length; i++) {
+        if (DATA[i]["id"].toString() === id.toString()) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 // handles the current progress state
 function finished(index, max) {
     counter++;
@@ -320,8 +342,10 @@ function finished(index, max) {
         let resContent = document.getElementById("result-content");
 
         let html = "<div class=\"accordion accordion-flush\" id=\"accordion\">";
-        for(let i = 0; i < max; i++) {
-            let tool = DATA[i];
+        for(let i = 0; i < temp.length; i++) {
+            console.log(temp, temp[i], getToolIndexById(temp[i]));
+            let tool = DATA[getToolIndexById(temp[i])];
+            console.log(tool);
             html += "<div class=\"accordion-item\">" +
                 "    <h2 class=\"accordion-header\" id=\"flush-heading" + i + "\">" +
                 "      <button class=\"accordion-button collapsed\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#flush-collapse" + i + "\" aria-expanded=\"false\" aria-controls=\"flush-collapse" + i + "\">" +
@@ -337,13 +361,14 @@ function finished(index, max) {
 
         $(resContent).html(html);
 
-        for(let j = 0; j < max; j++) {
-            getText(j);
+        for(let j = 0; j < temp.length; j++) {
+            getText(temp[j]);
         }
+        temp = [];
 
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
         resultModal.show();
-        $("#launchAll").html("<i class=\"fa fa-gears\"></i> Launch All");
+        $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
         counter = 0;
     }
 }
@@ -361,7 +386,7 @@ function getText(id) {
         if (request.readyState === 4 && request.status === 200) {
             var type = request.getResponseHeader('Content-Type');
             if (type.indexOf("text") !== 1) {
-                console.log(request.responseText, k);
+                // console.log(request.responseText, k);
                 document.getElementById("body-"+k).innerText = request.responseText;
             }
         }
