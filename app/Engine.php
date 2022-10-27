@@ -29,7 +29,7 @@ abstract class Engine
      * @param $value
      * @return String
      */
-    public static function fromString($value): string
+    public static function valueOf($value): string
     {
         switch (strtolower($value)) {
             case "python3":

@@ -329,7 +329,7 @@ class Scanner implements Runnable, Integrable
         $newTool = array(
             "id" => $newID,
             "name" => $this->name,
-            "engine" => Engine::fromString($this->engine),
+            "engine" => Engine::valueOf($this->engine),
             "index" => $namespace . "/" . $this->path,
             "args" => $this->cmdline,
             "description" => $this->description,
@@ -416,7 +416,7 @@ class Scanner implements Runnable, Integrable
         $newTool = array(
             "id" => $this->id,
             "name" => $this->name,
-            "engine" => Engine::fromString($this->engine),
+            "engine" => Engine::valueOf($this->engine),
             "index" => $this->path,
             "args" => $this->cmdline,
             "description" => $this->description,

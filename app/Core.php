@@ -149,7 +149,7 @@ class Core
 
         $runner = (new Scanner())
             ->target($target)
-            ->viaEngine(Engine::fromString($engine))
+            ->viaEngine(Engine::valueOf($engine))
             ->useCWD($this->APP_PATH)
             ->atPath($app)
             ->withArguments($args)
@@ -362,7 +362,7 @@ class Core
         $html = (count($this->getToolsObject()) === 0) ? "<h2 class='text-muted text-center'>No tools found</h2>" : "";
         foreach ($this->getToolsObject() as $tool) {
             if ($tool->ignore) continue;
-            $engine = Engine::fromString($tool->engine);
+            $engine = Engine::valueOf($tool->engine);
             $interactive = (Schedule::isPresent($this->APP_PATH, $tool->id)) ? "<i title=\"Interactive Script\" class=\"fa fa-magic\"></i>" : "";
 
             $html .= "<div onclick='$(this).toggleClass(`selection`)' id='tool-$tool->id' class=\"list-group-item list-group-item-action tool\" aria-current=\"true\">
