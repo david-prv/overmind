@@ -263,6 +263,33 @@ class Core
     }
 
     /**
+     * Schedules interactions for a tool
+     */
+    public function schedule(): void
+    {
+        if ($this->argv === NULL) {
+            die("no arguments provided");
+        }
+
+        $interactions = (isset($this->argv["interactions"])) ? $this->argv["interactions"] : NULL;
+        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
+
+        if (is_null($interactions) || is_null($id)) {
+            die("invalid arguments or incomplete arg set");
+        }
+
+        $interactions = explode(",", $interactions);
+
+        $scanner = (new Scanner())
+            ->useCWD($this->APP_PATH . "/app/tools")
+            ->identifiedBy($id)
+            ->withInteractions($interactions);
+
+        if ($scanner->schedule()) die("done");
+        else die("error");
+    }
+
+    /**
      * Getter for tools object
      *
      * @return array

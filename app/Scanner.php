@@ -24,6 +24,7 @@ class Scanner implements Runnable, Integrable
     private string $creatorURL;
     private string $description;
     private string $version;
+    private array $interactions;
     private array $fileData;
 
     // RUNNABLE METHODS
@@ -189,6 +190,18 @@ class Scanner implements Runnable, Integrable
     public function inVersion(string $version): Scanner
     {
         $this->version = $version;
+        return $this;
+    }
+
+    /**
+     * Defines the order of interactions
+     *
+     * @param array $interactions
+     * @return Integrable
+     */
+    public function withInteractions(array $interactions): Integrable
+    {
+        $this->interactions = $interactions;
         return $this;
     }
 
@@ -417,7 +430,13 @@ class Scanner implements Runnable, Integrable
      */
     public function schedule(): bool
     {
-        // TODO: Implement schedule() method.
-        return true;
+        $schedulePath = $this->cwd . "/interactions.json";
+
+        if (!file_exists($schedulePath) || !isset($this->interactions) || count($this->interactions) === 0)
+        {
+            return false;
+        }
+
+        return Schedule::put($this->cwd, $this->interactions, $this->id);
     }
 }

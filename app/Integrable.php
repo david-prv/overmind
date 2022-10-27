@@ -96,6 +96,14 @@ interface Integrable
     public function fileData(array $data): Integrable;
 
     /**
+     * Defines the order of interactions
+     *
+     * @param array $interactions
+     * @return Integrable
+     */
+    public function withInteractions(array $interactions): Integrable;
+
+    /**
      * Performs the final integration.
      * Returns -1 for failed creation or the ID
      * if the integration was successful

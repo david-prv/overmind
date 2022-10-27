@@ -104,12 +104,26 @@ abstract class Schedule
      * overwritten entirely
      *
      * @param string $cwd
-     * @param string $schedule
+     * @param array $schedule
+     * @param string $for
      * @return bool
      */
-    public static function put(string $cwd, string $schedule): bool
+    public static function put(string $cwd, array $schedule, string $for): bool
     {
-        // TODO
-        return true;
+        $schedulePlan = $cwd . "/interactions.json";
+
+        if (!file_exists($schedulePlan)) {
+            return false;
+        }
+
+        $stored = json_decode(file_get_contents($schedulePlan), true);
+
+        if (is_null($stored)) {
+            return false;
+        }
+
+        $stored[$for] = $schedule;
+
+        return file_put_contents($schedulePlan, json_encode($stored));
     }
 }

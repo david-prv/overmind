@@ -57,8 +57,12 @@ class App {
                 Core::getInstance()->withParams($_GET)->delete();
             };
         } elseif (isset($_GET["edit"])) {
-            return function() {
+            return function () {
                 Core::getInstance()->withParams($_GET)->edit();
+            };
+        } elseif (isset($_GET["schedule"])) {
+            return function() {
+                Core::getInstance()->withParams($_GET)->schedule();
             };
         } else {
             return function() {
