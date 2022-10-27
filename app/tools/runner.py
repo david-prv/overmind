@@ -13,7 +13,8 @@ DISCLAIMER: this should not be deployed to a live system!
 This tool is meant to be used only LOCALLY!
 """
 
-def main():
+def main() -> None:
+    # example: python3 runner.py python3 Test/app.py https://etage-4.de 3
     engine = sys.argv[1]
     app = sys.argv[2]
     cmd = sys.argv[3]
@@ -38,7 +39,6 @@ def main():
     f.close()
 
     exit()
-
 
 if __name__ == '__main__':
     main()
