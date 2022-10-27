@@ -106,9 +106,6 @@ class Scanner implements Runnable, Integrable
     public function run(): bool
     {
         if (Schedule::isPresent($this->cwd, $this->id)) {
-            echo "python3 " . $this->cwd . "/app/tools/interactive.py " .
-                $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
-                " " . $this->cmdline . " " . $this->id;
             return shell_exec("python3 " . $this->cwd . "/app/tools/interactive.py " .
                     $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
                     " " . $this->cmdline . " " . $this->id) !== NULL;
