@@ -25,8 +25,10 @@ class App {
         spl_autoload_register(function ($class_name) {
             if (file_exists("{$class_name}.php")) {
                 include "{$class_name}.php";
-            } else {
+            } else if (file_exists("./app/" . "{$class_name}.php")) {
                 include "./app/" . "{$class_name}.php";
+            } else {
+                include "./app/lib/" . "{$class_name}.php";
             }
         });
     }
@@ -44,25 +46,29 @@ class App {
           return function() {
               Core::getInstance()->withParams($_GET)->render();
           };
-        } elseif (isset($_GET["run"])) {
+        } else if (isset($_GET["run"])) {
             return function() {
                 Core::getInstance()->withParams($_GET)->scan();
             };
-        } elseif (isset($_GET["upload"])) {
+        } else if (isset($_GET["upload"])) {
             return function() {
                 Core::getInstance()->withParams($_POST)->integrate();
             };
-        } elseif (isset($_GET["delete"])) {
+        } else if (isset($_GET["delete"])) {
             return function() {
                 Core::getInstance()->withParams($_GET)->delete();
             };
-        } elseif (isset($_GET["edit"])) {
+        } else if (isset($_GET["edit"])) {
             return function () {
                 Core::getInstance()->withParams($_GET)->edit();
             };
-        } elseif (isset($_GET["schedule"])) {
+        } else if (isset($_GET["schedule"])) {
             return function() {
                 Core::getInstance()->withParams($_GET)->schedule();
+            };
+        } else if (isset($_GET["analysis"])) {
+            return function() {
+                Core::getInstance()->withParams($_GET)->analyze();
             };
         } else {
             return function() {

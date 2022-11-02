@@ -303,7 +303,8 @@ function finishedSelected(index, selected) {
                 "      </button>" +
                 "    </h2>" +
                 "    <div id=\"flush-collapse" + i + "\" class=\"accordion-collapse collapse\" aria-labelledby=\"flush-heading" + i + "\" data-bs-parent=\"#accordion\">" +
-                "      <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
+                "       (<a class='mt-3 p-2' target='_blank' href='/reports/report_" + tool["id"] + ".txt'>Open Full</a>)" +
+                "       <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
                 "    </div>" +
                 "  </div>";
             finishedIDs.push(tool["id"]);
@@ -341,7 +342,8 @@ function finished(index, max) {
                 "      </button>" +
                 "    </h2>" +
                 "    <div id=\"flush-collapse" + i + "\" class=\"accordion-collapse collapse\" aria-labelledby=\"flush-heading" + i + "\" data-bs-parent=\"#accordion\">" +
-                "      <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
+                "       (<a class='mt-3' target='_blank' href='/reports/report_" + tool["id"] + ".txt'>Open Full</a>)" +
+                "       <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
                 "    </div>" +
                 "  </div>";
         }

@@ -293,6 +293,17 @@ class Core
     }
 
     /**
+     * Analyzes the generated reports and compiles
+     * them as a PDF formatted file
+     */
+    public function analyze(): void
+    {
+        // TODO: Implement this
+        $analyzer = new Analyzer();
+        $pdfBuilder = new PDFBuilder();
+    }
+
+    /**
      * Getter for tools object
      *
      * @return array
