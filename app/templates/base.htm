@@ -33,10 +33,12 @@
             <div class="input-group m-1">
 
                 <div class="btn-group">
-                    <button data-bs-toggle="modal" data-bs-target="#launchModal" id="launchAll" class="btn btn-navbar btn-primary"
+                    <button data-bs-toggle="modal" data-bs-target="#launchModal" id="launchAll"
+                            class="btn btn-navbar btn-primary"
                             type="submit"><i class="fa fa-forward"></i> Launch All
                     </button>
-                    <button type="button" id="launchOptions" class="btn btn-navbar btn-primary dropdown-toggle dropdown-toggle-split"
+                    <button type="button" id="launchOptions"
+                            class="btn btn-navbar btn-primary dropdown-toggle dropdown-toggle-split"
                             data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="visually-hidden">Toggle Dropdown</span>
                     </button>
@@ -46,7 +48,8 @@
                     </ul>
                 </div>
 
-                <button data-bs-toggle="modal" data-bs-target="#helpModal" class="btn btn-navbar btn-secondary ms-1" type="button">
+                <button data-bs-toggle="modal" data-bs-target="#helpModal" class="btn btn-navbar btn-secondary ms-1"
+                        type="button">
                     <i class="fa fa-life-ring"></i> Help
                 </button>
             </div>
@@ -55,13 +58,29 @@
 </nav>
 <!-- End Controls -->
 
+<!-- Search Bar -->
+<div style="display:none;" id="keyword-search-bar" class="container keyword-search-bar ">
+    <div class="input-group">
+        <input id="search-bar-input" class="form-control border-end-0 border" type="text"
+               placeholder="keywords as csv..." id="search-input">
+        <span class="input-group-append">
+            <button class="btn btn-outline-secondary search-bar-icon" type="button">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</div>
+<!-- End Search Bar -->
+
 <!-- Main -->
 <div class="container mt-5">
     <div class="d-grid gap-1 d-md-flex justify-content-md-end mb-3">
+
         <button onclick="editTools();" class="btn btn-navbar btn-secondary" type="button">
             <i class="fa fa-cog"></i> Configure
         </button>
-        <button onclick="window.location.href = 'index.php?page=integrate';" class="btn btn-navbar btn-secondary" type="button">
+        <button onclick="window.location.href = 'index.php?page=integrate';" class="btn btn-navbar btn-secondary"
+                type="button">
             <i class="fa fa-plus"></i> Create
         </button>
     </div>
@@ -81,9 +100,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Author: %PROJECT_AUTHOR%</p>
-                <p>Version: %PROJECT_VERSION%</p>
-                <p>%PROJECT_DESCRIPTION%</p>
+                <h6>About</h6>
+                <ul>
+                    <li>Author: %PROJECT_AUTHOR%</li>
+                    <li>Version: %PROJECT_VERSION%</li>
+                    <li>Description: %PROJECT_DESCRIPTION%</li>
+                </ul>
+                <hr/>
+                <h6>Hotkeys:</h6>
+                <kbd>Shift</kbd> + <kbd>S</kbd> &mdash; Open Searchbar
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -118,7 +143,8 @@
                 </ul>
             </div>
             <div class="modal-footer">
-                <button id="btn-start-selected" type="button" class="btn btn-primary" data-bs-dismiss="modal">Start</button>
+                <button id="btn-start-selected" type="button" class="btn btn-primary" data-bs-dismiss="modal">Start
+                </button>
             </div>
         </div>
     </div>
@@ -250,6 +276,10 @@
                         <input type="text" class="form-control" id="edit-args">
                     </div>
                     <div class="col">
+                        <label for="edit-keywords" class="form-label">Keywords (csv)</label>
+                        <input type="text" class="form-control" id="edit-keywords">
+                    </div>
+                    <div class="col">
                         <label for="edit-description" class="form-label">Description</label>
                         <input type="text" class="form-control" id="edit-description">
                     </div>
@@ -257,7 +287,8 @@
             </div>
             <div class="modal-footer">
                 <p id="edit-result"></p>
-                <button onclick="submitEdit()" type="button" class="btn btn-primary"><i class="fa fa-download"></i> Save</button>
+                <button onclick="submitEdit()" type="button" class="btn btn-primary"><i class="fa fa-download"></i> Save
+                </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
@@ -278,5 +309,6 @@
         const DATA = JSON.parse('%TOOLS_JSON%');
     </script>
     <script src="/static/js/bundle.min.js"></script>
+    <script src="/static/js/hotkeys.min.js"></script>
 </footer>
 </html>

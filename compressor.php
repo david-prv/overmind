@@ -17,7 +17,7 @@ use MatthiasMullie\Minify;
  */
 
 $path = getcwd();
-$js_files = array("bundle", "schedule");
+$js_files = array("bundle", "schedule", "hotkeys");
 $css_files = array("main");
 
 /*

@@ -25,6 +25,7 @@ class Scanner implements Runnable, Integrable
     private string $creatorURL;
     private string $description;
     private string $version;
+    private string $keywords;
     private array $interactions;
     private array $fileData;
 
@@ -213,9 +214,21 @@ class Scanner implements Runnable, Integrable
      * @param array $interactions
      * @return Integrable
      */
-    public function withInteractions(array $interactions): Integrable
+    public function withInteractions(array $interactions): Scanner
     {
         $this->interactions = $interactions;
+        return $this;
+    }
+
+    /**
+     * Defines by which keywords this tool can be found
+     *
+     * @param string $keywords
+     * @return Integrable
+     */
+    public function searchKeywords(string $keywords): Scanner
+    {
+        $this->keywords = $keywords;
         return $this;
     }
 
@@ -227,7 +240,8 @@ class Scanner implements Runnable, Integrable
      * @param int $id
      * @return int
      */
-    private function getToolIndexById(array $json, int $id): int {
+    private function getToolIndexById(array $json, int $id): int
+    {
         $index = 0;
         foreach ($json as $element) {
             if ((int)$element->id === (int)$id) {
@@ -245,7 +259,8 @@ class Scanner implements Runnable, Integrable
      * @param int $id
      * @return string
      */
-    private function getToolPathById(array $json, int $id): string {
+    private function getToolPathById(array $json, int $id): string
+    {
         foreach ($json as $element) {
             if ((int)$element->id === (int)$id) {
                 $indexExplode = explode("/", (string)$element->index);
@@ -269,9 +284,9 @@ class Scanner implements Runnable, Integrable
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
-                    if (filetype($dir."/".$object) == "dir")
-                        $this->deleteToolFolder($dir."/".$object);
-                    else unlink($dir."/".$object);
+                    if (filetype($dir . "/" . $object) == "dir")
+                        $this->deleteToolFolder($dir . "/" . $object);
+                    else unlink($dir . "/" . $object);
                 }
             }
             return rmdir($dir);
@@ -286,7 +301,8 @@ class Scanner implements Runnable, Integrable
      * @param string $id
      * @return array
      */
-    private function removeToolFrom(array $map, string $id) {
+    private function removeToolFrom(array $map, string $id): array
+    {
         $newMap = array();
         foreach ($map as $tool) {
             if ((string)$tool->id === (string)$id) continue;
@@ -336,6 +352,7 @@ class Scanner implements Runnable, Integrable
             "version" => $this->version,
             "author" => $this->creator,
             "url" => $this->creatorURL,
+            "keywords" => $this->keywords,
             "ignore" => false
         );
 
@@ -378,8 +395,7 @@ class Scanner implements Runnable, Integrable
     {
         $mapPath = $this->cwd . "/map.json";
 
-        if (!file_exists($mapPath))
-        {
+        if (!file_exists($mapPath)) {
             return false;
         }
 
@@ -408,8 +424,7 @@ class Scanner implements Runnable, Integrable
     {
         $mapPath = $this->cwd . "/map.json";
 
-        if (!file_exists($mapPath))
-        {
+        if (!file_exists($mapPath)) {
             return false;
         }
 
@@ -423,6 +438,7 @@ class Scanner implements Runnable, Integrable
             "version" => $this->version,
             "author" => $this->creator,
             "url" => $this->creatorURL,
+            "keywords" => $this->keywords,
             "ignore" => false
         );
 
@@ -446,8 +462,7 @@ class Scanner implements Runnable, Integrable
     {
         $schedulePath = $this->cwd . "/interactions.json";
 
-        if (!file_exists($schedulePath) || !isset($this->interactions) || count($this->interactions) === 0)
-        {
+        if (!file_exists($schedulePath) || !isset($this->interactions) || count($this->interactions) === 0) {
             return false;
         }
 

@@ -177,9 +177,10 @@ class Core
         $description = (isset($this->argv["description"])) ? $this->argv["description"] : NULL;
         $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : NULL;
         $index = (isset($this->argv["index"])) ? $this->argv["index"] : NULL;
+        $keywords = (isset($this->argv["keywords"])) ? $this->argv["keywords"] : NULL;
 
         if (is_null($name) || is_null($creator) || is_null($url) || is_null($version) || is_null($cmdline)
-            || is_null($description) || is_null($engine) || is_null($index) || !isset($_FILES)) {
+            || is_null($description) || is_null($engine) || is_null($index) || is_null($keywords) || !isset($_FILES)) {
             die("invalid arguments or incomplete arg set");
         }
 
@@ -192,6 +193,7 @@ class Core
             ->setCreatorURL($url)
             ->inVersion($version)
             ->withArguments($cmdline)
+            ->searchKeywords($keywords)
             ->describedBy($description)
             ->fileData($_FILES);
 
@@ -243,9 +245,10 @@ class Core
         $description = (isset($jsonObj->description)) ? $jsonObj->description : NULL;
         $engine = (isset($jsonObj->engine)) ? $jsonObj->engine : NULL;
         $index = (isset($jsonObj->index)) ? $jsonObj->index : NULL;
+        $keywords = (isset($jsonObj->keywords)) ? $jsonObj->keywords : NULL;
 
         if (is_null($id) || is_null($name) || is_null($creator) || is_null($url) || is_null($version)
-            || is_null($cmdline) || is_null($description) || is_null($engine) || is_null($index)) {
+            || is_null($cmdline) || is_null($description) || is_null($engine) || is_null($index) || is_null($keywords)) {
             die("invalid arguments or incomplete arg set");
         }
 
@@ -258,6 +261,7 @@ class Core
             ->setCreatorURL($url)
             ->inVersion($version)
             ->withArguments($cmdline)
+            ->searchKeywords($keywords)
             ->describedBy($description)
             ->identifiedBy($id);
 

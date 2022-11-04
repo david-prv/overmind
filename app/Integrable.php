@@ -104,6 +104,14 @@ interface Integrable
     public function withInteractions(array $interactions): Integrable;
 
     /**
+     * Defines by which keywords this tool can be found
+     *
+     * @param string $keywords
+     * @return Integrable
+     */
+    public function searchKeywords(string $keywords): Integrable;
+
+    /**
      * Performs the final integration.
      * Returns -1 for failed creation or the ID
      * if the integration was successful

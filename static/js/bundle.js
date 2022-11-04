@@ -87,11 +87,12 @@ function editTool(id) {
     $('#edit-index').val(DATA[tool]["index"]);
     $('#edit-args').val(DATA[tool]["args"]);
     $('#edit-description').val(DATA[tool]["description"]);
+    $('#edit-keywords').val(DATA[tool]["keywords"]);
 }
 
 // reads values from form and submits them to backend
 function submitEdit() {
-    let name, creator, url, version, engine, index, args, description, id;
+    let name, creator, url, version, engine, index, args, description, keywords, id;
 
     id = $('#edit-id').val();
     name = $('#edit-name').val();
@@ -102,6 +103,8 @@ function submitEdit() {
     index = $('#edit-index').val();
     args = $('#edit-args').val();
     description = $('#edit-description').val();
+    keywords = $('#edit-keywords').val();
+
 
     let json = {
         "id": id,
@@ -112,7 +115,8 @@ function submitEdit() {
         "engine": engine,
         "index": index,
         "args": args,
-        "description": description
+        "description": description,
+        "keywords": keywords
     }
 
     $.get('index.php?edit&json=' + JSON.stringify(json), function(data) {
