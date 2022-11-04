@@ -49,7 +49,7 @@ class PDFBuilder extends FPDF
         $this->Cell(0, 0, "Target: $this->targetUrl");
         $this->Ln(5);
         $this->SetX(9);
-        $this->Cell(0, 0, date('d/m/Y'), 0, 0);
+        $this->Cell(0, 0, "Timestamp: " . date('d-m-Y H:i:s', time()), 0, 0);
         $this->Ln(20);
     }
 
