@@ -1,6 +1,6 @@
-.btn-check:focus+.btn-primary, .btn-primary:focus, .btn-check:focus+.btn-secondary, .btn-secondary:focus, .dropdown-toggle,
+.btn-check:focus + .btn-primary, .btn-primary:focus, .btn-check:focus + .btn-secondary, .btn-secondary:focus, .dropdown-toggle,
 .btn-outline-secondary {
-    box-shadow: none!important;
+    box-shadow: none !important;
 }
 
 #protocol, #protocol-alt {
@@ -19,7 +19,7 @@
 }
 
 .hidden {
-    display:none;
+    display: none;
 }
 
 .selection {
@@ -27,11 +27,11 @@
 }
 
 .selection:hover {
-    background: rgba(13, 110, 253, 0.1)!important;
+    background: rgba(13, 110, 253, 0.1) !important;
 }
 
 .tool {
-    user-select: none!important;
+    user-select: none !important;
 }
 
 #selection-list li::marker {
@@ -66,22 +66,22 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
 
 .search-bar-icon {
-    border: 1px solid #dee2e6!important;
-    border-left: none!important;
-    border-top-left-radius: 0px!important;
-    border-bottom-left-radius: 0px!important;
+    border: 1px solid #dee2e6 !important;
+    border-left: none !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
 }
 
 #search-bar-input:focus {
-    box-shadow: none!important;
+    box-shadow: none !important;
 }
 
 .search-bar-icon:hover {
-    background:white!important;
-    color:#6c757d!important;
+    background: white !important;
+    color: #6c757d !important;
 }
 
-.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback):not(.enqueue) {
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback):not(.enqueue) {
     border-top-left-radius: 0.25rem !important;
     border-bottom-left-radius: 0.25rem !important;
 }

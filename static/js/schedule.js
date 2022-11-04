@@ -9,7 +9,7 @@
 var list;
 
 // code ignition
-(function() {
+(function () {
     list = $('#interactions');
 })();
 
@@ -26,7 +26,7 @@ function moveUp(pos) {
         }
     }
 
-    if(index === -1) {
+    if (index === -1) {
         console.log("[ERROR] Cannot find element with specified ID");
     } else {
         let wrapper = interactions[index];
@@ -51,7 +51,7 @@ function moveDown(pos) {
         }
     }
 
-    if(index === -1) {
+    if (index === -1) {
         console.log("[ERROR] Cannot find element with specified ID");
     } else {
         let wrapper = interactions[index];
@@ -138,12 +138,12 @@ function store() {
     let interactions = getInteractions();
     let intStr = "";
     interactions.toArray().forEach(element => {
-       let v = $(element).attr("value");
-       intStr += v + ",";
+        let v = $(element).attr("value");
+        intStr += v + ",";
     });
     intStr = intStr.slice(0, -1);
 
-    $.get('index.php?schedule&id=' + CURRENT_ID + '&interactions=' + intStr, function(data) {
+    $.get('index.php?schedule&id=' + CURRENT_ID + '&interactions=' + intStr, function (data) {
         console.log(data);
     });
 }

@@ -46,7 +46,7 @@ if (substr_compare($path, "scanner-bundle", -strlen("scanner-bundle")) !== 0) di
 
 // STEP 1: JavaScript
 
-foreach($js_files as $js_file) {
+foreach ($js_files as $js_file) {
     $fileName = "$js_file.js";
     $fileNameMinified = "$js_file.min.js";
 
@@ -63,7 +63,7 @@ foreach($js_files as $js_file) {
 
 // STEP 2: Stylesheets
 
-foreach($css_files as $css_file) {
+foreach ($css_files as $css_file) {
     $fileName = "$css_file.css";
     $fileNameMinified = "$css_file.min.css";
 

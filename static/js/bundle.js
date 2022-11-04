@@ -27,7 +27,7 @@ var temp = [];
     });
 
     let searchBarInput = document.getElementById("search-bar-input");
-    searchBarInput.addEventListener("keypress", function(event) {
+    searchBarInput.addEventListener("keypress", function (event) {
         if (event.keyCode && event.keyCode == 13) selectSearch();
     });
 
@@ -409,9 +409,9 @@ function getText(id) {
 function deselectTools() {
     let tools = $('#tool-list').children();
     tools.toArray().forEach(tool => {
-       if($(tool).hasClass("selection")) {
-           $(tool).removeClass("selection");
-       }
+        if ($(tool).hasClass("selection")) {
+            $(tool).removeClass("selection");
+        }
     });
 }
 
@@ -419,7 +419,7 @@ function deselectTools() {
 function selectAllTools() {
     let tools = $('#tool-list').children();
     tools.toArray().forEach(tool => {
-        if(!$(tool).hasClass("selection")) {
+        if (!$(tool).hasClass("selection")) {
             $(tool).addClass("selection");
         }
     });
@@ -440,7 +440,7 @@ function selectSearch() {
         for (let j = 0; j < keywords.length; j++) {
             if (tool["keywords"].indexOf(keywords[j]) !== -1) {
                 let toolEl = $('#tool-' + tool["id"]);
-                if(!toolEl) continue;
+                if (!toolEl) continue;
 
                 $(toolEl).click();
 
