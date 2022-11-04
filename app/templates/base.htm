@@ -61,10 +61,10 @@
 <!-- Search Bar -->
 <div style="display:none;" id="keyword-search-bar" class="container keyword-search-bar ">
     <div class="input-group">
-        <input id="search-bar-input" class="form-control border-end-0 border" type="text"
+        <input id="search-bar-input" class="form-control border-end-0 border" type="search"
                placeholder="keywords as csv..." id="search-input">
         <span class="input-group-append">
-            <button class="btn btn-outline-secondary search-bar-icon" type="button">
+            <button onclick="selectSearch()" class="btn btn-outline-secondary search-bar-icon" type="button">
                 <i class="fa fa-search"></i>
             </button>
         </span>
@@ -84,7 +84,7 @@
             <i class="fa fa-plus"></i> Create
         </button>
     </div>
-    <div class="list-group">
+    <div id="tool-list" class="list-group">
         %TOOLS_LIST%
     </div>
 
@@ -108,7 +108,9 @@
                 </ul>
                 <hr/>
                 <h6>Hotkeys:</h6>
-                <kbd>Shift</kbd> + <kbd>S</kbd> &mdash; Open Searchbar
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> &mdash; Open searchbar<br />
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> &mdash; Select all tools<br />
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> &mdash; Deselect all tools
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

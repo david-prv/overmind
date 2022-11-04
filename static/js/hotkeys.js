@@ -21,9 +21,15 @@ function showSearchBar() {
 
 // detects the hotkeys and invokes handlers
 function handle(evt) {
-    console.log(evt);
     if (!evt) evt = event;
-    else if (evt.shiftKey && evt.keyCode == 83){ // Shift + S
+    else if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 83){ // Ctrl + Shift + S
         showSearchBar();
+    }
+    else if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 90){ // Ctrl + Shift + Z
+        deselectTools();
+    }
+    else if (evt.ctrlKey && evt.shiftKey  && evt.keyCode == 65){ // Ctrl + Shift + A
+        evt.preventDefault();
+        selectAllTools();
     }
 }
