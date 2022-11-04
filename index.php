@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Include all composer requirements
+ */
+require __DIR__ . '/vendor/autoload.php';
+
+/**
  * Class App
  *
  * <p>
@@ -43,34 +48,42 @@ class App {
      */
     private function getHandle(): closure {
         if (isset($_GET["page"])) {
-          return function() {
-              Core::getInstance()->withParams($_GET)->render();
-          };
+            /* Renders a view */
+            return function() {
+                Core::getInstance()->withParams($_GET)->render();
+            };
         } else if (isset($_GET["run"])) {
+            /* Background worker for running a scan */
             return function() {
                 Core::getInstance()->withParams($_GET)->scan();
             };
         } else if (isset($_GET["upload"])) {
+            /* Background worker for running a tool integration */
             return function() {
                 Core::getInstance()->withParams($_POST)->integrate();
             };
         } else if (isset($_GET["delete"])) {
+            /* Background worker for deleting a tool */
             return function() {
                 Core::getInstance()->withParams($_GET)->delete();
             };
         } else if (isset($_GET["edit"])) {
+            /* Background worker for updating a tool */
             return function () {
                 Core::getInstance()->withParams($_GET)->edit();
             };
         } else if (isset($_GET["schedule"])) {
+            /* Background worker for registering new interactions */
             return function() {
                 Core::getInstance()->withParams($_GET)->schedule();
             };
-        } else if (isset($_GET["analysis"])) {
+        } else if (isset($_GET["pdf"])) {
+            /* PDF file stream to output general result */
             return function() {
-                Core::getInstance()->withParams($_GET)->analyze();
+                Core::getInstance()->withParams($_GET)->pdf();
             };
         } else {
+            /* Renders the basic/default view */
             return function() {
                 Core::getInstance()->render("base");
             };

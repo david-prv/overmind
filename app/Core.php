@@ -30,6 +30,10 @@ class Core
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of web pages.";
 
+    ///////////////////////
+    // SINGLETON METHODS //
+    ///////////////////////
+
     /**
      * Core constructor.
      *
@@ -39,7 +43,7 @@ class Core
     private function __construct($tp = NULL, $tip = NULL)
     {
         $this->APP_PATH = getcwd();
-        $this->VIEW_PATH = $this->APP_PATH . "/app/templates";
+        $this->VIEW_PATH = $this->APP_PATH . "/app/views";
         $this->TOOLS_PATH = ($tp === NULL) ? $this->APP_PATH . "/app/tools" : $tp;
         $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL) ? $this->APP_PATH . "/app/tools/map.json" : $tip), false);
 
@@ -60,6 +64,10 @@ class Core
         }
         return self::$instance;
     }
+
+    ////////////////////////////////
+    // PUBLICLY AVAILABLE METHODS //
+    ////////////////////////////////
 
     /**
      * Sets the argv attribute and thus
@@ -126,6 +134,32 @@ class Core
         }
 
         View::render($viewObj);
+    }
+
+    /**
+     * Composes and outputs the PDF file stream
+     * using the PDFBuilder library
+     */
+    public function pdf(): void
+    {
+        if ($this->argv === NULL) {
+            die("no arguments provided");
+        }
+
+        $target = (isset($this->argv["last"])) ? $this->argv["last"] : NULL;
+        $tools = (isset($this->argv["tools"])) ? $this->argv["tools"] : NULL;
+
+        if (is_null($target) || is_null($tools)) {
+            die("invalid arguments or incomplete arg set");
+        }
+
+        $pdf = new PDFBuilder();
+        $pdf->setTargetUrl($target);
+        $pdf->setToolsUsed(explode(",", preg_replace('/\s+/', '', $tools)));
+
+        $pdf->dummy();
+
+        $pdf->stream();
     }
 
     /**
@@ -296,16 +330,9 @@ class Core
         else die("error");
     }
 
-    /**
-     * Analyzes the generated reports and compiles
-     * them as a PDF formatted file
-     */
-    public function analyze(): void
-    {
-        // TODO: Implement this
-        $analyzer = new Analyzer();
-        $pdfBuilder = new PDFBuilder();
-    }
+    /////////////////////////////////
+    // PRIVATELY AVAILABLE METHODS //
+    /////////////////////////////////
 
     /**
      * Getter for tools object

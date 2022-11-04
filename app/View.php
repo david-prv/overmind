@@ -89,7 +89,7 @@ class View
     }
 
     /**
-     * Returns the location of the templates
+     * Returns the location of the views
      *
      * @return string
      */
