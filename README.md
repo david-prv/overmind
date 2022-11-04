@@ -40,5 +40,5 @@ Now open a web browser and navigate to `http://localhost:8080/`. The scanner-bun
 ## Screenshots
 
 ![image](https://user-images.githubusercontent.com/66866223/199949463-0151365a-fe01-44c3-9ff9-3f6f09b948eb.png)
-![image](https://user-images.githubusercontent.com/66866223/197338559-1a665271-c056-43f1-a335-14f7ef62e3c9.png)
+![image](https://user-images.githubusercontent.com/66866223/200019984-ef0501df-b3de-4f02-a290-14e4043f5df3.png)
 ![image](https://user-images.githubusercontent.com/66866223/198300858-0a65e372-af2e-4898-8a75-31af486906d0.png)
