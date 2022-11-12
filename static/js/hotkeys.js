@@ -27,7 +27,6 @@ function handle(evt) {
     } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 90) { // Ctrl + Shift + Z
         deselectTools();
     } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 65) { // Ctrl + Shift + A
-        evt.preventDefault();
         selectAllTools();
     }
 }
