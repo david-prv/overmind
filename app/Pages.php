@@ -99,6 +99,7 @@ class Pages
 
     /**
      * Public getter for the views
+     * (the only publicly exposed method)
      *
      * @param string $name
      * @return View

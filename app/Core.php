@@ -39,21 +39,20 @@ class Core
     /**
      * Core constructor.
      *
-     * @param NULL $tp
-     * @param NULL $tip
+     * @param string $tp
+     * @param string $tip
      */
-    private function __construct($tp = NULL, $tip = NULL)
+    function __construct(?string $tp = NULL, ?string $tip = NULL)
     {
         $this->APP_PATH = getcwd();
         $this->VIEW_PATH = $this->APP_PATH . "/app/views";
         $this->TOOLS_PATH = ($tp === NULL) ? $this->APP_PATH . "/app/tools" : $tp;
         $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL) ? $this->APP_PATH . "/app/tools/map.json" : $tip), false);
 
-        $this->pages = new Pages($this->VIEW_PATH);
-
         foreach ($this->TOOLS_OBJECT as $key => $value) {
             if ($value->ignore) unset($this->TOOLS_OBJECT[$key]);
         }
+
     }
 
     /**
@@ -65,6 +64,7 @@ class Core
     {
         if (self::$instance === NULL) {
             self::$instance = new Core();
+            self::$instance->pages = new Pages(getcwd() . "/app/views");
         }
         return self::$instance;
     }
@@ -96,14 +96,15 @@ class Core
      */
     public function render($view = NULL): void
     {
-        /* ----------------------------------------------
-         * Pages configuration
-         * ----------------------------------------------
+        /*
+         *----------------------------------------------
+         * Pages Configuration
+         *----------------------------------------------
          * To add/edit/configure existing pages
          * go to Pages class. Locate the create()
          * method and follow the instructions as stated
          * in the method docs.
-         * ----------------------------------------------
+         *
          */
 
         if ($this->argv !== NULL && $view === NULL) {
@@ -316,15 +317,12 @@ class Core
     /**
      * Getter for arguments
      *
+     * @param string $arg
      * @return array
      */
-    public function getArgs(): array
+    public function getArg(?string $arg = NULL): string
     {
-        return (is_null($this->argv)) ? array() : $this->argv;
-    }
-
-    public function getArg(string $arg): string
-    {
+        if ($arg === NULL && !is_null($this->argv)) return $this->argv;
         if (!is_null($this->argv) && in_array($arg, $this->argv))
             return $this->argv[$arg];
         return "";

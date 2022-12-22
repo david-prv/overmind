@@ -5,7 +5,8 @@
  *
  * <p>
  * This class is an extension of the pdf class
- * from {@see http://fpdf.de/}. It is used to auto-generate the
+ * from {@see http://fpdf.de/} and serves as handmade PDF
+ * library. It is used to auto-generate the
  * risk analysis result as PDF, using the scan reports of the
  * tools of the bundle.
  * </p>
@@ -91,6 +92,8 @@ class PDFBuilder extends FPDF
 
     /**
      * Dummy debug method
+     *
+     * TODO: remove this
      */
     public function dummy()
     {
