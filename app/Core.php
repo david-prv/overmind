@@ -96,6 +96,16 @@ class Core
      */
     public function render($view = NULL): void
     {
+        /* ----------------------------------------------
+         * Pages configuration
+         * ----------------------------------------------
+         * To add/edit/configure existing pages
+         * go to Pages class. Locate the create()
+         * method and follow the instructions as stated
+         * in the method docs.
+         * ----------------------------------------------
+         */
+
         if ($this->argv !== NULL && $view === NULL) {
             $view = $this->argv["page"];
         }
@@ -124,6 +134,8 @@ class Core
         $pdf->setTargetUrl($target);
         $pdf->setToolsUsed(explode(",", preg_replace('/\s+/', '', $tools)));
 
+        // TODO:    Implement Analyzer to automatically
+        //          generate a result report
         $pdf->dummy();
 
         $pdf->stream();
