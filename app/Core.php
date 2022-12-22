@@ -23,6 +23,8 @@ class Core
     private string $VIEW_PATH;
     private string $TOOLS_PATH;
 
+    private Pages $pages;
+
     private string $PROJECT_NAME = "Scanner Bundle";
     private string $PROJECT_AUTHOR = "David Dewes";
     private string $PROJECT_VERSION = "1.0.0";
@@ -47,6 +49,8 @@ class Core
         $this->TOOLS_PATH = ($tp === NULL) ? $this->APP_PATH . "/app/tools" : $tp;
         $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL) ? $this->APP_PATH . "/app/tools/map.json" : $tip), false);
 
+        $this->pages = new Pages($this->VIEW_PATH);
+
         foreach ($this->TOOLS_OBJECT as $key => $value) {
             if ($value->ignore) unset($this->TOOLS_OBJECT[$key]);
         }
@@ -65,9 +69,9 @@ class Core
         return self::$instance;
     }
 
-    ////////////////////////////////
-    // PUBLICLY AVAILABLE METHODS //
-    ////////////////////////////////
+    ////////////////////
+    // SETTER METHODS //
+    ////////////////////
 
     /**
      * Sets the argv attribute and thus
@@ -96,44 +100,7 @@ class Core
             $view = $this->argv["page"];
         }
 
-        $viewObj = new View($this->VIEW_PATH);
-
-        switch (strtoupper($view)) {
-            case 'BASE':
-                $viewObj->setTemplate(strtolower($view));
-                $placeholders = array(
-                    array("%TOOLS_LIST%", $this->renderToolsAsHtml()),
-                    array("%PROJECT_NAME%", $this->getProjectName()),
-                    array("%PROJECT_VERSION%", $this->getProjectVersion()),
-                    array("%PROJECT_AUTHOR%", $this->getProjectAuthor()),
-                    array("%PROJECT_DESCRIPTION%", $this->getProjectDescription()),
-                    array("%TOOLS_JSON%", $this->getToolsJson())
-                );
-                $viewObj->setPlaceholders($placeholders);
-                break;
-            case 'SCHEDULE':
-                $viewObj->setTemplate(strtolower($view));
-                $placeholders = array(
-                    array("%PROJECT_NAME%", $this->getProjectName()),
-                    array("%INTERACTIONS_LIST%", $this->renderScheduleAsHtml($this->argv["edit"])),
-                    array("%ID%", $this->argv["edit"])
-                );
-                $viewObj->setPlaceholders($placeholders);
-                break;
-            case 'INTEGRATE':
-            case 'TEST':
-                $viewObj->setTemplate(strtolower($view));
-                $placeholders = array(
-                    array("%PROJECT_NAME%", $this->getProjectName())
-                );
-                $viewObj->setPlaceholders($placeholders);
-                break;
-            default:
-                $viewObj->setError(true);
-                break;
-        }
-
-        View::render($viewObj);
+        View::render($this->pages->get($view));
     }
 
     /**
@@ -330,16 +297,33 @@ class Core
         else die("error");
     }
 
-    /////////////////////////////////
-    // PRIVATELY AVAILABLE METHODS //
-    /////////////////////////////////
+    ////////////////////
+    // GETTER METHODS //
+    ////////////////////
+
+    /**
+     * Getter for arguments
+     *
+     * @return array
+     */
+    public function getArgs(): array
+    {
+        return (is_null($this->argv)) ? array() : $this->argv;
+    }
+
+    public function getArg(string $arg): string
+    {
+        if (!is_null($this->argv) && in_array($arg, $this->argv))
+            return $this->argv[$arg];
+        return "";
+    }
 
     /**
      * Getter for tools object
      *
      * @return array
      */
-    private function getToolsObject(): array
+    public function getToolsObject(): array
     {
         return $this->TOOLS_OBJECT;
     }
@@ -349,7 +333,7 @@ class Core
      *
      * @return string
      */
-    private function getToolsJson(): string
+    public function getToolsJson(): string
     {
         return json_encode($this->TOOLS_OBJECT);
     }
@@ -359,7 +343,7 @@ class Core
      *
      * @return string
      */
-    private function getProjectAuthor(): string
+    public function getProjectAuthor(): string
     {
         return $this->PROJECT_AUTHOR;
     }
@@ -369,7 +353,7 @@ class Core
      *
      * @return string
      */
-    private function getProjectName(): string
+    public function getProjectName(): string
     {
         return $this->PROJECT_NAME;
     }
@@ -379,7 +363,7 @@ class Core
      *
      * @return string
      */
-    private function getProjectVersion(): string
+    public function getProjectVersion(): string
     {
         return $this->PROJECT_VERSION;
     }
@@ -389,7 +373,7 @@ class Core
      *
      * @return string
      */
-    private function getProjectDescription(): string
+    public function getProjectDescription(): string
     {
         return $this->PROJECT_DESCRIPTION;
     }
@@ -399,7 +383,7 @@ class Core
      *
      * @return string
      */
-    private function renderToolsAsHtml(): string
+    public function renderToolsAsHtml(): string
     {
         $html = (count($this->getToolsObject()) === 0) ? "<h2 class='text-muted text-center'>No tools found</h2>" : "";
         foreach ($this->getToolsObject() as $tool) {
@@ -445,7 +429,7 @@ class Core
      * @param string $id
      * @return string
      */
-    private function renderScheduleAsHtml(string $id): string
+    public function renderScheduleAsHtml(string $id): string
     {
         return Schedule::render($this->APP_PATH, $id);
     }

@@ -58,10 +58,12 @@ class View
      * Defines which template file should be used
      *
      * @param string $template
+     * @return View
      */
-    public function setTemplate(string $template): void
+    public function setTemplate(string $template): View
     {
         $this->filename = strtolower($template) . ".htm";
+        return $this;
     }
 
     /**
@@ -71,10 +73,12 @@ class View
      * closed with another percentage symbol
      *
      * @param array $placeholders
+     * @return View
      */
-    public function setPlaceholders(array $placeholders): void
+    public function setPlaceholders(array $placeholders): View
     {
         $this->placeholders = $placeholders;
+        return $this;
     }
 
     /**
@@ -82,10 +86,12 @@ class View
      * Prevents the render method to perform
      *
      * @param bool $value
+     * @return View
      */
-    public function setError(bool $value): void
+    public function setError(bool $value): View
     {
         $this->error = $value;
+        return $this;
     }
 
     /**
