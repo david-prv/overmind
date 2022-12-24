@@ -17,15 +17,26 @@ class Autoloader
     private ?closure $loader;
 
     /**
+     * This array contains all possible class locations
+     * that can occur in this framework. In case you add any new
+     * classes, which are not present yet, and also add a new folder
+     * to the dir structure, please remember to adjust this array too.
+     *
+     * @var array|string[]
+     */
+    private static array $locations = ["./app/", "./app/core/", "./app/core/lib/"];
+
+    /**
      * Autoloader constructor.
      */
     private function __construct()
     {
-        $this->loader = function($class_name) {
-            if (file_exists("./app/core/" . "{$class_name}.php")) {
-                include "./app/core/" . "{$class_name}.php";
-            } else {
-                include "./app/core/lib/" . "{$class_name}.php";
+        $this->loader = function ($class_name) {
+            foreach (Autoloader::$locations as $location) {
+                $abs_path = $location . "{$class_name}.php";
+                if (file_exists($abs_path)) {
+                    include $abs_path . "";
+                }
             }
         };
     }
@@ -48,7 +59,8 @@ class Autoloader
      *
      * @return closure
      */
-    public function getLoader(): closure {
+    public function getLoader(): closure
+    {
         return $this->loader;
     }
 }

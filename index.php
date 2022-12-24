@@ -25,14 +25,71 @@ require __DIR__ . '/app/core/Autoloader.php';
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-class App {
-
+class App
+{
     /**
      * App constructor.
      */
     function __construct()
     {
         spl_autoload_register(Autoloader::getInstance()->getLoader());
+    }
+
+    /**
+     * Manages all possible handles.
+     *
+     * DO NOT TOUCH!
+     *
+     * Usually you don't need to modify the handles
+     * array, except you know what you do (e.g adding
+     * entirely new functionality to the framework).
+     *
+     * @return array|Closure[]
+     */
+    private function allHandles(): array
+    {
+        return [
+            "page" => function () {
+                Core::getInstance()->withParams($_GET)->render();
+            },
+            "run" => function () {
+                Core::getInstance()->withParams($_GET)->scan();
+            },
+            "upload" => function () {
+                Core::getInstance()->withParams($_POST)->integrate();
+            },
+            "delete" => function () {
+                Core::getInstance()->withParams($_GET)->delete();
+            },
+            "edit" => function () {
+                Core::getInstance()->withParams($_GET)->edit();
+            },
+            "schedule" => function () {
+                Core::getInstance()->withParams($_GET)->schedule();
+            },
+            "pdf" => function () {
+                Core::getInstance()->withParams($_GET)->pdf();
+            }
+        ];
+    }
+
+    /**
+     * Manages the default handle
+     *
+     * DO NOT TOUCH!
+     *
+     * Even if you know what you do:
+     * The default handle should never be altered.
+     * It defines the home page, which is, for this framework,
+     * always the same.
+     *
+     * @return closure
+     */
+    private function defaultHandle(): closure
+    {
+        return function () {
+            Core::getInstance()->render("base");
+        };
     }
 
     /**
@@ -43,48 +100,13 @@ class App {
      *
      * @return closure
      */
-    private function getHandle(): closure {
-        if (isset($_GET["page"])) {
-            /* Renders a view */
-            return function() {
-                Core::getInstance()->withParams($_GET)->render();
-            };
-        } else if (isset($_GET["run"])) {
-            /* Background worker for running a scan */
-            return function() {
-                Core::getInstance()->withParams($_GET)->scan();
-            };
-        } else if (isset($_GET["upload"])) {
-            /* Background worker for running a tool integration */
-            return function() {
-                Core::getInstance()->withParams($_POST)->integrate();
-            };
-        } else if (isset($_GET["delete"])) {
-            /* Background worker for deleting a tool */
-            return function() {
-                Core::getInstance()->withParams($_GET)->delete();
-            };
-        } else if (isset($_GET["edit"])) {
-            /* Background worker for updating a tool */
-            return function () {
-                Core::getInstance()->withParams($_GET)->edit();
-            };
-        } else if (isset($_GET["schedule"])) {
-            /* Background worker for registering new interactions */
-            return function() {
-                Core::getInstance()->withParams($_GET)->schedule();
-            };
-        } else if (isset($_GET["pdf"])) {
-            /* PDF file stream to output general result */
-            return function() {
-                Core::getInstance()->withParams($_GET)->pdf();
-            };
-        } else {
-            /* Renders the basic/default view */
-            return function() {
-                Core::getInstance()->render("base");
-            };
-        }
+    private function getHandle(): closure
+    {
+        $handles = $this->allHandles();
+        $default = $this->defaultHandle();
+
+        $key = (count(array_keys($_GET)) >= 1) ? array_keys($_GET)[0] : -1;
+        return array_key_exists($key, $handles) ? $handles[$key] : $default;
     }
 
     /**
