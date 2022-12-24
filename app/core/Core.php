@@ -42,12 +42,14 @@ class Core
      * @param string $tp
      * @param string $tip
      */
-    function __construct(?string $tp = NULL, ?string $tip = NULL)
+    private function __construct(?string $tp = NULL, ?string $tip = NULL)
     {
         $this->APP_PATH = getcwd();
         $this->VIEW_PATH = $this->APP_PATH . "/app/views";
         $this->TOOLS_PATH = ($tp === NULL) ? $this->APP_PATH . "/app/tools" : $tp;
-        $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL) ? $this->APP_PATH . "/app/tools/map.json" : $tip), false);
+        $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL)
+            ? $this->APP_PATH . "/app/tools/map.json"
+            : $tip), false);
 
         foreach ($this->TOOLS_OBJECT as $key => $value) {
             if ($value->ignore) unset($this->TOOLS_OBJECT[$key]);
@@ -64,7 +66,7 @@ class Core
     {
         if (self::$instance === NULL) {
             self::$instance = new Core();
-            self::$instance->pages = new Pages(getcwd() . "/app/views");
+            self::$instance->pages = new Pages();
         }
         return self::$instance;
     }

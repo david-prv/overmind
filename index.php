@@ -6,6 +6,11 @@
 require __DIR__ . '/vendor/autoload.php';
 
 /**
+ * Include framework autoloader
+ */
+require __DIR__ . '/app/core/Autoloader.php';
+
+/**
  * Class App
  *
  * <p>
@@ -27,15 +32,7 @@ class App {
      */
     function __construct()
     {
-        spl_autoload_register(function ($class_name) {
-            if (file_exists("{$class_name}.php")) {
-                include "{$class_name}.php";
-            } else if (file_exists("./app/" . "{$class_name}.php")) {
-                include "./app/" . "{$class_name}.php";
-            } else {
-                include "./app/lib/" . "{$class_name}.php";
-            }
-        });
+        spl_autoload_register(Autoloader::getInstance()->getLoader());
     }
 
     /**

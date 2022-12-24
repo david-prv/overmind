@@ -27,12 +27,10 @@ class Pages
 
     /**
      * Pages constructor.
-     *
-     * @param string $viewPath
      */
-    public function __construct(string $viewPath)
+    public function __construct()
     {
-        $this->viewPath = $viewPath;
+        $this->viewPath = getcwd() . "/app/views";
         $this->pages = array();
         $this->placeholders = array();
         $this->core = Core::getInstance();
@@ -44,7 +42,7 @@ class Pages
      *
      * <p>
      * Use this method to add new pages to the framework.
-     * Please make sure, that the file in /views/, names by the page name
+     * Please make sure, that the file in /views/, named by the page name
      * in lower-case letters, has to exist. Otherwise, the View cannot be
      * successfully rendered.
      * </p>
