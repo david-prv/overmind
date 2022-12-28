@@ -20,6 +20,7 @@
  */
 class Pages
 {
+    private static ?Pages $instance = NULL;
     private array $pages;
     private array $placeholders;
     private string $viewPath;
@@ -28,59 +29,25 @@ class Pages
     /**
      * Pages constructor.
      */
-    public function __construct()
+    private function __construct()
     {
         $this->viewPath = getcwd() . "/app/views";
         $this->pages = array();
         $this->placeholders = array();
         $this->core = Core::getInstance();
-        $this->create();
     }
 
     /**
-     * Creates/registers a new page entity.
+     * Returns instance
      *
-     * <p>
-     * Use this method to add new pages to the framework.
-     * Please make sure, that the file in /views/, named by the page name
-     * in lower-case letters, has to exist. Otherwise, the View cannot be
-     * successfully rendered.
-     * </p>
-     *
-     * <p>
-     * HowTo:
-     * -    Add a new line (order does not matter)
-     * -    Write $this->add( ... );
-     * -    Fill in all parameters, like name and placeholders
-     * -    You can use the public programming interface from Core
-     *      by using the local reference: $this->core->...
-     * </p>
+     * @return Pages
      */
-    private function create(): void
+    public static function getInstance(): Pages
     {
-        $this->add("BASE", array(
-            array("%TOOLS_LIST%", $this->core->renderToolsAsHtml()),
-            array("%PROJECT_NAME%", $this->core->getProjectName()),
-            array("%PROJECT_VERSION%", $this->core->getProjectVersion()),
-            array("%PROJECT_AUTHOR%", $this->core->getProjectAuthor()),
-            array("%PROJECT_DESCRIPTION%", $this->core->getProjectDescription()),
-            array("%TOOLS_JSON%", $this->core->getToolsJson())
-        ));
-
-        $this->add("SCHEDULE", array(
-            array("%PROJECT_NAME%", $this->core->getProjectName()),
-            array("%INTERACTIONS_LIST%", $this->core->renderScheduleAsHtml($this->core->getArg("edit"))),
-            array("%ID%", $this->core->getArg("edit"))
-        ));
-
-        $this->add("INTEGRATE", array(
-            array("%PROJECT_NAME%", $this->core->getProjectName())
-        ));
-
-        $this->add("TEST", array(
-            array("%PROJECT_NAME%", $this->core->getProjectName())
-        ));
-
+       if (self::$instance === NULL) {
+           self::$instance = new Pages();
+       }
+       return self::$instance;
     }
 
     /**
@@ -89,7 +56,7 @@ class Pages
      * @param string $name
      * @param array $placeholders
      */
-    private function add(string $name, array $placeholders): void
+    public function add(string $name, array $placeholders): void
     {
         $this->placeholders[strtoupper($name)] = $placeholders;
         array_push($this->pages, strtoupper($name));

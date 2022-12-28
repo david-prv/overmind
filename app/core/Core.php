@@ -66,7 +66,7 @@ class Core
     {
         if (self::$instance === NULL) {
             self::$instance = new Core();
-            self::$instance->pages = new Pages();
+            self::$instance->pages = Pages::getInstance();
         }
         return self::$instance;
     }
