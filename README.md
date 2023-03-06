@@ -4,10 +4,15 @@ A small framework to run open-source tools that inspect and scan any kind of web
 
 Disclaimer: This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
+## Todo
+- Support for more native runners
+- Automatic risk assessment
+- Adjust tool integration to work with standard github-master ZIPs
+
 ## Prerequisites
 
  - Apache2
- - PHP (>= 7.4.19)
+ - PHP (>= 7.4.19 || >= 8.0)
  - Python (>= 3.9.13)
  - Composer (>= 2.1.2)
 
