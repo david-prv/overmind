@@ -1,4 +1,5 @@
 from subprocess import Popen, PIPE, STDOUT
+from threading import Timer
 import os, sys, json
 
 """
@@ -8,6 +9,8 @@ The interactive runner reads the interactions.json file and
 decides whether there are interactions or not. If so,
 it loads the pre-defined answers and communicates them to the running tool.
 """
+
+EXEC_TIMEOUT = 15
 
 def main() -> None:
     try:
@@ -46,8 +49,15 @@ def main() -> None:
     print(args, used_data)
 
     out = open("./reports/report_" + str(id) + ".txt", "w", encoding="utf-8")
+
     p = Popen(args, stdout=out, stdin=PIPE, stderr=out)
-    p.communicate(input=used_data)[0]
+    timer = Timer(EXEC_TIMEOUT, p.kill)
+
+    try:
+        timer.start()
+        stdout, stderr = p.communicate(input=used_data)[0]
+    except:
+        timer.cancel()
 
     out.close()
     exit()

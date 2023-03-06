@@ -35,6 +35,21 @@ class App
     }
 
     /**
+     * Updates the parameters, which are passed to the
+     * Core handle closure afterwards.
+     *
+     * @return void
+     */
+    private function updateParams(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "GET") {
+            Core::getInstance()->withParams($_GET);
+        } else {
+            Core::getInstance()->withParams($_POST);
+        }
+    }
+
+    /**
      * Manages all routes.
      *
      * <p>
@@ -53,45 +68,34 @@ class App
      */
     private function registerRoutes(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === "GET") {
-            Core::getInstance()->withParams($_GET);
-        } else {
-            Core::getInstance()->withParams($_POST);
-        }
+        $this->updateParams();
 
         $this->routes->add("page", function () {
-            Core::getInstance()
-                ->render();
+            Core::getInstance()->render();
         });
 
         $this->routes->add("run", function () {
-            Core::getInstance()
-                ->scan();
+            Core::getInstance()->scan();
         });
 
         $this->routes->add("upload", function () {
-            Core::getInstance()
-                ->integrate();
+            Core::getInstance()->integrate();
         });
 
         $this->routes->add("delete",function () {
-            Core::getInstance()
-                ->delete();
+            Core::getInstance()->delete();
         });
 
         $this->routes->add("edit", function () {
-            Core::getInstance()
-                ->edit();
+            Core::getInstance()->edit();
         });
 
         $this->routes->add("schedule", function () {
-            Core::getInstance()
-                ->schedule();
+            Core::getInstance()->schedule();
         });
 
         $this->routes->add("pdf", function () {
-            Core::getInstance()
-                ->pdf();
+            Core::getInstance()->pdf();
         });
     }
 

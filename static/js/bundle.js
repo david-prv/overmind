@@ -44,11 +44,11 @@ var temp = [];
     resultModal.addEventListener('hidden.bs.modal', resetStates);
 
     $('#launch-all').on("click", () => {
-        (new bootstrap.Modal(launchModal, {})).show();
+        (new bootstrap.Modal(launchModal, {backdrop: 'static', keyboard: false})).show();
     });
 
     $('#launch-selected').on("click", () => {
-        (new bootstrap.Modal(selectedModal, {})).show();
+        (new bootstrap.Modal(selectedModal, {backdrop: 'static', keyboard: false})).show();
     });
 
 })();

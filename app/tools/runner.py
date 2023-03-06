@@ -13,6 +13,8 @@ DISCLAIMER: this should not be deployed to a live system!
 This tool is meant to be used only LOCALLY!
 """
 
+EXEC_TIMEOUT = 15
+
 def main() -> None:
     # example: python3 runner.py python3 Test/app.py https://etage-4.de 3
     engine = sys.argv[1]
@@ -25,7 +27,7 @@ def main() -> None:
 
     print(args)
 
-    r = subprocess.run(args, stdout=subprocess.PIPE)
+    r = subprocess.run(args, stdout=subprocess.PIPE, timeout=EXEC_TIMEOUT)
     try:
         r = r.stdout.decode('ascii')
     except UnicodeDecodeError:
