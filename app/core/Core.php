@@ -325,7 +325,7 @@ class Core
     public function getArg(?string $arg = NULL): string
     {
         if ($arg === NULL && !is_null($this->argv)) return $this->argv;
-        if (!is_null($this->argv) && in_array($arg, $this->argv))
+        if (!is_null($this->argv) && isset($this->argv[$arg]))
             return $this->argv[$arg];
         return "";
     }

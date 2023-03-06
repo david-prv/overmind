@@ -30,8 +30,8 @@ class App
         $this->pages = Pages::getInstance();
         $this->routes = Routes::getInstance();
 
-        $this->registerPages();
         $this->registerRoutes();
+        $this->registerPages();
     }
 
     /**
@@ -53,45 +53,44 @@ class App
      */
     private function registerRoutes(): void
     {
+        if ($_SERVER['REQUEST_METHOD'] === "GET") {
+            Core::getInstance()->withParams($_GET);
+        } else {
+            Core::getInstance()->withParams($_POST);
+        }
+
         $this->routes->add("page", function () {
             Core::getInstance()
-                ->withParams($_GET)
                 ->render();
         });
 
         $this->routes->add("run", function () {
             Core::getInstance()
-                ->withParams($_GET)
                 ->scan();
         });
 
         $this->routes->add("upload", function () {
             Core::getInstance()
-                ->withParams($_POST)
                 ->integrate();
         });
 
         $this->routes->add("delete",function () {
             Core::getInstance()
-                ->withParams($_GET)
                 ->delete();
         });
 
         $this->routes->add("edit", function () {
             Core::getInstance()
-                ->withParams($_GET)
                 ->edit();
         });
 
         $this->routes->add("schedule", function () {
             Core::getInstance()
-                ->withParams($_GET)
                 ->schedule();
         });
 
         $this->routes->add("pdf", function () {
             Core::getInstance()
-                ->withParams($_GET)
                 ->pdf();
         });
     }

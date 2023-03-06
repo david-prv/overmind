@@ -24,6 +24,9 @@ def main() -> None:
     id = sys.argv[4]
     target = sys.argv[5]
 
+    if "://" in target:
+        clean_target = target.split("://")[1]
+
     if not id in data:
         print("ERROR: No interactive data found")
         return
@@ -37,6 +40,7 @@ def main() -> None:
 
     tmp = "\n".join(data[id]) + "\n"
     tmp = tmp.replace("%URL%", target)
+    tmp = tmp.replace("%RAW%", clean_target)
     used_data = str.encode(tmp)
 
     print(args, used_data)

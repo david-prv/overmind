@@ -122,8 +122,6 @@ abstract class Schedule
             return false;
         }
 
-        var_dump($schedule);
-
         if (count($schedule) === 1 && $schedule[0] === "") {
             unset($stored[$for]);
         } else {
