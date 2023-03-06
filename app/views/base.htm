@@ -108,8 +108,8 @@
                 </ul>
                 <hr/>
                 <h6>Hotkeys:</h6>
-                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> &mdash; Open searchbar<br />
-                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> &mdash; Select all tools<br />
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> &mdash; Open searchbar<br/>
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> &mdash; Select all tools<br/>
                 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> &mdash; Deselect all tools
             </div>
             <div class="modal-footer">
@@ -121,7 +121,8 @@
 <!-- End Help Modal -->
 
 <!-- Selected Modal -->
-<div class="modal fade" id="selectedModal" tabindex="-1" aria-labelledby="selectedModalLabel" aria-hidden="true">
+<div data-bs-backdrop="static" data-bs-keyboard="false" class="modal fade" id="selectedModal" tabindex="-1"
+     aria-labelledby="selectedModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -145,7 +146,8 @@
                 </ul>
             </div>
             <div class="modal-footer">
-                <button id="btn-start-selected" type="button" class="btn btn-primary" data-bs-dismiss="modal">Start
+                <button id="btn-start-selected" type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="((event) => { invokeLaunchSelected(event); })()">Start
                 </button>
             </div>
         </div>
@@ -154,7 +156,8 @@
 <!-- End Selected Modal -->
 
 <!-- Launch Modal -->
-<div class="modal fade" id="launchModal" tabindex="-1" aria-labelledby="launchModalLabel" aria-hidden="true">
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="launchModal" tabindex="-1"
+     aria-labelledby="launchModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -205,7 +208,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Start</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="((event) => { invokeLaunchAll(event); })()">Start
+                </button>
             </div>
         </div>
     </div>
@@ -213,7 +218,8 @@
 <!-- End Launch Modal -->
 
 <!-- Result Modal -->
-<div class="modal fade" id="resModal" tabindex="-1" aria-labelledby="resModalLabel" aria-hidden="true">
+<div data-bs-backdrop="static" data-bs-keyboard="false" class="modal fade" id="resModal" tabindex="-1"
+     aria-labelledby="resModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -226,7 +232,9 @@
             <div class="modal-footer">
                 <button onclick="(function(event) {
                     event.preventDefault();
-                })(event);" type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-print"></i>&nbsp; Print Report</button>
+                })(event);" type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-print"></i>&nbsp;
+                    Print Report
+                </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>

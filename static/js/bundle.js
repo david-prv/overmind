@@ -35,20 +35,26 @@ var temp = [];
     launchSelectedOption.addEventListener("click", prepareSelectedModal);
 
     let launchModal = document.getElementById("launchModal");
-    launchModal.addEventListener('hidden.bs.modal', invokeLaunchAll)
+    //launchModal.addEventListener('hidden.bs.modal', invokeLaunchAll)
 
     let selectedModal = document.getElementById("selectedModal");
-    selectedModal.addEventListener('hidden.bs.modal', invokeLaunchSelected);
+    //selectedModal.addEventListener('hidden.bs.modal', invokeLaunchSelected);
 
     let resultModal = document.getElementById("resModal");
     resultModal.addEventListener('hidden.bs.modal', resetStates);
 
     $('#launch-all').on("click", () => {
-        (new bootstrap.Modal(launchModal, {backdrop: 'static', keyboard: false})).show();
+        (new bootstrap.Modal(launchModal, {
+            backdrop: 'static',
+            keyboard: false
+        })).show();
     });
 
     $('#launch-selected').on("click", () => {
-        (new bootstrap.Modal(selectedModal, {backdrop: 'static', keyboard: false})).show();
+        (new bootstrap.Modal(selectedModal, {
+            backdrop: 'static',
+            keyboard: false
+        })).show();
     });
 
 })();
@@ -338,7 +344,10 @@ function finishedSelected(index, selected) {
             getText(finishedIDs[j]);
         }
 
-        let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
+        let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {
+            backdrop: 'static',
+            keyboard: false
+        });
         resultModal.show();
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
         counterS = 0;
