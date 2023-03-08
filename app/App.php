@@ -65,6 +65,8 @@ class App
      * -    For the handle function use $this->core, followed by all
      *      specifications you want to make
      * </p>
+     *
+     * @return void
      */
     private function registerRoutes(): void
     {
@@ -117,9 +119,12 @@ class App
      * -    You can use the public programming interface from Core
      *      by using the local reference: $this->core->...
      * </p>
+     *
+     * @return void
      */
-    private function registerPages()
+    private function registerPages(): void
     {
+        /* Index page */
         $this->pages->add("BASE", array(
             array("%TOOLS_LIST%", Core::getInstance()->renderToolsAsHtml()),
             array("%PROJECT_NAME%", Core::getInstance()->getProjectName()),
@@ -129,16 +134,24 @@ class App
             array("%TOOLS_JSON%", Core::getInstance()->getToolsJson())
         ));
 
+        /* Interactive input schedule */
         $this->pages->add("SCHEDULE", array(
             array("%PROJECT_NAME%", Core::getInstance()->getProjectName()),
             array("%INTERACTIONS_LIST%", Core::getInstance()->renderScheduleAsHtml(Core::getInstance()->getArg("edit"))),
             array("%ID%", Core::getInstance()->getArg("edit"))
         ));
 
+        /* Integration of a new tool */
         $this->pages->add("INTEGRATE", array(
             array("%PROJECT_NAME%", Core::getInstance()->getProjectName())
         ));
 
+        /* Creation of the reference report */
+        $this->pages->add("REFERENCE", array(
+            array("%PROJECT_NAME%", Core::getInstance()->getProjectName())
+        ));
+
+        /* Just a test page */
         $this->pages->add("TEST", array(
             array("%PROJECT_NAME%", Core::getInstance()->getProjectName())
         ));

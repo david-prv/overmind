@@ -16,7 +16,9 @@ This tool is meant to be used only LOCALLY!
 EXEC_TIMEOUT = 15
 
 def main() -> None:
-    # example: python3 runner.py python3 Test/app.py https://etage-4.de 3
+    # Example:
+    #                   Engine  App         Cmd                Id
+    # python3 runner.py python3 Test/app.py https://etage-4.de 3
     engine = sys.argv[1]
     app = sys.argv[2]
     cmd = sys.argv[3]

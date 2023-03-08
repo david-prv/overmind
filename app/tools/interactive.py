@@ -55,7 +55,7 @@ def main() -> None:
 
     try:
         timer.start()
-        stdout, stderr = p.communicate(input=used_data)[0]
+        p.communicate(input=used_data)[0]
     except:
         timer.cancel()
 
