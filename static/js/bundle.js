@@ -397,6 +397,7 @@ function finished(index, max) {
 // fetches text from a .txt report
 function getText(id) {
 
+    // TODO: remove hardcode URLs
     console.log("[INFO] Fetching report", id, 'http://localhost:8080/reports/report_' + id + '.txt');
 
     // read text from URL location

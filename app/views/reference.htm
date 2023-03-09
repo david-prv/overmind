@@ -24,12 +24,15 @@
 <div class="container p-3">
     <form class="row g-3" enctype="multipart/form-data" action="/index.php?upload" method="POST">
         <h1>Create a reference report</h1>
-        <p>
-            Replace all dynamic values, which change independently of the scanning result (e.g. target URL, timestamps,
-            etc...), by placeholders. Placeholders will be ignored during the risk assessment evaluation, s.t. they
-            don't cause any change of the risk-factor. To indicate such a placeholder, use <code>%</code> to surround
-            the dynamic value.<br>Example: <code>I_WILL_CHANGE</code> becomes <code>%I_WILL_CHANGE%</code>.
-        </p>
+        <div>
+            <p class="left-border">
+                Replace all dynamic values, which change independently of the scanning result (e.g. target URL, timestamps,
+                etc...), by placeholders. Placeholders will be ignored during the risk assessment evaluation, s.t. they
+                don't cause any change of the risk-factor (i.e. they are going to be "ignored"). To indicate such a
+                placeholder, use <code>%</code> to surround the dynamic value.
+                <br>Example: <code>I_WILL_CHANGE</code> becomes <code>%I_WILL_CHANGE%</code>.
+            </p>
+        </div>
         <div>
             <textarea name="reference" class="form-control" id="reference" rows="25" required></textarea>
         </div>
@@ -42,6 +45,9 @@
 </body>
 <footer>
     <!-- Runtime JS -->
+    <script type="text/javascript">
+        const DATA = JSON.parse('%TOOLS_JSON%');
+    </script>
     <script src="/static/js/reference.min.js"></script>
 </footer>
 </html>

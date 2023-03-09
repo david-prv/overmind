@@ -25,6 +25,13 @@
     <form class="row g-3" enctype="multipart/form-data" action="/index.php?upload" method="POST">
         <h1>Scanner Integration</h1>
         <div>
+            <p class="left-border">
+                Fill in all information about the tool, you want to integrate. Please make sure, that the index file
+                is given correctly. You can also provide a subfolder's path there. For example: iff the tool is located
+                in <code>toolName/subFolder/app.py</code>, provide <code>subfolder/app.py</code> as index file.
+            </p>
+        </div>
+        <div>
             <label for="name" class="form-label">Name</label>
             <input name="name" type="text" class="form-control" id="name" placeholder="e.g. Wordpress Scanner Tool"
                    required>

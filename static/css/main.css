@@ -95,6 +95,11 @@ input[type="search"]:focus::-webkit-search-cancel-button {
     border-bottom-left-radius: 0 !important;
 }
 
+.left-border {
+    border-left: 4px solid blue;
+    padding: 0.5em;
+}
+
 kbd {
     background-color: #eee;
     border-radius: 3px;
