@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class ExecResult
+ * Class ScanResult
  *
  * <p>
  * This class stores the result of a scanner execution
@@ -12,7 +12,7 @@
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-class ExecResult
+class ScanResult
 {
     /**
      * Constants for Result Tokens
@@ -69,7 +69,7 @@ class ExecResult
      */
     public function isOk(): bool
     {
-        return $this->resultToken === ExecResult::RESULT_OK;
+        return $this->resultToken === ScanResult::RESULT_OK;
     }
 
 }

@@ -84,3 +84,9 @@ function executeTool(btn_icon, btn_caption, ref_txt) {
         callback(id, a, b, c);
     });
 }
+
+/* Submits the reference report and redirects */
+function submitRef() {
+    // TODO: Submit to backend
+    window.location.href = "index.php?page=schedule&edit=" + CURRENT;
+}

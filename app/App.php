@@ -149,7 +149,8 @@ class App
         /* Creation of the reference report */
         $this->pages->add("REFERENCE", array(
             array("%PROJECT_NAME%", Core::getInstance()->getProjectName()),
-            array("%TOOLS_JSON%", Core::getInstance()->getToolsJson())
+            array("%TOOLS_JSON%", Core::getInstance()->getToolsJson()),
+            array("%ID%", Core::getInstance()->getArg("edit"))
         ));
 
         /* Just a test page */

@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container p-3">
-    <form class="row g-3" enctype="multipart/form-data" action="/index.php?upload" method="POST">
+    <div class="row g-3">
         <h1>Create a reference report</h1>
         <div>
             <p class="left-border">
@@ -37,16 +37,17 @@
             <textarea name="reference" class="form-control" id="reference" rows="25" required></textarea>
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="submit" name="submit"><span id="button-icon"></span>&nbsp;<span
+            <button onclick="submitRef()" class="btn btn-primary" type="submit" name="submit"><span id="button-icon"></span>&nbsp;<span
                     id="button-caption"></span></button>
         </div>
-    </form>
+    </div>
 </div>
 </body>
 <footer>
     <!-- Runtime JS -->
     <script type="text/javascript">
         const DATA = JSON.parse('%TOOLS_JSON%');
+        const CURRENT = "%ID%";
     </script>
     <script src="/static/js/reference.min.js"></script>
 </footer>

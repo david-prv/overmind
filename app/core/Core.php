@@ -214,7 +214,7 @@ class Core
             ->fileData($_FILES);
 
         $res = $scanner->create();
-        if ($res !== -1) header("Location: index.php?page=schedule&edit=$res");
+        if ($res !== -1) header("Location: index.php?page=reference&edit=$res"); // index.php?page=schedule&edit=$res
         else die("<h1>Something went wrong! Please try again.</h1>");
     }
 

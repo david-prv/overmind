@@ -39,9 +39,9 @@ class Scanner implements Runnable, Integrable
      *
      * @param string $cmd
      * @param int $timeout
-     * @return ExecResult
+     * @return ScanResult
      */
-    private function runWithTimeout(string $cmd, int $timeout): ExecResult
+    private function runWithTimeout(string $cmd, int $timeout): ScanResult
     {
         $st = microtime(true);
 
@@ -50,9 +50,9 @@ class Scanner implements Runnable, Integrable
         $et = microtime(true);
         $dt = $et - $st;
 
-        if ($retVal === false) return new ExecResult(ExecResult::RESULT_ERROR, false);
-        if ((int)$dt >= $timeout) return new ExecResult(ExecResult::RESULT_TIMEOUT, $retVal);
-        return new ExecResult(ExecResult::RESULT_OK, $retVal);
+        if ($retVal === false) return new ScanResult(ScanResult::RESULT_ERROR, false);
+        if ((int)$dt >= $timeout) return new ScanResult(ScanResult::RESULT_TIMEOUT, $retVal);
+        return new ScanResult(ScanResult::RESULT_OK, $retVal);
     }
 
     /**
