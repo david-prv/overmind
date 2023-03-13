@@ -34,6 +34,28 @@ class Scanner implements Runnable, Integrable
     //////////////////////
 
     /**
+     * Actual execution with respect to
+     * errors and timeouts, which may occur
+     *
+     * @param string $cmd
+     * @param int $timeout
+     * @return ExecResult
+     */
+    private function runWithTimeout(string $cmd, int $timeout): ExecResult
+    {
+        $st = microtime(true);
+
+        $retVal = shell_exec($cmd);
+
+        $et = microtime(true);
+        $dt = $et - $st;
+
+        if ($retVal === false) return new ExecResult(ExecResult::RESULT_ERROR, false);
+        if ((int)$dt >= $timeout) return new ExecResult(ExecResult::RESULT_TIMEOUT, $retVal);
+        return new ExecResult(ExecResult::RESULT_OK, $retVal);
+    }
+
+    /**
      * Defines the target
      *
      * @param string $url
@@ -117,18 +139,19 @@ class Scanner implements Runnable, Integrable
      * runtime script needs to know the termination status.
      * This is secure because no user input can be provided.
      *
+     * @param int $timeout
      * @return bool
      */
-    public function run(): bool
+    public function run(int $timeout = 15): bool
     {
         if (Schedule::isPresent($this->cwd, $this->id)) {
-            return shell_exec("python3 " . $this->cwd . "/app/tools/interactive.py " .
+            return ($this->runWithTimeout("python3 " . $this->cwd . "/app/tools/interactive.py " .
                     $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
-                    " " . $this->cmdline . " " . $this->id . " " . $this->target) !== NULL;
+                    " " . $this->cmdline . " " . $this->id . " " . $this->target, $timeout))->isOk();
         }
-        return shell_exec("python3 " . $this->cwd . "/app/tools/runner.py " .
+        return ($this->runWithTimeout("python3 " . $this->cwd . "/app/tools/runner.py " .
                 $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
-                " " . $this->cmdline . " " . $this->id . " " . $this->target) !== NULL;
+                " " . $this->cmdline . " " . $this->id . " " . $this->target, $timeout))->isOk();
     }
 
     ////////////////////////
@@ -272,7 +295,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Deletes a folder and all of its sub directories
+     * Deletes a folder and all of its subdirectories
      * and containing files
      *
      * @param $dir
@@ -306,7 +329,7 @@ class Scanner implements Runnable, Integrable
         $newMap = array();
         foreach ($map as $tool) {
             if ((string)$tool->id === (string)$id) continue;
-            array_push($newMap, $tool);
+            $newMap[] = $tool;
         }
         return $newMap;
     }
@@ -356,7 +379,7 @@ class Scanner implements Runnable, Integrable
             "ignore" => false
         );
 
-        array_push($currentMap, $newTool);
+        $currentMap[] = $newTool;
 
         $targetFile = $this->cwd . "/" . basename($_FILES["file"]["name"]);
         if (move_uploaded_file($this->fileData["file"]["tmp_name"], $targetFile) === false) {

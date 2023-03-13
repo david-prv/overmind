@@ -319,10 +319,10 @@ class Core
     /**
      * Getter for arguments
      *
-     * @param string $arg
-     * @return array
+     * @param string|null $arg
+     * @return mixed
      */
-    public function getArg(?string $arg = NULL): string
+    public function getArg(?string $arg = NULL)
     {
         if ($arg === NULL && !is_null($this->argv)) return $this->argv;
         if (!is_null($this->argv) && isset($this->argv[$arg]))

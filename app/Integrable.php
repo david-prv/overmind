@@ -56,10 +56,10 @@ interface Integrable
     /**
      * Defines the startup arguments used for the Runnable
      *
-     * @param string $args
+     * @param string $cmdLineString
      * @return Integrable
      */
-    public function withArguments(string $args): Integrable;
+    public function withArguments(string $cmdLineString): Integrable;
 
     /**
      * Defines the running engine used

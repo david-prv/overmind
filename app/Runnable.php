@@ -80,7 +80,8 @@ interface Runnable
      * result as HTTP response. This is because the javascript
      * runtime script needs to know the termination status
      *
+     * @param int $timeout
      * @return bool
      */
-    public function run(): bool;
+    public function run(int $timeout): bool;
 }

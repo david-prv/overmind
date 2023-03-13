@@ -24,7 +24,7 @@ class Autoloader
      *
      * @var array|string[]
      */
-    private static array $locations = ["./app/", "./app/core/", "./app/core/lib/"];
+    private static array $locations = ["./app/", "./app/core/", "./app/lib/"];
 
     /**
      * Autoloader constructor.
@@ -35,7 +35,7 @@ class Autoloader
             foreach (Autoloader::$locations as $location) {
                 $abs_path = $location . "{$class_name}.php";
                 if (file_exists($abs_path)) {
-                    include $abs_path . "";
+                    include $abs_path;
                 }
             }
         };

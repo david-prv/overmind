@@ -228,7 +228,8 @@ function invokeLaunchSelected(event) {
     for (let j = 0; j < queue.length; j++) {
         $("#state-" + selectedInputs[j]).html("<span class='blinking'>Running...</span>");
         $.get("/index.php" + queue[j], function (data, status, xhr, id = selectedInputs[j], callback = finishedSelected, max = queue.length) {
-            $("#state-" + selectedInputs[j]).html("<span style='color:green!important;'>Finished</span>");
+            if (data === "done") $("#state-" + selectedInputs[j]).html("<span style='color:green!important;'>Finished</span>");
+            else $("#state-" + selectedInputs[j]).html("<span style='color:red!important;'>Cancelled</span>");
             callback(id, selectedInputs);
         });
     }
@@ -301,7 +302,8 @@ function invokeLaunchAll(event) {
 
         $("#state-" + id).html("<span class='blinking'>Running...</span>");
         $.get("/index.php" + queue[j], function (data, status, xhr, identity = id, callback = finished, max = queue.length) {
-            $("#state-" + identity).html("<span style='color:green!important;'>Finished</span>");
+            if (data === "done") $("#state-" + identity).html("<span style='color:green!important;'>Finished</span>");
+            else $("#state-" + identity).html("<span style='color:red!important;'>Cancelled</span>");
             temp.push(identity);
             callback(identity, max);
         });
