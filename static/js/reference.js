@@ -87,6 +87,7 @@ function executeTool(btn_icon, btn_caption, ref_txt) {
 
 /* Submits the reference report and redirects */
 function submitRef() {
-    // TODO: Submit to backend
+    // POST: index.php?reference, {"id": ID, "data": FORM_DATA}
+    $.post("index.php?reference", {"id": CURRENT_ID, "reference": null});
     window.location.href = "index.php?page=schedule&edit=" + CURRENT;
 }

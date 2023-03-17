@@ -26,6 +26,7 @@ class Scanner implements Runnable, Integrable
     private string $description;
     private string $version;
     private string $keywords;
+    private string $reference;
     private array $interactions;
     private array $fileData;
 
@@ -235,7 +236,7 @@ class Scanner implements Runnable, Integrable
      * Defines the order of interactions
      *
      * @param array $interactions
-     * @return Integrable
+     * @return Scanner
      */
     public function withInteractions(array $interactions): Scanner
     {
@@ -247,11 +248,24 @@ class Scanner implements Runnable, Integrable
      * Defines by which keywords this tool can be found
      *
      * @param string $keywords
-     * @return Integrable
+     * @return Scanner
      */
     public function searchKeywords(string $keywords): Scanner
     {
         $this->keywords = $keywords;
+        return $this;
+    }
+
+    /**
+     * Defines the reference used for risk
+     * assessment later during the vulnerability scans
+     *
+     * @param string $reference
+     * @return Integrable
+     */
+    public function withReference(string $reference): Integrable
+    {
+        $this->reference = $reference;
         return $this;
     }
 
@@ -490,5 +504,22 @@ class Scanner implements Runnable, Integrable
         }
 
         return Schedule::put($this->cwd, $this->interactions, $this->id);
+    }
+
+    /**
+     * Stores a reference report for the given
+     * tool/scanner, which is identified by the ID
+     *
+     * @return bool
+     */
+    public function reference(): bool
+    {
+        $refPath = $this->cwd . "/../../refs";
+
+        if (!is_dir($refPath) || !isset($this->reference) || !isset($this->id)) {
+            return false;
+        }
+
+        return Reference::put($refPath, $this->id, $this->reference);
     }
 }

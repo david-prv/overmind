@@ -19,7 +19,7 @@
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-interface Integrable
+interface Integrable extends Runnable
 {
     /**
      * Defines the scanner name
@@ -28,6 +28,14 @@ interface Integrable
      * @return Integrable
      */
     public function hasName(string $name): Integrable;
+
+    /**
+     * Defined the scanner ID
+     *
+     * @param string $id
+     * @return Runnable
+     */
+    public function identifiedBy(string $id): Runnable;
 
     /**
      * Defines the creator's name
@@ -112,6 +120,15 @@ interface Integrable
     public function searchKeywords(string $keywords): Integrable;
 
     /**
+     * Defines the reference used for risk
+     * assessment later during the vulnerability scans
+     *
+     * @param string $reference
+     * @return Integrable
+     */
+    public function withReference(string $reference): Integrable;
+
+    /**
      * Performs the final integration.
      * Returns -1 for failed creation or the ID
      * if the integration was successful
@@ -143,4 +160,12 @@ interface Integrable
      * @return bool
      */
     public function schedule(): bool;
+
+    /**
+     * Stores a reference report for the given
+     * tool/scanner, which is identified by the ID
+     *
+     * @return bool
+     */
+    public function reference(): bool;
 }

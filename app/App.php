@@ -70,32 +70,46 @@ class App
      */
     private function registerRoutes(): void
     {
+        // Updates internal parameters (GET or POST),
+        // used by all application functions
         $this->updateParams();
 
+        // Access a page (register them below)
         $this->routes->add("page", function () {
             Core::getInstance()->render();
         });
 
+        // Background runner for scanners
         $this->routes->add("run", function () {
             Core::getInstance()->scan();
         });
 
+        // Background endpoint for tool upload
         $this->routes->add("upload", function () {
             Core::getInstance()->integrate();
         });
 
+        // Background endpoint for reference creation
+        $this->routes->add("reference", function () {
+           Core::getInstance()->reference();
+        });
+
+        // Background endpoint for tool removal
         $this->routes->add("delete",function () {
             Core::getInstance()->delete();
         });
 
+        // Background endpoint for tool edition
         $this->routes->add("edit", function () {
             Core::getInstance()->edit();
         });
 
+        // Background endpoint for interaction schedules
         $this->routes->add("schedule", function () {
             Core::getInstance()->schedule();
         });
 
+        // Trigger PDF stream
         $this->routes->add("pdf", function () {
             Core::getInstance()->pdf();
         });

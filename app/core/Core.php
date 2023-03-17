@@ -219,6 +219,30 @@ class Core
     }
 
     /**
+     * Creates a reference report for a tool
+     */
+    public function reference(): void
+    {
+        if ($this->argv === NULL) {
+            die("no arguments provided");
+        }
+
+        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
+        $reference = (isset($this->argv["reference"])) ? $this->argv["reference"] : NULL;
+
+        if (is_null($id)) {
+            die("invalid arguments or incomplete arg set");
+        }
+
+        $scanner = (new Scanner())
+            ->identifiedBy($id)
+            ->withReference($reference);
+
+        if ($scanner->reference()) die("done");
+        else die("error");
+    }
+
+    /**
      * Deletes an existing tool from the bundle
      */
     public function delete(): void
@@ -317,7 +341,7 @@ class Core
     ////////////////////
 
     /**
-     * Getter for arguments
+     * Failsafe getter for arguments
      *
      * @param string|null $arg
      * @return mixed
