@@ -331,6 +331,21 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
+     * Delete the (maybe existing) tool
+     * references from the filesystem
+     *
+     * @param string $id
+     * @return bool
+     */
+    private function deleteToolReference(string $id): bool
+    {
+        $refPath = $this->cwd . "/../../refs/$id.txt";
+
+        if (!is_file($refPath)) return true;
+        return unlink($refPath);
+    }
+
+    /**
      * Removes a specific tool from map.
      * Selection uses the tool's ID
      *
@@ -449,7 +464,8 @@ class Scanner implements Runnable, Integrable
         $currentMap = $this->removeToolFrom($currentMap, $this->id);
 
         return $this->deleteToolFolder($workspace)
-            && file_put_contents($mapPath, json_encode($currentMap));
+            && file_put_contents($mapPath, json_encode($currentMap)) !== false
+            && $this->deleteToolReference($this->id);
     }
 
     /**

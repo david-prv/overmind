@@ -24,6 +24,7 @@ class Core
     private string $TOOLS_PATH;
 
     private Pages $pages;
+    private Analyzer $analyzer;
 
     private string $PROJECT_NAME = "Scanner Bundle";
     private string $PROJECT_AUTHOR = "David Dewes";
@@ -51,6 +52,9 @@ class Core
             ? $this->APP_PATH . "/app/tools/map.json"
             : $tip), false);
 
+        $this->pages = Pages::getInstance();
+        $this->analyzer = Analyzer::getInstance();
+
         foreach ($this->TOOLS_OBJECT as $key => $value) {
             if ($value->ignore) unset($this->TOOLS_OBJECT[$key]);
         }
@@ -66,7 +70,7 @@ class Core
     {
         if (self::$instance === NULL) {
             self::$instance = new Core();
-            self::$instance->pages = Pages::getInstance();
+            // self::$instance->pages = Pages::getInstance();
         }
         return self::$instance;
     }

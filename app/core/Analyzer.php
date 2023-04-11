@@ -25,5 +25,36 @@
  */
 class Analyzer
 {
-    // TODO
+    private static ?Analyzer $instance = NULL;
+
+    private function __construct()
+    {
+    }
+
+    public static function getInstance(): Analyzer
+    {
+        if (self::$instance === NULL) {
+            self::$instance = new Analyzer();
+        }
+        return self::$instance;
+    }
+
+    public function prepare(string $id, string $actualResult): ?StringComparator
+    {
+        // 1. Read & decode reference
+        // 2. Read actual result from report
+        // 3. Prepare comparator
+
+        // Can FAIL in any step --> return NULL
+        return NULL;
+    }
+
+    public function analyze(string $id, StringComparator $comparator): ?AnalysisResult
+    {
+        // 1. Run comparator
+        // 2. Return Analysis Result
+
+        // Can FAIL in any step --> return NULL
+        return NULL;
+    }
 }

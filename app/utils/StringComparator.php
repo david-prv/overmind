@@ -21,6 +21,7 @@ class StringComparator
 {
     private string $string1;
     private string $string2;
+    private int $distance;
 
     /**
      * Constructor.
@@ -32,6 +33,7 @@ class StringComparator
     {
         $this->string1 = $string1;
         $this->string2 = $string2;
+        $this->distance = PHP_INT_MAX; // infinity
     }
 
     /**
@@ -101,9 +103,9 @@ class StringComparator
      * with a long series of occurring words. If diff = 0,
      * both texts are identical (ignoring the placeholders).
      *
-     * @return int
+     * @return void
      */
-    public function compare(): int
+    public function compare(): void
     {
         $a = $this->string1;
         $b = $this->string2;
@@ -129,6 +131,16 @@ class StringComparator
 
         // total diff of arrays is also text difference
         // one char difference results in 8 distance, so we divide by that factor
-        return (int)($accumulator / 8) + $this->lengthDifference($a_words, $b_words);
+        $this->distance = (int)($accumulator / 8) + $this->lengthDifference($a_words, $b_words);
+    }
+
+    /**
+     * Distance getter
+     *
+     * @return int
+     */
+    public function getDistance(): int
+    {
+        return $this->distance;
     }
 }

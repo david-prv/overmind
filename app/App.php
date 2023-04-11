@@ -17,7 +17,21 @@
  */
 class App
 {
+    /**
+     * Keeps track of all displayable
+     * HTML pages and their placeholders
+     *
+     * @var Pages
+     */
     private Pages $pages;
+
+    /**
+     * Keeps track of all available routes
+     * and manages how they will be handled
+     * (e.g. render a page)
+     *
+     * @var Routes
+     */
     private Routes $routes;
 
     /**
@@ -50,11 +64,11 @@ class App
      * would redirect to INDEX view and passing the args
      * {'edit': 2} to it.
      *
-     * @param string $destIdentifier
+     * @param string $routeIdentifier
      */
-    public static function finishWithRedirect(string $destIdentifier): void
+    public static function finishWithRedirect(string $routeIdentifier): void
     {
-        header("Location: index.php?$destIdentifier");
+        header("Location: index.php?$routeIdentifier");
         die();
     }
 
