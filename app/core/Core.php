@@ -123,14 +123,14 @@ class Core
     public function pdf(): void
     {
         if ($this->argv === NULL) {
-            die("no arguments provided");
+            App::finishWithError("no arguments provided");
         }
 
         $target = (isset($this->argv["last"])) ? $this->argv["last"] : NULL;
         $tools = (isset($this->argv["tools"])) ? $this->argv["tools"] : NULL;
 
         if (is_null($target) || is_null($tools)) {
-            die("invalid arguments or incomplete arg set");
+            App::finishWithError("invalid arguments or incomplete arg set");
         }
 
         $pdf = new PDFBuilder();
@@ -150,7 +150,7 @@ class Core
     public function scan(): void
     {
         if ($this->argv === NULL) {
-            die("no arguments provided");
+            App::finishWithError("no arguments provided");
         }
 
         $target = (isset($this->argv["target"])) ? $this->argv["target"] : NULL;
@@ -160,7 +160,7 @@ class Core
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
         if (is_null($target) || is_null($engine) || is_null($app) || is_null($args) || is_null($id)) {
-            die("invalid arguments or incomplete arg set");
+            App::finishWithError("invalid arguments or incomplete arg set");
         }
 
         $runner = (new Scanner())
@@ -171,8 +171,8 @@ class Core
             ->withArguments($args)
             ->identifiedBy($id);
 
-        if ($runner->run()) die("done");
-        else die("error");
+        if ($runner->run()) App::finishWithSuccess();
+        else App::finishWithError();
 
     }
 
@@ -182,7 +182,7 @@ class Core
     public function integrate(): void
     {
         if ($this->argv === NULL) {
-            die("no arguments provided");
+            App::finishWithError("no arguments provided");
         }
 
         $name = (isset($this->argv["name"])) ? $this->argv["name"] : NULL;
@@ -197,7 +197,7 @@ class Core
 
         if (is_null($name) || is_null($creator) || is_null($url) || is_null($version) || is_null($cmdline)
             || is_null($description) || is_null($engine) || is_null($index) || is_null($keywords) || !isset($_FILES)) {
-            die("invalid arguments or incomplete arg set");
+            App::finishWithError("invalid arguments or incomplete arg set");
         }
 
         $scanner = (new Scanner())
@@ -214,8 +214,8 @@ class Core
             ->fileData($_FILES);
 
         $res = $scanner->create();
-        if ($res !== -1) header("Location: index.php?page=reference&edit=$res"); // index.php?page=schedule&edit=$res
-        else die("<h1>Something went wrong! Please try again.</h1>");
+        if ($res !== -1) App::finishWithRedirect("page=schedule&edit=$res");
+        else App::finishWithError("<h1>Something went wrong! Please try again.</h1>");
     }
 
     /**
@@ -224,22 +224,23 @@ class Core
     public function reference(): void
     {
         if ($this->argv === NULL) {
-            die("no arguments provided");
+            App::finishWithError("no arguments provided");
         }
 
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
         $reference = (isset($this->argv["reference"])) ? $this->argv["reference"] : NULL;
 
         if (is_null($id)) {
-            die("invalid arguments or incomplete arg set");
+            App::finishWithError("invalid arguments or incomplete arg set");
         }
 
         $scanner = (new Scanner())
+            ->useCWD($this->TOOLS_PATH)
             ->identifiedBy($id)
             ->withReference($reference);
 
-        if ($scanner->reference()) die("done");
-        else die("error");
+        if ($scanner->reference()) App::finishWithSuccess();
+        else App::finishWithError();
     }
 
     /**
@@ -248,19 +249,19 @@ class Core
     public function delete(): void
     {
         if ($this->argv === NULL) {
-            die("no arguments provided");
+            App::finishWithError("no arguments provided");
         }
 
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
         if (is_null($id)) {
-            die("invalid arguments or incomplete arg set");
+            App::finishWithError("invalid arguments or incomplete arg set");
         }
 
         $scanner = (new Scanner())->useCWD($this->TOOLS_PATH)->identifiedBy($id);
 
-        if ($scanner->delete()) die("done");
-        else die("error");
+        if ($scanner->delete()) App::finishWithSuccess();
+        else App::finishWithError();
     }
 
     /**
@@ -271,7 +272,7 @@ class Core
         $jsonObj = (isset($this->argv["json"])) ? $this->argv["json"] : NULL;
 
         if (is_null($jsonObj)) {
-            die("no json object found");
+            App::finishWithError("no json object found");
         }
 
         $jsonObj = json_decode($jsonObj);
@@ -289,7 +290,7 @@ class Core
 
         if (is_null($id) || is_null($name) || is_null($creator) || is_null($url) || is_null($version)
             || is_null($cmdline) || is_null($description) || is_null($engine) || is_null($index) || is_null($keywords)) {
-            die("invalid arguments or incomplete arg set");
+            App::finishWithError("invalid arguments or incomplete arg set");
         }
 
         $scanner = (new Scanner())
@@ -305,8 +306,8 @@ class Core
             ->describedBy($description)
             ->identifiedBy($id);
 
-        if ($scanner->update()) die("done");
-        else die("error");
+        if ($scanner->update()) App::finishWithSuccess();
+        else App::finishWithError();
     }
 
     /**
@@ -315,14 +316,14 @@ class Core
     public function schedule(): void
     {
         if ($this->argv === NULL) {
-            die("no arguments provided");
+            App::finishWithError("no arguments provided");
         }
 
         $interactions = (isset($this->argv["interactions"])) ? $this->argv["interactions"] : NULL;
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
         if (is_null($interactions) || is_null($id)) {
-            die("invalid arguments or incomplete arg set");
+            App::finishWithError("invalid arguments or incomplete arg set");
         }
 
         $interactions = explode(",", $interactions);
@@ -332,8 +333,8 @@ class Core
             ->identifiedBy($id)
             ->withInteractions($interactions);
 
-        if ($scanner->schedule()) die("done");
-        else die("error");
+        if ($scanner->schedule()) App::finishWithSuccess();
+        else App::finishWithError();
     }
 
     ////////////////////

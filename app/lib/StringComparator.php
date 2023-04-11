@@ -24,6 +24,9 @@ class StringComparator
 
     /**
      * Constructor.
+     *
+     * @param string $string1
+     * @param string $string2
      */
     public function __construct(string $string1, string $string2)
     {
@@ -33,6 +36,10 @@ class StringComparator
 
     /**
      * Calculate the positive difference between two arrays
+     *
+     * @param array $a
+     * @param array $b
+     * @return int
      */
     private function lengthDifference(array $a, array $b): int
     {
@@ -91,7 +98,8 @@ class StringComparator
     /**
      * Does the comparison for two strings.
      * This function also works for entire text blocks,
-     * with a long series of occurring words.
+     * with a long series of occurring words. If diff = 0,
+     * both texts are identical (ignoring the placeholders).
      *
      * @return int
      */

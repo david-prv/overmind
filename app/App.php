@@ -21,6 +21,44 @@ class App
     private Routes $routes;
 
     /**
+     * Method for closing HTTP requests by
+     * printing an error indication message
+     *
+     * @param string $msg
+     */
+    public static function finishWithError(string $msg = "error"): void
+    {
+        die($msg);
+    }
+
+    /**
+     * Method for closing HTTP requests by
+     * printing a success indicating message
+     *
+     * @param string $msg
+     */
+    public static function finishWithSuccess(string $msg = "done"): void
+    {
+        die($msg);
+    }
+
+    /**
+     * Method for closing HTTP requests by
+     * redirecting to another page.
+     *
+     * E.g. finishWithRedirect("page=index&edit=2");
+     * would redirect to INDEX view and passing the args
+     * {'edit': 2} to it.
+     *
+     * @param string $destIdentifier
+     */
+    public static function finishWithRedirect(string $destIdentifier): void
+    {
+        header("Location: index.php?$destIdentifier");
+        die();
+    }
+
+    /**
      * App constructor.
      */
     function __construct()
