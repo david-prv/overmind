@@ -175,6 +175,8 @@ class Core
             ->withArguments($args)
             ->identifiedBy($id);
 
+        // TODO: $this->analyzer->get($this->TOOLS_PATH, $id)->analyze();
+
         if ($runner->run()) App::finishWithSuccess();
         else App::finishWithError();
 

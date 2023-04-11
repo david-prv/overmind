@@ -42,17 +42,9 @@ class AnalysisResult
      */
     private int $returnValue;
 
-    /**
-     * The used comparator
-     *
-     * @var StringComparator
-     */
-    private StringComparator $comparator;
-
-    public function __construct(string $resultToken, StringComparator $comparator)
+    public function __construct(string $resultToken, int $returnValue = PHP_INT_MAX)
     {
-        $this->comparator = $comparator;
-        $this->returnValue = $comparator->getDistance();
+        $this->returnValue = $returnValue;
         $this->resultToken = $resultToken;
     }
 

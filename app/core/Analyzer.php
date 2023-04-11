@@ -26,6 +26,7 @@
 class Analyzer
 {
     private static ?Analyzer $instance = NULL;
+    private ?StringComparator $comparator = NULL;
 
     private function __construct()
     {
@@ -39,22 +40,29 @@ class Analyzer
         return self::$instance;
     }
 
-    public function prepare(string $id, string $actualResult): ?StringComparator
+    public function get(string $cwd, string $id): ?Analyzer
     {
-        // 1. Read & decode reference
-        // 2. Read actual result from report
-        // 3. Prepare comparator
+        $refFile = $cwd . "/../../refs/$id.txt";
+        $reportFile = $cwd . "/../../reports/$id.txt";
+        if (!is_file($refFile) || !is_file($reportFile)) return NULL;
 
-        // Can FAIL in any step --> return NULL
-        return NULL;
+        $content = base64_decode(file_get_contents($refFile));
+        if ($content === false) return NULL;
+
+        $actualResult = file_get_contents($reportFile);
+        if ($actualResult === false) return NULL;
+
+        $this->comparator = new StringComparator($content, $actualResult);
+        return $this;
     }
 
-    public function analyze(string $id, StringComparator $comparator): ?AnalysisResult
+    public function analyze(): AnalysisResult
     {
-        // 1. Run comparator
-        // 2. Return Analysis Result
+        if (is_null($this->comparator))
+            return new AnalysisResult(AnalysisResult::RESULT_ERROR);
 
-        // Can FAIL in any step --> return NULL
-        return NULL;
+        $distance = $this->comparator->compare()->getDistance();
+        if ($distance === PHP_INT_MAX) return new AnalysisResult(AnalysisResult::RESULT_ERROR);
+        return new AnalysisResult(AnalysisResult::RESULT_OK, $distance);
     }
 }

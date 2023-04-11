@@ -103,9 +103,9 @@ class StringComparator
      * with a long series of occurring words. If diff = 0,
      * both texts are identical (ignoring the placeholders).
      *
-     * @return void
+     * @return StringComparator
      */
-    public function compare(): void
+    public function compare(): StringComparator
     {
         $a = $this->string1;
         $b = $this->string2;
@@ -132,6 +132,7 @@ class StringComparator
         // total diff of arrays is also text difference
         // one char difference results in 8 distance, so we divide by that factor
         $this->distance = (int)($accumulator / 8) + $this->lengthDifference($a_words, $b_words);
+        return $this;
     }
 
     /**
