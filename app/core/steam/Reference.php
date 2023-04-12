@@ -12,7 +12,7 @@
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-class Reference
+abstract class Reference
 {
     /**
      * Puts the reference for one specific tool
@@ -29,7 +29,7 @@ class Reference
             return false;
         }
 
-        return file_put_contents("$refPath/$id.txt", $reference);
+        return file_put_contents("$refPath/ref_$id.txt", $reference);
     }
 
     public static function get(string $refPath, string $id): ?string

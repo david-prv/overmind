@@ -24,7 +24,12 @@ class Autoloader
      *
      * @var array|string[]
      */
-    private static array $locations = ["./app/", "./app/core/", "./app/utils/"];
+    private static array $locations = [
+        "./app/",
+        "./app/core/",
+        "./app/core/steam/",
+        "./app/utils/"
+    ];
 
     /**
      * Autoloader constructor.

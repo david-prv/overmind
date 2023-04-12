@@ -339,7 +339,7 @@ class Scanner implements Runnable, Integrable
      */
     private function deleteToolReference(string $id): bool
     {
-        $refPath = $this->cwd . "/../../refs/$id.txt";
+        $refPath = $this->cwd . "/../../refs/ref_$id.txt";
 
         if (!is_file($refPath)) return true;
         return unlink($refPath);

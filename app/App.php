@@ -146,6 +146,11 @@ class App
            Core::getInstance()->reference();
         });
 
+        // Background endpoint for report analysis
+        $this->routes->add("analyze", function() {
+            Core::getInstance()->analyze();
+        });
+
         // Background endpoint for tool removal
         $this->routes->add("delete",function () {
             Core::getInstance()->delete();

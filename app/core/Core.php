@@ -13,7 +13,6 @@
  */
 class Core
 {
-
     private static ?Core $instance = NULL;
 
     private ?array $argv = NULL;
@@ -32,6 +31,34 @@ class Core
     private string $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of web pages.";
+
+    ////////////////////
+    // HELPER METHODS //
+    ////////////////////
+
+    /**
+     * Checks the common pre-condition for all
+     * core-methods
+     */
+    private function preCondition(): void
+    {
+        if ($this->argv === NULL) App::finishWithError("no arguments provided");
+    }
+
+    /**
+     * Checks if any provided argument is NULL
+     *
+     * @param mixed ...$args
+     */
+    private function verifyArgs(...$args): void
+    {
+        foreach ($args as $arg) {
+            if (is_null($arg)) {
+                App::finishWithError("invalid arguments or incomplete arg set");
+            }
+        }
+    }
+
 
     ///////////////////////
     // SINGLETON METHODS //
@@ -70,7 +97,6 @@ class Core
     {
         if (self::$instance === NULL) {
             self::$instance = new Core();
-            // self::$instance->pages = Pages::getInstance();
         }
         return self::$instance;
     }
@@ -126,16 +152,12 @@ class Core
      */
     public function pdf(): void
     {
-        if ($this->argv === NULL) {
-            App::finishWithError("no arguments provided");
-        }
+        $this->preCondition();
 
         $target = (isset($this->argv["last"])) ? $this->argv["last"] : NULL;
         $tools = (isset($this->argv["tools"])) ? $this->argv["tools"] : NULL;
 
-        if (is_null($target) || is_null($tools)) {
-            App::finishWithError("invalid arguments or incomplete arg set");
-        }
+        $this->verifyArgs($target, $tools);
 
         $pdf = new PDFBuilder();
         $pdf->setTargetUrl($target);
@@ -153,9 +175,7 @@ class Core
      */
     public function scan(): void
     {
-        if ($this->argv === NULL) {
-            App::finishWithError("no arguments provided");
-        }
+        $this->preCondition();
 
         $target = (isset($this->argv["target"])) ? $this->argv["target"] : NULL;
         $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : NULL;
@@ -163,9 +183,7 @@ class Core
         $args = (isset($this->argv["args"])) ? $this->argv["args"] : NULL;
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
-        if (is_null($target) || is_null($engine) || is_null($app) || is_null($args) || is_null($id)) {
-            App::finishWithError("invalid arguments or incomplete arg set");
-        }
+        $this->verifyArgs($target, $engine, $app, $args, $id);
 
         $runner = (new Scanner())
             ->target($target)
@@ -175,11 +193,24 @@ class Core
             ->withArguments($args)
             ->identifiedBy($id);
 
-        // TODO: $this->analyzer->get($this->TOOLS_PATH, $id)->analyze();
-
         if ($runner->run()) App::finishWithSuccess();
         else App::finishWithError();
 
+    }
+
+    /**
+     * Runs an analysis of the actual report and the reference
+     */
+    public function analyze(): void
+    {
+        $this->preCondition();
+
+        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
+
+        $this->verifyArgs($id);
+
+        $res = $this->analyzer->get($this->TOOLS_PATH, $id)->analyze();
+        echo $res->returnValue();
     }
 
     /**
@@ -187,9 +218,7 @@ class Core
      */
     public function integrate(): void
     {
-        if ($this->argv === NULL) {
-            App::finishWithError("no arguments provided");
-        }
+        $this->preCondition();
 
         $name = (isset($this->argv["name"])) ? $this->argv["name"] : NULL;
         $creator = (isset($this->argv["author"])) ? $this->argv["author"] : NULL;
@@ -201,10 +230,8 @@ class Core
         $index = (isset($this->argv["index"])) ? $this->argv["index"] : NULL;
         $keywords = (isset($this->argv["keywords"])) ? $this->argv["keywords"] : NULL;
 
-        if (is_null($name) || is_null($creator) || is_null($url) || is_null($version) || is_null($cmdline)
-            || is_null($description) || is_null($engine) || is_null($index) || is_null($keywords) || !isset($_FILES)) {
-            App::finishWithError("invalid arguments or incomplete arg set");
-        }
+        $this->verifyArgs($name, $creator, $url, $version, $cmdline, $description,
+            $engine, $index, $keywords);
 
         $scanner = (new Scanner())
             ->useCWD($this->TOOLS_PATH)
@@ -229,16 +256,12 @@ class Core
      */
     public function reference(): void
     {
-        if ($this->argv === NULL) {
-            App::finishWithError("no arguments provided");
-        }
+        $this->preCondition();
 
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
         $reference = (isset($this->argv["reference"])) ? $this->argv["reference"] : NULL;
 
-        if (is_null($id)) {
-            App::finishWithError("invalid arguments or incomplete arg set");
-        }
+        $this->verifyArgs($id);
 
         $scanner = (new Scanner())
             ->useCWD($this->TOOLS_PATH)
@@ -254,15 +277,11 @@ class Core
      */
     public function delete(): void
     {
-        if ($this->argv === NULL) {
-            App::finishWithError("no arguments provided");
-        }
+        $this->preCondition();
 
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
-        if (is_null($id)) {
-            App::finishWithError("invalid arguments or incomplete arg set");
-        }
+        $this->verifyArgs($id);
 
         $scanner = (new Scanner())->useCWD($this->TOOLS_PATH)->identifiedBy($id);
 
@@ -275,11 +294,11 @@ class Core
      */
     public function edit(): void
     {
+        $this->preCondition();
+
         $jsonObj = (isset($this->argv["json"])) ? $this->argv["json"] : NULL;
 
-        if (is_null($jsonObj)) {
-            App::finishWithError("no json object found");
-        }
+        $this->verifyArgs($jsonObj);
 
         $jsonObj = json_decode($jsonObj);
 
@@ -294,10 +313,8 @@ class Core
         $index = (isset($jsonObj->index)) ? $jsonObj->index : NULL;
         $keywords = (isset($jsonObj->keywords)) ? $jsonObj->keywords : NULL;
 
-        if (is_null($id) || is_null($name) || is_null($creator) || is_null($url) || is_null($version)
-            || is_null($cmdline) || is_null($description) || is_null($engine) || is_null($index) || is_null($keywords)) {
-            App::finishWithError("invalid arguments or incomplete arg set");
-        }
+        $this->verifyArgs($id, $name, $creator, $url, $version, $cmdline, $description,
+            $engine, $index, $keywords);
 
         $scanner = (new Scanner())
             ->useCWD($this->TOOLS_PATH)
@@ -321,16 +338,12 @@ class Core
      */
     public function schedule(): void
     {
-        if ($this->argv === NULL) {
-            App::finishWithError("no arguments provided");
-        }
+        $this->preCondition();
 
         $interactions = (isset($this->argv["interactions"])) ? $this->argv["interactions"] : NULL;
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
-        if (is_null($interactions) || is_null($id)) {
-            App::finishWithError("invalid arguments or incomplete arg set");
-        }
+        $this->verifyArgs($interactions, $id);
 
         $interactions = explode(",", $interactions);
 

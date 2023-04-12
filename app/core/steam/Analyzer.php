@@ -42,8 +42,9 @@ class Analyzer
 
     public function get(string $cwd, string $id): ?Analyzer
     {
-        $refFile = $cwd . "/../../refs/$id.txt";
-        $reportFile = $cwd . "/../../reports/$id.txt";
+        $refFile = $cwd . "/../../refs/ref_$id.txt";
+        $reportFile = $cwd . "/../../reports/report_$id.txt";
+
         if (!is_file($refFile) || !is_file($reportFile)) return NULL;
 
         $content = base64_decode(file_get_contents($refFile));
