@@ -59,8 +59,16 @@ class StringComparator
      */
     private function convertStrToBinary(string $word): string
     {
-        $value = unpack("H*", $word);
-        return base_convert($value[1], 16, 2);
+        $characters = str_split($word);
+
+        $binary = [];
+        foreach ($characters as $character) {
+            $data = unpack('H*', $character);
+            $binary[] = base_convert($data[1], 16, 2);
+        }
+
+        return implode(' ', $binary);
+
     }
 
     /**
@@ -106,21 +114,15 @@ class StringComparator
      * with a long series of occurring words. If diff = 0,
      * both texts are identical (ignoring the placeholders).
      *
-     * @param bool $debug
      * @return StringComparator
      */
-    public function compare(bool $debug = false): StringComparator
+    public function compare(): StringComparator
     {
-        if ($debug) {
-            echo "Comparing '" . nl2br($this->string1) . "' and '" . nl2br($this->string2) . "' <br>";
-            echo ($this->string1 === $this->string2) ? "They are the same <br>" : "They differ <br>";
-        }
-
         $a = $this->string1;
         $b = $this->string2;
 
-        $a_words = explode(" ", $a);
-        $b_words = explode(" ", $b);
+        $a_words = preg_split("/[\n\r, ]+/",$a); //explode(" ", $a);
+        $b_words = preg_split("/[\n\r, ]+/",$b); //explode(" ", $b);
 
         $accumulator = 0;
         for ($i = 0; $i < count(
@@ -131,14 +133,7 @@ class StringComparator
             // don't take placeholders into account
             if ((isset(trim($a_words[$i])[0]) && trim($a_words[$i])[0] === "%")
                 || (isset(trim($b_words[$i])[0]) && trim($b_words[$i])[0] === "%")) {
-                if ($debug) echo "Skipped ($a_words[$i], $b_words[$i]) <br>";
                 continue;
-            }
-
-            if ($debug) {
-                echo "[$i] Words: " . trim($a_words[$i]) . " vs " . trim($b_words[$i]) . " <br>";
-                echo $this->convertStrToBinary(trim($a_words[$i])) . "<br>";
-                echo $this->convertStrToBinary(trim($b_words[$i])) . "<br>";
             }
 
             // accumulate differences over all blocks
