@@ -140,6 +140,11 @@ class Scanner implements Runnable, Integrable
      * runtime script needs to know the termination status.
      * This is secure because no user input can be provided.
      *
+     * Example: (Run from root dir)
+     * python3 ./app/tools/interactive.py python3
+     * C:\Users\david\PhpstormProjects\scanner-bundle\scanner-bundle/app/tools/InteractiveTest/app.py
+     * "https://example.com" 3 https://example.com
+     *
      * @param int $timeout
      * @return bool
      */
@@ -147,12 +152,12 @@ class Scanner implements Runnable, Integrable
     {
         if (Schedule::isPresent($this->cwd, $this->id)) {
             return ($this->runWithTimeout("python3 " . $this->cwd . "/app/tools/interactive.py " .
-                    $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
-                    " " . $this->cmdline . " " . $this->id . " " . $this->target, $timeout))->isOk();
-        }
-        return ($this->runWithTimeout("python3 " . $this->cwd . "/app/tools/runner.py " .
                 $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
                 " " . $this->cmdline . " " . $this->id . " " . $this->target, $timeout))->isOk();
+        }
+        return ($this->runWithTimeout("python3 " . $this->cwd . "/app/tools/runner.py " .
+            $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
+            " " . $this->cmdline . " " . $this->id . " " . $this->target, $timeout))->isOk();
     }
 
     ////////////////////////

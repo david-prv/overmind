@@ -22,6 +22,7 @@ class StringComparator
     private string $string1;
     private string $string2;
     private int $distance;
+    private array $badWords;
 
     /**
      * Constructor.
@@ -34,6 +35,7 @@ class StringComparator
         $this->string1 = $string1;
         $this->string2 = $string2;
         $this->distance = PHP_INT_MAX; // infinity
+        $this->badWords = array();
     }
 
     /**
@@ -137,10 +139,12 @@ class StringComparator
             }
 
             // accumulate differences over all blocks
-            $accumulator = $accumulator + $this->hammingDistance(
-                    $this->convertStrToBinary(trim($a_words[$i])),
-                    $this->convertStrToBinary(trim($b_words[$i]))
-                );
+            $hDist = $this->hammingDistance(
+                $this->convertStrToBinary(trim($a_words[$i])),
+                $this->convertStrToBinary(trim($b_words[$i]))
+            );
+            $accumulator = $accumulator + $hDist;
+            if($hDist > 0) $this->badWords[] = $b_words[$i];
         }
 
         // total diff of arrays is also text difference
@@ -150,12 +154,22 @@ class StringComparator
     }
 
     /**
-     * Distance getter
+     * Returns the (modified) hamming distance
      *
      * @return int
      */
     public function getDistance(): int
     {
         return $this->distance;
+    }
+
+    /**
+     * Returns all bad words
+     *
+     * @return array
+     */
+    public function getBadWords(): array
+    {
+        return $this->badWords;
     }
 }

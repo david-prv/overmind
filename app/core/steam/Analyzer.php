@@ -28,10 +28,18 @@ class Analyzer
     private static ?Analyzer $instance = NULL;
     private ?StringComparator $comparator = NULL;
 
+    /**
+     * Analyzer constructor.
+     */
     private function __construct()
     {
     }
 
+    /**
+     * Returns an instance
+     *
+     * @return Analyzer
+     */
     public static function getInstance(): Analyzer
     {
         if (self::$instance === NULL) {
@@ -40,6 +48,13 @@ class Analyzer
         return self::$instance;
     }
 
+    /**
+     * Constructs a StringComparator
+     *
+     * @param string $cwd
+     * @param string $id
+     * @return $this|null
+     */
     public function get(string $cwd, string $id): ?Analyzer
     {
         $refFile = $cwd . "/../../refs/ref_$id.txt";
@@ -57,13 +72,22 @@ class Analyzer
         return $this;
     }
 
+    /**
+     * Analysis
+     *
+     * @return AnalysisResult
+     */
     public function analyze(): AnalysisResult
     {
         if (is_null($this->comparator))
             return new AnalysisResult(AnalysisResult::RESULT_ERROR);
 
-        $distance = $this->comparator->compare()->getDistance();
+        $this->comparator->compare();
+
+        $distance = $this->comparator->getDistance();
+        $bWords = $this->comparator->getBadWords();
+
         if ($distance === PHP_INT_MAX) return new AnalysisResult(AnalysisResult::RESULT_ERROR);
-        return new AnalysisResult(AnalysisResult::RESULT_OK, $distance);
+        return new AnalysisResult(AnalysisResult::RESULT_OK, $distance, $bWords);
     }
 }

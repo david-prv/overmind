@@ -209,7 +209,8 @@ class App
         $this->pages->add("SCHEDULE", array(
             array("%PROJECT_NAME%", Core::getInstance()->getProjectName()),
             array("%INTERACTIONS_LIST%", Core::getInstance()->renderScheduleAsHtml(Core::getInstance()->getArg("edit"))),
-            array("%ID%", Core::getInstance()->getArg("edit"))
+            array("%ID%", Core::getInstance()->getArg("edit")),
+            array("%SKIP_REDIRECT%", Core::getInstance()->isArgPresent("noref") ? "true" : "false")
         ));
 
         /* Integration of a new tool */

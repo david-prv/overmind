@@ -398,13 +398,11 @@ function finished(index, max) {
 
 // fetches text from a .txt report
 function getText(id) {
-
-    // TODO: remove hardcode URLs
-    console.log("[INFO] Fetching report", id, 'http://localhost:8080/reports/report_' + id + '.txt');
+    console.log("[INFO] Fetching report", id, '/reports/report_' + id + '.txt');
 
     // read text from URL location
     var request = new XMLHttpRequest();
-    request.open('GET', 'http://localhost:8080/reports/report_' + id + '.txt', true);
+    request.open('GET', '/reports/report_' + id + '.txt', true);
     request.send(null);
     request.onreadystatechange = function (event, k = id) {
         if (request.readyState === 4 && request.status === 200) {

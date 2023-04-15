@@ -210,6 +210,7 @@ class Core
         $this->verifyArgs($id);
 
         $res = $this->analyzer->get($this->TOOLS_PATH, $id)->analyze();
+        print_r($res->diff());
         echo $res->returnValue();
     }
 
@@ -261,7 +262,7 @@ class Core
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
         $reference = (isset($this->argv["reference"])) ? $this->argv["reference"] : NULL;
 
-        $this->verifyArgs($id);
+        $this->verifyArgs($id, $reference);
 
         $scanner = (new Scanner())
             ->useCWD($this->TOOLS_PATH)
@@ -375,6 +376,18 @@ class Core
     }
 
     /**
+     * Checks whether there's a certain GET
+     * or POST argument provided (used for optionals)
+     *
+     * @param string $arg
+     * @return bool
+     */
+    public function isArgPresent(string $arg): bool
+    {
+        return isset($_GET[$arg]) || isset($_POST[$arg]);
+    }
+
+    /**
      * Getter for tools object
      *
      * @return array
@@ -455,7 +468,7 @@ class Core
                     <div class=\"d-grid gap-2 d-md-block\">
                      <button onclick='(function(event) {
                           event.stopPropagation();
-                          window.location.href = \"index.php?page=schedule&edit=$tool->id\";
+                          window.location.href = \"index.php?page=schedule&edit=$tool->id&noref=1\";
                       })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\"><i class=\"fa fa-clock-o\"></i></button>
                       <button onclick='(function(event) {
                           event.stopPropagation();

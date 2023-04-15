@@ -25,7 +25,7 @@ def main() -> None:
     app = sys.argv[2]
     cmd = sys.argv[3]
     id = sys.argv[4]
-    target, clean_target = sys.argv[5]
+    target = clean_target = sys.argv[5]
 
     if "://" in target:
         clean_target = target.split("://")[1]

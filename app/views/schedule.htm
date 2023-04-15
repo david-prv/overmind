@@ -18,6 +18,12 @@
     <!-- jQuery JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <!-- Redirect Option -->
+    <script type="text/javascript">
+        const SKIP_REDIRECT = ("%SKIP_REDIRECT%" === "true");
+        let REDIRECT_LOCATION = (SKIP_REDIRECT) ? "index.php" : "index.php?page=reference&edit=%ID%";
+    </script>
+
     <title>%PROJECT_NAME%</title>
 </head>
 <body>
@@ -42,7 +48,7 @@
         </button>
     </div>
     <div class="d-grid gap-2">
-        <button onclick="window.location.href = 'index.php?page=reference&edit=%ID%';" class="btn btn-primary mt-3"><i class="fa fa-check"></i> Save and
+        <button onclick="window.location.href = REDIRECT_LOCATION;" class="btn btn-primary mt-3"><i class="fa fa-check"></i> Save and
             Continue
         </button>
     </div>

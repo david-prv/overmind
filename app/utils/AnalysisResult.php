@@ -42,10 +42,25 @@ class AnalysisResult
      */
     private int $returnValue;
 
-    public function __construct(string $resultToken, int $returnValue = PHP_INT_MAX)
+    /**
+     * Words, which differ from reference
+     *
+     * @var array
+     */
+    private array $badWords;
+
+    /**
+     * AnalysisResult constructor.
+     *
+     * @param string $resultToken
+     * @param int $returnValue
+     * @param array|null $bad
+     */
+    public function __construct(string $resultToken, int $returnValue = PHP_INT_MAX, ?array $bad = NULL)
     {
         $this->returnValue = $returnValue;
         $this->resultToken = $resultToken;
+        $this->badWords = $bad ?? array();
     }
 
     /**
@@ -66,6 +81,16 @@ class AnalysisResult
     public function returnValue(): int
     {
         return $this->returnValue;
+    }
+
+    /**
+     * Returns the differing words
+     *
+     * @return array
+     */
+    public function diff(): array
+    {
+        return $this->badWords;
     }
 
     /**
