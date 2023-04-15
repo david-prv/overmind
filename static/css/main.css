@@ -117,3 +117,15 @@ kbd {
     padding: 2px 4px;
     white-space: nowrap;
 }
+
+.accordion-button {
+    position: relative;
+    display: block;
+}
+
+.distance {
+    font-weight: bold;
+    right: 20px;
+    position: absolute;
+    display: inline-block;
+}

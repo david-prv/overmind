@@ -144,7 +144,7 @@ class StringComparator
                 $this->convertStrToBinary(trim($b_words[$i]))
             );
             $accumulator = $accumulator + $hDist;
-            if($hDist > 0) $this->badWords[] = $b_words[$i];
+            if($hDist > 0) $this->badWords[] = [$a_words[$i] => $b_words[$i]];
         }
 
         // total diff of arrays is also text difference

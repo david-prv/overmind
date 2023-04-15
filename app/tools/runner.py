@@ -13,7 +13,7 @@ DISCLAIMER: this should not be deployed to a live system!
 This tool is meant to be used only LOCALLY!
 """
 
-EXEC_TIMEOUT = 15
+EXEC_TIMEOUT = 60
 
 def main() -> None:
     # Example:

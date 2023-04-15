@@ -329,6 +329,7 @@ function finishedSelected(index, selected) {
                 "    <h2 class=\"accordion-header\" id=\"flush-heading-" + i + "\">" +
                 "      <button class=\"accordion-button collapsed\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#flush-collapse" + i + "\" aria-expanded=\"false\" aria-controls=\"flush-collapse" + i + "\">" +
                 "        " + tool["name"] +
+                "      <span class='distance' id='distance-" + tool["id"] + "'></span>" +
                 "      </button>" +
                 "    </h2>" +
                 "    <div id=\"flush-collapse" + i + "\" class=\"accordion-collapse collapse\" aria-labelledby=\"flush-heading" + i + "\" data-bs-parent=\"#accordion\">" +
@@ -344,6 +345,7 @@ function finishedSelected(index, selected) {
 
         for (let j = 0; j < finishedIDs.length; j++) {
             getText(finishedIDs[j]);
+            getDistance(finishedIDs[j]);
         }
 
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {
@@ -372,6 +374,7 @@ function finished(index, max) {
                 "    <h2 class=\"accordion-header\" id=\"flush-heading" + i + "\">" +
                 "      <button class=\"accordion-button collapsed\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#flush-collapse" + i + "\" aria-expanded=\"false\" aria-controls=\"flush-collapse" + i + "\">" +
                 "        " + tool["name"] +
+                "      <span class='distance' id='distance-" + tool["id"] + "'></span>" +
                 "      </button>" +
                 "    </h2>" +
                 "    <div id=\"flush-collapse" + i + "\" class=\"accordion-collapse collapse\" aria-labelledby=\"flush-heading" + i + "\" data-bs-parent=\"#accordion\">" +
@@ -386,6 +389,7 @@ function finished(index, max) {
 
         for (let j = 0; j < temp.length; j++) {
             getText(temp[j]);
+            getDistance(temp[j]);
         }
         temp = [];
 
@@ -412,6 +416,43 @@ function getText(id) {
                 document.getElementById("body-" + k).innerText = request.responseText;
             }
         }
+    }
+}
+
+// fetches analysis result
+function getDistance(id) {
+    console.log("[INFO] Fetching analysis result", id);
+
+    // read text from URL location
+    var request = new XMLHttpRequest();
+    request.open('GET', '/index.php?analyze&id=' + id, true);
+    request.send(null);
+    request.onreadystatechange = function (event, k = id) {
+        if (request.readyState === 4 && request.status === 200) {
+            var type = request.getResponseHeader('Content-Type');
+            if (type.indexOf("text") !== 1) {
+                // console.log(request.responseText, k);
+                document.getElementById("distance-" + k).innerText = request.responseText;
+                correctDistanceColoring(k, request.responseText)
+            }
+        }
+    }
+}
+
+// sets the correct color for the dist indicator
+function correctDistanceColoring(id, score) {
+    let el = document.getElementById("distance-" + id);
+    let i_score = parseInt(score);
+    switch(true) {
+        case (i_score === 0):
+            el.style.color = "green";
+            break;
+        case (i_score <= 15):
+            el.style.color = "orange";
+            break;
+        default:
+            el.style.color = "red";
+            break;
     }
 }
 

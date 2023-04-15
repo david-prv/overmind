@@ -210,7 +210,7 @@ class Core
         $this->verifyArgs($id);
 
         $res = $this->analyzer->get($this->TOOLS_PATH, $id)->analyze();
-        print_r($res->diff());
+        // print_r($res->diff());
         echo $res->returnValue();
     }
 
@@ -477,7 +477,7 @@ class Core
                       <button onclick='(function(event) {
                           event.stopPropagation();
                           deleteTool($tool->id)
-                      })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\"><i class=\"fa fa-trash\"></i></button>
+                      })(event);' class=\"btn btn-sm btn-outline-danger\" type=\"button\"><i class=\"fa fa-trash\"></i></button>
                     </div>
                 </div>
                 </div>

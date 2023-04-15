@@ -10,7 +10,7 @@ decides whether there are interactions or not. If so,
 it loads the pre-defined answers and communicates them to the running tool.
 """
 
-EXEC_TIMEOUT = 15
+EXEC_TIMEOUT = 60
 
 def main() -> None:
     try:
@@ -54,8 +54,11 @@ def main() -> None:
     timer = Timer(EXEC_TIMEOUT, p.kill)
 
     try:
+        print("Starting timer...")
         timer.start()
+        print("Initializing communication...")
         p.communicate(input=used_data)[0]
+        timer.cancel()
     except:
         timer.cancel()
 
