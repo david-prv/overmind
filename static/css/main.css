@@ -27,11 +27,11 @@ body {
 }
 
 .selection {
-    background: rgba(13, 110, 253, 0.1);
+    background: rgba(13, 110, 253, 0.24);
 }
 
 .selection:hover {
-    background: rgba(13, 110, 253, 0.1) !important;
+    background: rgba(13, 110, 253, 0.3) !important;
 }
 
 .tool {

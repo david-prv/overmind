@@ -51,7 +51,7 @@
 
                 <button data-bs-toggle="modal" data-bs-target="#helpModal" class="btn btn-navbar btn-secondary ms-1"
                         type="button">
-                    <i class="fa fa-life-ring"></i> Help
+                    <i class="fa fa-life-ring"></i> View Help
                 </button>
             </div>
         </form>
@@ -74,15 +74,15 @@
 <!-- End Search Bar -->
 
 <!-- Main -->
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="d-grid gap-1 d-md-flex justify-content-md-end mb-3">
 
         <button onclick="editTools();" class="btn btn-navbar btn-secondary" type="button">
-            <i class="fa fa-cog"></i> Configure
+            <i class="fa fa-cog"></i> Configure Tools
         </button>
         <button onclick="window.location.href = 'index.php?page=integrate';" class="btn btn-navbar btn-secondary"
                 type="button">
-            <i class="fa fa-plus"></i> Create
+            <i class="fa fa-plug"></i> Integrate Tool
         </button>
     </div>
     <div id="tool-list" class="list-group">
@@ -148,7 +148,7 @@
             </div>
             <div class="modal-footer">
                 <button id="btn-start-selected" type="button" class="btn btn-primary col" data-bs-dismiss="modal"
-                        onclick="((event) => { invokeLaunchSelected(event); })()"><i class="fa fa-play"></i> Start
+                        onclick="((event) => { invokeLaunchSelected(event); })()"><i class="fa fa-rocket"></i> Launch
                 </button>
             </div>
         </div>
@@ -210,7 +210,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary col" data-bs-dismiss="modal"
-                        onclick="((event) => { invokeLaunchAll(event); })()"><i class="fa fa-play"></i> Start
+                        onclick="((event) => { invokeLaunchAll(event); })()"><i class="fa fa-rocket"></i> Launch
                 </button>
             </div>
         </div>
@@ -261,9 +261,9 @@
                     <div class="col-sm-6">
                         <h6>Actions:</h6>
                         <div id="modules">
-                            <p draggable="true" class="drag"><a class="btn offer">Text</a></p>
-                            <p draggable="true" class="drag"><a class="btn offer">Textarea</a></p>
-                            <p draggable="true" class="drag"><a class="btn offer">Number</a></p>
+                            <p draggable="true" data-price="45€" class="drag"><a class="btn offer">Text</a></p>
+                            <p draggable="true" data-price="50€" class="drag"><a class="btn offer">Textarea</a></p>
+                            <p draggable="true" data-price="55€" class="drag"><a class="btn offer">Number</a></p>
                         </div>
                     </div>
 
