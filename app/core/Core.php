@@ -208,10 +208,9 @@ class Core
         $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
 
         $this->verifyArgs($id);
-
         $res = $this->analyzer->get($this->TOOLS_PATH, $id);
-        // print_r($res->diff());
-        if (!is_null($res)) echo $res->analyze()->returnValue(); else echo "";
+
+        if (!is_null($res)) echo $res->analyze()->returnValue(); else echo "-1";
     }
 
     /**

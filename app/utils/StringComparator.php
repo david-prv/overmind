@@ -126,6 +126,9 @@ class StringComparator
         $a_words = preg_split("/[\n\r, ]+/",$a); //explode(" ", $a);
         $b_words = preg_split("/[\n\r, ]+/",$b); //explode(" ", $b);
 
+        //var_dump($a);
+        //var_dump($b_words);
+
         $accumulator = 0;
         for ($i = 0; $i < count(
             (count($a_words) <= count($b_words))

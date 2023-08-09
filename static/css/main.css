@@ -170,3 +170,7 @@ kbd {
     top: 4px;
     right: 4px;
 }
+
+.drag, .drag > a {
+    cursor: move;
+}

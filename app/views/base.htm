@@ -147,7 +147,7 @@
                 </ul>
             </div>
             <div class="modal-footer">
-                <button id="btn-start-selected" type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                <button id="btn-start-selected" type="button" class="btn btn-primary col" data-bs-dismiss="modal"
                         onclick="((event) => { invokeLaunchSelected(event); })()"><i class="fa fa-play"></i> Start
                 </button>
             </div>
@@ -209,8 +209,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        onclick="((event) => { invokeLaunchAll(event); })()">Start
+                <button type="button" class="btn btn-primary col" data-bs-dismiss="modal"
+                        onclick="((event) => { invokeLaunchAll(event); })()"><i class="fa fa-play"></i> Start
                 </button>
             </div>
         </div>
@@ -259,16 +259,16 @@
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <h6>Offering:</h6>
+                        <h6>Actions:</h6>
                         <div id="modules">
-                            <p class="drag"><a class="btn offer">Text</a></p>
-                            <p class="drag"><a class="btn offer">Textarea</a></p>
-                            <p class="drag"><a class="btn offer">Number</a></p>
+                            <p draggable="true" class="drag"><a class="btn offer">Text</a></p>
+                            <p draggable="true" class="drag"><a class="btn offer">Textarea</a></p>
+                            <p draggable="true" class="drag"><a class="btn offer">Number</a></p>
                         </div>
                     </div>
 
                     <div class="col-sm-6">
-                        <h6>Selected:</h6>
+                        <h6>Recommended:</h6>
                         <div id="dropzone"></div>
                     </div>
                 </div>
