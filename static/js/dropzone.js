@@ -35,7 +35,8 @@ $('#dropzone').droppable({
 
         dropHistory.add(identifier);
 
-        var $el = $('<div class="drop-item" id="' + identifier + '"><details><summary>' + ui.draggable.text() + '</summary><div>' +
+        var $el = $('<div class="drop-item" data-text="' + ui.draggable.text().trim() + '" data-price="' + price + '" id="' +
+            identifier + '"><details><summary>' + ui.draggable.text() + '</summary><div>' +
             '<form>\n' +
             '  <div class="form-group row">\n' +
             '    <label for="staticEmail" class="col-sm-2 col-form-label">Price</label>\n' +
@@ -51,7 +52,7 @@ $('#dropzone').droppable({
             '  </div>\n' +
             '</form>' +
             '</details></div>');
-        $el.append($('<button type="button" class="btn btn-default btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>').click(function () { $(this).parent().detach(); }));
+        //$el.append($('<button type="button" class="btn btn-default btn-xs remove"><span class="glyphicon glyphicon-trash"></span></button>').click(function () { $(this).parent().detach(); }));
         $(this).append($el);
     }
 }).sortable({

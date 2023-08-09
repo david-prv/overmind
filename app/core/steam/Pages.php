@@ -51,7 +51,7 @@ class Pages
     public function add(string $name, array $placeholders): void
     {
         $this->placeholders[strtoupper($name)] = $placeholders;
-        array_push($this->pages, strtoupper($name));
+        $this->pages[] = strtoupper($name);
     }
 
     /**
@@ -59,15 +59,15 @@ class Pages
      * (the only publicly exposed method)
      *
      * @param string $name
-     * @return View
+     * @return Page
      */
-    public function get(string $name): View
+    public function get(string $name): Page
     {
         return in_array(strtoupper($name), $this->pages)
-            ? (((new View($this->viewPath))
+            ? (((new Page($this->viewPath))
                 ->setTemplate(strtolower($name)))
                 ->setPlaceholders($this->placeholders[strtoupper($name)]))
-            : ((new View($this->viewPath))
+            : ((new Page($this->viewPath))
                 ->setError(true));
     }
 }

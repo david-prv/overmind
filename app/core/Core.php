@@ -143,31 +143,7 @@ class Core
             $view = $this->argv["page"];
         }
 
-        View::render($this->pages->get($view));
-    }
-
-    /**
-     * Composes and outputs the PDF file stream
-     * using the PDFBuilder library
-     */
-    public function pdf(): void
-    {
-        $this->preCondition();
-
-        $target = (isset($this->argv["last"])) ? $this->argv["last"] : NULL;
-        $tools = (isset($this->argv["tools"])) ? $this->argv["tools"] : NULL;
-
-        $this->verifyArgs($target, $tools);
-
-        $pdf = new PDFBuilder();
-        $pdf->setTargetUrl($target);
-        $pdf->setToolsUsed(explode(",", preg_replace('/\s+/', '', $tools)));
-
-        // TODO:    Implement Analyzer to automatically
-        //          generate a result report
-        $pdf->dummy();
-
-        $pdf->stream();
+        Page::render($this->pages->get($view));
     }
 
     /**

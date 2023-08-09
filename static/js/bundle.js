@@ -41,7 +41,7 @@ var temp = [];
     //selectedModal.addEventListener('hidden.bs.modal', invokeLaunchSelected);
 
     let resultModal = document.getElementById("resModal");
-    resultModal.addEventListener('hidden.bs.modal', resetStates);
+    resultModal.addEventListener('hidden.bs.modal', resetStatesAndOffers);
 
     $('#launch-all').on("click", () => {
         (new bootstrap.Modal(launchModal, {
@@ -139,8 +139,11 @@ function submitEdit() {
     });
 }
 
-// reset tool states after finished run
-function resetStates() {
+// reset tool states & offers after finished run
+function resetStatesAndOffers() {
+    let dropZone = document.getElementById("dropzone");
+    dropZone.innerHTML = "";
+
     for (let i = 0; i < DATA.length; i++) {
         let el = $(`#state-${i}`)[0];
         console.log("[DEBUG] Resetting for ID " + i + " has started...");
@@ -499,4 +502,75 @@ function selectSearch() {
             }
         }
     }
+}
+
+function parseOffers(zone) {
+    let elements = zone.children;
+    if (elements.length <= 0) {
+        return [];
+    }
+
+    let tmp = [];
+    for(let i = 0; i < elements.length; i++) {
+        tmp.push({
+            caption: elements[i].getAttribute("data-text"),
+            price: elements[i].getAttribute("data-price")
+        });
+    }
+    return tmp;
+}
+
+function parseResults(results) {
+
+    function bounds(l) {
+        let t = [...l].map((x) => {return parseInt(x);}).sort(function(a, b){return a-b});
+        return [t[0], t[t.length - 1]];
+    }
+
+    function normalize(i, x, q = 100) {
+        let bound = bounds(x);
+        let min = bound[0], max = bound[1];
+
+        if (min - max === 0) return 0;
+        else return Math.abs((x[i] - min) / (max - min)) * q;
+    }
+
+    let elements = results.firstChild.children;
+    if (elements.length <= 0) {
+        return [];
+    }
+
+    let tmp = [];
+    let dist = [];
+    for(let j = 0; j < elements.length; j++) {
+        let name = results.firstChild.children[j].children[0].children[0].innerText.trim().split("\n")[0];
+        let distance = results.firstChild.children[j].children[0].children[0].innerText.trim().split("\n")[1];
+        dist.push(distance);
+        tmp.push({
+            testName: name,
+            distance: distance,
+            normalized: -1
+        });
+    }
+
+    for(let k = 0; k < elements.length; k++) {
+        tmp[k].normalized = normalize(k, dist);
+    }
+
+    return tmp;
+}
+
+function collectAndPrepareInfo() {
+    let dropZone = document.getElementById("dropzone");
+    let resultContent = document.getElementById("result-content");
+
+    if(dropZone === null || resultContent === null) {
+        console.error("[ERROR] dropzone or result-content could not be found!");
+        return -1;
+    }
+
+    let offers = parseOffers(dropZone);
+    let results = parseResults(resultContent);
+
+    console.log(offers, results);
 }

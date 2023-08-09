@@ -239,6 +239,7 @@
                 </button>
                 <button onclick="(function(event) {
                     event.preventDefault();
+                    collectAndPrepareInfo();
                 })(event);" type="button" class="btn btn-outline-secondary"><i class="fa fa-print"></i>&nbsp;
                     Print Summary
                 </button>
@@ -322,7 +323,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><i class="fa fa-download"></i> Save</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-download"></i> Save</button>
                 <button type="button" class="btn btn-secondary" onclick="(function() {dropHistory.undo();})();">
                     <i class="fa fa-undo" aria-hidden="true"></i>
                     Undo

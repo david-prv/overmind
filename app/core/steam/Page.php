@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class View
+ * Class Page
  *
  * <p>
  * This class handles the proper building of a view.
@@ -11,7 +11,7 @@
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-class View
+class Page
 {
     private string $filename;
     private string $viewPath;
@@ -19,7 +19,7 @@ class View
     private bool $error;
 
     /**
-     * View constructor.
+     * Page constructor.
      *
      * @param string $viewPath
      */
@@ -30,15 +30,15 @@ class View
     }
 
     /**
-     * Renders a View object
+     * Renders a Page object
      *
-     * @param View $view
+     * @param Page $view
      * @return bool
      */
-    public static function render(View $view): bool
+    public static function render(Page $view): bool
     {
         if (!$view->isComplete()) {
-            die("View could not be constructed");
+            die("Page could not be constructed");
         }
 
         $html = file_get_contents($view->getViewPath() . "/" . $view->getFileName());
@@ -51,16 +51,16 @@ class View
 
         print_r($html);
 
-        return $html != false && $html != NULL;
+        return $html != false;
     }
 
     /**
      * Defines which template file should be used
      *
      * @param string $template
-     * @return View
+     * @return Page
      */
-    public function setTemplate(string $template): View
+    public function setTemplate(string $template): Page
     {
         $this->filename = strtolower($template) . ".htm";
         return $this;
@@ -73,9 +73,9 @@ class View
      * closed with another percentage symbol
      *
      * @param array $placeholders
-     * @return View
+     * @return Page
      */
-    public function setPlaceholders(array $placeholders): View
+    public function setPlaceholders(array $placeholders): Page
     {
         $this->placeholders = $placeholders;
         return $this;
@@ -86,9 +86,9 @@ class View
      * Prevents the render method to perform
      *
      * @param bool $value
-     * @return View
+     * @return Page
      */
-    public function setError(bool $value): View
+    public function setError(bool $value): Page
     {
         $this->error = $value;
         return $this;

@@ -165,11 +165,6 @@ class App
         $this->routes->add("schedule", function () {
             Core::getInstance()->schedule();
         });
-
-        // Trigger PDF stream
-        $this->routes->add("pdf", function () {
-            Core::getInstance()->pdf();
-        });
     }
 
     /**
@@ -178,7 +173,7 @@ class App
      * <p>
      * Use this method to add new pages to the framework.
      * Please make sure, that the file in /views/, named by the page name
-     * in lower-case letters, has to exist. Otherwise, the View cannot be
+     * in lower-case letters, has to exist. Otherwise, the Page cannot be
      * successfully rendered.
      * </p>
      *
