@@ -148,7 +148,7 @@ class Scanner implements Runnable, Integrable
      * @param int $timeout
      * @return bool
      */
-    public function run(int $timeout = 60): bool
+    public function run(int $timeout = 20): bool
     {
         if (Schedule::isPresent($this->cwd, $this->id)) {
             return ($this->runWithTimeout("python3 " . $this->cwd . "/app/tools/interactive.py " .

@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL ^ E_DEPRECATED);
+
 require __DIR__ . '/vendor/autoload.php';
 
 use MatthiasMullie\Minify;
@@ -17,7 +19,7 @@ use MatthiasMullie\Minify;
  */
 
 $path = getcwd();
-$js_files = array("bundle", "schedule", "hotkeys", "reference");
+$js_files = array("bundle", "schedule", "hotkeys", "reference", "dropzone");
 $css_files = array("main");
 
 /*

@@ -209,9 +209,9 @@ class Core
 
         $this->verifyArgs($id);
 
-        $res = $this->analyzer->get($this->TOOLS_PATH, $id)->analyze();
+        $res = $this->analyzer->get($this->TOOLS_PATH, $id);
         // print_r($res->diff());
-        echo $res->returnValue();
+        if (!is_null($res)) echo $res->analyze()->returnValue(); else echo "";
     }
 
     /**

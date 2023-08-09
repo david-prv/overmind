@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="/static/css/main.min.css">
 
     <!-- jQuery JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 
     <title>%PROJECT_NAME%</title>
 </head>
@@ -147,7 +148,7 @@
             </div>
             <div class="modal-footer">
                 <button id="btn-start-selected" type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        onclick="((event) => { invokeLaunchSelected(event); })()">Start
+                        onclick="((event) => { invokeLaunchSelected(event); })()"><i class="fa fa-play"></i> Start
                 </button>
             </div>
         </div>
@@ -232,15 +233,55 @@
             <div class="modal-footer">
                 <button onclick="(function(event) {
                     event.preventDefault();
-                })(event);" type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-print"></i>&nbsp;
-                    Print Report
+                })(event);" type="button" data-bs-toggle="modal" data-bs-target="#offerModal" class="btn btn-primary"><i class="fa fa-volume-control-phone"></i>
+                    Help Offer
                 </button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button onclick="(function(event) {
+                    event.preventDefault();
+                })(event);" type="button" class="btn btn-outline-secondary"><i class="fa fa-print"></i>&nbsp;
+                    Print Summary
+                </button>
             </div>
         </div>
     </div>
 </div>
 <!-- End Result Modal -->
+
+<!-- Offer Modal -->
+<div class="modal fade" id="offerModal" tabindex="-1" aria-labelledby="offerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="offerModalLabel">Action Recommendation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h6>Offering:</h6>
+                        <div id="modules">
+                            <p class="drag"><a class="btn offer">Text</a></p>
+                            <p class="drag"><a class="btn offer">Textarea</a></p>
+                            <p class="drag"><a class="btn offer">Number</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <h6>Selected:</h6>
+                        <div id="dropzone"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"><i class="fa fa-download"></i> Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Offer Modal -->
 
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -323,5 +364,6 @@
     </script>
     <script src="/static/js/bundle.min.js"></script>
     <script src="/static/js/hotkeys.min.js"></script>
+    <script src="/static/js/dropzone.min.js"></script>
 </footer>
 </html>

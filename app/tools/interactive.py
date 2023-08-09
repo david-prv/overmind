@@ -10,7 +10,13 @@ decides whether there are interactions or not. If so,
 it loads the pre-defined answers and communicates them to the running tool.
 """
 
-EXEC_TIMEOUT = 60
+EXEC_TIMEOUT = 20
+
+def getExecTimeout() -> int:
+    try:
+        return int(open('./app/tools/timeout').readline())
+    except:
+        return EXEC_TIMEOUT
 
 def main() -> None:
     try:
@@ -51,7 +57,7 @@ def main() -> None:
     out = open("./reports/report_" + str(id) + ".txt", "w", encoding="utf-8")
 
     p = Popen(args, stdout=out, stdin=PIPE, stderr=out)
-    timer = Timer(EXEC_TIMEOUT, p.kill)
+    timer = Timer(getExecTimeout(), p.kill)
 
     try:
         print("Starting timer...")

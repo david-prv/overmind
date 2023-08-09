@@ -13,7 +13,13 @@ DISCLAIMER: this should not be deployed to a live system!
 This tool is meant to be used only LOCALLY!
 """
 
-EXEC_TIMEOUT = 60
+EXEC_TIMEOUT = 20
+
+def getExecTimeout() -> int:
+    try:
+        return int(open('./app/tools/timeout').readline())
+    except:
+        return EXEC_TIMEOUT
 
 def main() -> None:
     # Example:
@@ -29,7 +35,7 @@ def main() -> None:
 
     print(args)
 
-    r = subprocess.run(args, stdout=subprocess.PIPE, timeout=EXEC_TIMEOUT)
+    r = subprocess.run(args, stdout=subprocess.PIPE, timeout=getExecTimeout())
     try:
         r = r.stdout.decode('ascii')
     except UnicodeDecodeError:
