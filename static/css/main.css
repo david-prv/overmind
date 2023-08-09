@@ -28,6 +28,7 @@ body {
 
 .selection {
     background: rgba(13, 110, 253, 0.24);
+    border: 1px solid rgb(0 17 255 / 25%);
 }
 
 .selection:hover {

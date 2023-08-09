@@ -233,7 +233,8 @@
             <div class="modal-footer">
                 <button onclick="(function(event) {
                     event.preventDefault();
-                })(event);" type="button" data-bs-toggle="modal" data-bs-target="#offerModal" class="btn btn-primary"><i class="fa fa-volume-control-phone"></i>
+                })(event);" type="button" data-bs-toggle="modal" data-bs-target="#offerModal" class="btn btn-primary"><i
+                        class="fa fa-volume-control-phone"></i>
                     Help Offer
                 </button>
                 <button onclick="(function(event) {
@@ -248,7 +249,8 @@
 <!-- End Result Modal -->
 
 <!-- Offer Modal -->
-<div class="modal fade" id="offerModal" tabindex="-1" aria-labelledby="offerModalLabel" aria-hidden="true">
+<div data-bs-backdrop="static" data-bs-keyboard="false" class="modal fade" id="offerModal" tabindex="-1"
+     aria-labelledby="offerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -261,9 +263,54 @@
                     <div class="col-sm-6">
                         <h6>Actions:</h6>
                         <div id="modules">
-                            <p draggable="true" data-price="45€" class="drag"><a class="btn offer">Text</a></p>
-                            <p draggable="true" data-price="50€" class="drag"><a class="btn offer">Textarea</a></p>
-                            <p draggable="true" data-price="55€" class="drag"><a class="btn offer">Number</a></p>
+                            <p draggable="true" data-price="30€" class="drag"><a class="btn offer">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                Basic CMS Security
+                            </a></p>
+                            <p draggable="true" data-price="85€" class="drag"><a class="btn offer">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                Enhanced CMS Security
+                            </a></p>
+                            <p draggable="true" data-price="100€" class="drag"><a class="btn offer">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                Basic Server Hardening
+                            </a></p>
+                            <p draggable="true" data-price="150€" class="drag"><a class="btn offer">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                Basic Firewall Configuration
+                            </a></p>
+                            <p draggable="true" data-price="200€" class="drag"><a class="btn offer">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                Website Malware Removal
+                            </a></p>
+                            <p draggable="true" data-price="75€" class="drag"><a class="btn offer">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                Website Performance Improvement
+                            </a></p>
+                            <p draggable="true" data-price="150€" class="drag"><a class="btn offer">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                Website Issue Investigation
+                            </a></p>
+                            <p draggable="true" data-price="300€" class="drag"><a class="btn offer">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                Premium All-Inclusive
+                            </a></p>
                         </div>
                     </div>
 
@@ -276,7 +323,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary"><i class="fa fa-download"></i> Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" onclick="(function() {dropHistory.undo();})();">
+                    <i class="fa fa-undo" aria-hidden="true"></i>
+                    Undo
+                </button>
             </div>
         </div>
     </div>
