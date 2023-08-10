@@ -192,8 +192,7 @@ class Core
         }
 
         $analysisResult = $res->analyze();
-        //$analysisResult->returnValue()
-        echo random_int(0, 300) . "|" . json_encode($analysisResult->diff());
+        echo $analysisResult->returnValue() . "|" . json_encode($analysisResult->diff());
     }
 
     /**
