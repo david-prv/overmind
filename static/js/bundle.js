@@ -11,6 +11,8 @@ var counter = 0;
 var counterS = 0;
 var finishedIDs = [];
 var temp = [];
+var lastTarget = "";
+var lastTargetDiff = [];
 
 // code ignition
 (function () {
@@ -206,6 +208,7 @@ function invokeLaunchSelected(event) {
         return;
     }
     if (target.indexOf("://") === -1) target = $("#protocol-alt").val() + "://" + target;
+    lastTarget = target;
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
 
@@ -247,6 +250,7 @@ function invokeLaunchAll(event) {
         return;
     }
     if (target.indexOf("://") === -1) target = $("#protocol").val() + "://" + target;
+    lastTarget = target;
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
 
@@ -435,8 +439,17 @@ function getDistance(id) {
             var type = request.getResponseHeader('Content-Type');
             if (type.indexOf("text") !== 1) {
                 // console.log(request.responseText, k);
-                document.getElementById("distance-" + k).innerText = request.responseText;
-                correctDistanceColoring(k, request.responseText)
+                let dist = request.responseText.split("|")[0];
+                let bad = request.responseText.split("|")[1];
+
+                try {
+                    lastTargetDiff = JSON.parse(bad);
+                } catch (e) {
+                    console.info("[WARNING] Could not parse response:", e);
+                    lastTargetDiff = [];
+                }
+                document.getElementById("distance-" + k).innerText = dist;
+                correctDistanceColoring(k, dist);
             }
         }
     }
@@ -512,9 +525,11 @@ function parseOffers(zone) {
 
     let tmp = [];
     for(let i = 0; i < elements.length; i++) {
+        let identifier = elements[i].getAttribute("id");
         tmp.push({
             caption: elements[i].getAttribute("data-text"),
-            price: elements[i].getAttribute("data-price")
+            price: elements[i].getAttribute("data-price"),
+            comment: document.getElementById("inputComment-" + identifier).value
         });
     }
     return tmp;
@@ -560,7 +575,7 @@ function parseResults(results) {
     return tmp;
 }
 
-function collectAndPrepareInfo() {
+function collectInfoAndRedirect() {
     let dropZone = document.getElementById("dropzone");
     let resultContent = document.getElementById("result-content");
 
@@ -572,5 +587,14 @@ function collectAndPrepareInfo() {
     let offers = parseOffers(dropZone);
     let results = parseResults(resultContent);
 
-    console.log(offers, results);
+    let result_information = JSON.stringify({
+        target_url: lastTarget,
+        scanner_results: results,
+        our_offers: offers,
+        bad_words: lastTargetDiff
+    });
+
+    console.log(result_information);
+
+    window.location.href = "/app/utils/html2pdf/index.php?data=" + result_information;
 }

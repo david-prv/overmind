@@ -47,7 +47,7 @@ $('#dropzone').droppable({
             '  <div class="form-group row">\n' +
             '    <label for="inputPassword" class="col-sm-2 col-form-label">Comment</label>\n' +
             '    <div class="col-sm-10">\n' +
-            '      <input type="text" class="form-control" id="inputComment" placeholder="Comment">\n' +
+            '      <input type="text" class="form-control" id="inputComment-' + identifier + '" placeholder="Comment">\n' +
             '    </div>\n' +
             '  </div>\n' +
             '</form>' +

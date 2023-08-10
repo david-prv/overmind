@@ -186,7 +186,14 @@ class Core
         $this->verifyArgs($id);
         $res = $this->analyzer->get($this->TOOLS_PATH, $id);
 
-        if (!is_null($res)) echo $res->analyze()->returnValue(); else echo "-1";
+        if (is_null($res)) {
+            echo "-1|[]";
+            return;
+        }
+
+        $analysisResult = $res->analyze();
+        //$analysisResult->returnValue()
+        echo random_int(0, 300) . "|" . json_encode($analysisResult->diff());
     }
 
     /**
