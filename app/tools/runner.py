@@ -21,6 +21,34 @@ def getExecTimeout() -> int:
     except:
         return EXEC_TIMEOUT
 
+def removeANSIFromOutput(fileLocation) -> None:
+    # Stolen from:
+    # https://stackoverflow.com/questions/2424000/read-and-overwrite-a-file-in-python
+    ansi_escape = re.compile(r'''
+        \x1B  # ESC
+        (?:   # 7-bit C1 Fe (except CSI)
+            [@-Z\\-_]
+        |     # or [ for CSI, followed by a control sequence
+            \[
+            [0-?]*  # Parameter bytes
+            [ -/]*  # Intermediate bytes
+            [@-~]   # Final byte
+        )
+        ''', re.VERBOSE)
+
+    try:
+        f = open(fileLocation, 'r+', encoding="utf-8")
+        content = f.read()
+        f.truncate(0)
+        new_content = ansi_escape.sub('', content)
+        f.seek(0)
+        f.write(new_content)
+
+        f.close()
+    except:
+        print("ERROR: File was not found or permission mismatch")
+        return
+
 def main() -> None:
     # Example:
     #                   Engine  App         Cmd                Id
@@ -46,8 +74,14 @@ def main() -> None:
 
     f = open("./reports/report_" + str(id) + ".txt", "w", encoding="utf-8")
     f.write(r)
+
+    # close fp
     f.close()
 
+    # clean up output
+    removeANSIFromOutput("./reports/report_" + str(id) + ".txt")
+
+    # exit application
     exit()
 
 if __name__ == '__main__':
