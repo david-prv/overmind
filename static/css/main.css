@@ -37,6 +37,12 @@ body {
 
 .tool {
     user-select: none !important;
+    transition: opacity 0.4s ease-out;
+    opacity: 0;
+}
+
+.animated-show {
+    opacity: 1!important;
 }
 
 #selection-list li::marker {

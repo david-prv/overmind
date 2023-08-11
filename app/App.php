@@ -195,6 +195,7 @@ class App
             array("%TOOLS_LIST%", Core::getInstance()->renderToolsAsHtml()),
             array("%PROJECT_NAME%", Core::getInstance()->getProjectName()),
             array("%PROJECT_VERSION%", Core::getInstance()->getProjectVersion()),
+            array("%PROJECT_LOGO%", Core::getInstance()->getProjectLogo()),
             array("%PROJECT_AUTHOR%", Core::getInstance()->getProjectAuthor()),
             array("%PROJECT_DESCRIPTION%", Core::getInstance()->getProjectDescription()),
             array("%TOOLS_JSON%", Core::getInstance()->getToolsJson())

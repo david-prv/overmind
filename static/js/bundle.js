@@ -59,7 +59,21 @@ var lastTargetDiff = [];
         })).show();
     });
 
+    showToolListAnimated();
+
 })();
+
+// helper to show tools list with fade-in animation
+function showToolListAnimated() {
+    let tools = $('#tool-list').children();
+    for(let i = 0; i < tools.length; i++) {
+        setTimeout(
+            (c = i) => {
+                tools[c].classList.add("animated-show");
+            },
+        i * 100);
+    }
+}
 
 // helper method to get the right index from json map
 function getToolIndexById(id) {

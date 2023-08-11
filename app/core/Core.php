@@ -27,10 +27,11 @@ class Core
 
     private string $PROJECT_NAME = "Scanner Bundle";
     private string $PROJECT_AUTHOR = "David Dewes";
-    private string $PROJECT_VERSION = "1.0.0";
+    private string $PROJECT_VERSION = "1.1.0";
     private string $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of web pages.";
+    private string $PROJECT_LOGO = "<i class=\"fa fa-shield\" aria-hidden=\"true\"></i>";
 
     ////////////////////
     // HELPER METHODS //
@@ -426,6 +427,11 @@ class Core
     public function getProjectDescription(): string
     {
         return $this->PROJECT_DESCRIPTION;
+    }
+
+    public function getProjectLogo(): string
+    {
+        return $this->PROJECT_LOGO;
     }
 
     /**
