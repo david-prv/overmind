@@ -3,5 +3,6 @@
 *.min.js
 /vendor/*
 /reports/*.txt
+/refs/*.txt
 /app/tools/*/
 /app/tools/map.json
