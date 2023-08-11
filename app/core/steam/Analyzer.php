@@ -62,8 +62,10 @@ class Analyzer
 
         if (!is_file($refFile) || !is_file($reportFile)) return NULL;
 
-        $content = base64_decode(file_get_contents($refFile));
-        if ($content === false) return NULL;
+        $_explode = explode("|", file_get_contents($refFile));
+        $content = base64_decode($_explode[0]);
+
+        if ($content === false || !Reference::checkIntegrity($cwd . "/../../refs", $id)) return NULL;
 
         $actualResult = file_get_contents($reportFile);
         if ($actualResult === false) return NULL;

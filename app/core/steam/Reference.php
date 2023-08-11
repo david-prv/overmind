@@ -29,15 +29,54 @@ abstract class Reference
             return false;
         }
 
-        return file_put_contents("$refPath/ref_$id.txt", $reference);
+        return file_put_contents("$refPath/ref_$id.txt", $reference . "|" . hash("sha256",
+                $reference . "." . Reference::getFingerPrint()));
     }
 
+    /**
+     * Fetched the reference for one specific tool
+     *
+     * @param string $refPath
+     * @param string $id
+     * @return string|null
+     */
     public static function get(string $refPath, string $id): ?string
     {
-        if (!is_file("$refPath/$id.txt")) {
+        if (!is_file("$refPath/ref_$id.txt")) {
             return NULL;
         }
 
         return file_get_contents("$refPath/$id.txt");
+    }
+
+    /**
+     * Checks reference integrity for a specific tool
+     *
+     * @param string $refPath
+     * @param string $id
+     * @return bool
+     */
+    public static function checkIntegrity(string $refPath, string $id): bool
+    {
+        $reference = file_get_contents("$refPath/ref_$id.txt");
+        $_explode = explode("|", $reference);
+        $hashSum = $_explode[1];
+        $encodedData = $_explode[0];
+
+        if ($hashSum === "" || $encodedData === "") return false;
+
+        return hash('sha256', $encodedData . "." . Reference::getFingerPrint()) === $hashSum;
+    }
+
+    /**
+     * Generates a fingerprint for your system
+     * to ensure data integrity
+     *
+     * @return string
+     */
+    public static function getFingerPrint(): string
+    {
+        $fingerprint = [php_uname(), disk_total_space('.'), filectime('/'), phpversion()];
+        return hash('sha256', json_encode($fingerprint));
     }
 }

@@ -198,7 +198,8 @@ class App
             array("%PROJECT_LOGO%", Core::getInstance()->getProjectLogo()),
             array("%PROJECT_AUTHOR%", Core::getInstance()->getProjectAuthor()),
             array("%PROJECT_DESCRIPTION%", Core::getInstance()->getProjectDescription()),
-            array("%TOOLS_JSON%", Core::getInstance()->getToolsJson())
+            array("%TOOLS_JSON%", Core::getInstance()->getToolsJson()),
+            array("%CURRENT_FINGER_PRINT%", Reference::getFingerPrint())
         ));
 
         /* Interactive input schedule */
