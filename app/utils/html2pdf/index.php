@@ -1,5 +1,5 @@
 <?php
-    // read passed data
+    // read passed data...
 
     if(!isset($_GET["data"])) die("[html2pdf] Invalid data!");
 
