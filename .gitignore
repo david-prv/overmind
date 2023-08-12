@@ -5,4 +5,4 @@
 /reports/*.txt
 /refs/*.txt
 /app/tools/*/
-/app/tools/map.json
+/app/tools/*.json
