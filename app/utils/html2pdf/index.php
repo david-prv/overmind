@@ -1,28 +1,28 @@
 <?php
-    // read passed data...
+// read passed data...
 
-    if(!isset($_GET["data"])) die("[html2pdf] Invalid data!");
+if (!isset($_GET["data"])) die("[html2pdf] Invalid data!");
 
-    // try to decode data...
+// try to decode data...
 
-    try {
-        $data = json_decode($_GET["data"], true);
-    } catch (Exception $ex) {
-        die("[html2pdf] Whoops! Couldn't parse your data!");
-    }
+try {
+    $data = json_decode($_GET["data"], true);
+} catch (Exception $ex) {
+    die("[html2pdf] Whoops! Couldn't parse your data!");
+}
 
-    // parsing data...
+// parsing data...
 
-    if (!isset($data["target_url"]) || !isset($data["scanner_results"])
-        || !isset($data["our_offers"]) || !isset($data["bad_words"]) || !isset($data["ref_token"])) {
-        die("[html2pdf] Sorry, you provided the wrong data format!");
-    }
+if (!isset($data["target_url"]) || !isset($data["scanner_results"])
+    || !isset($data["our_offers"]) || !isset($data["bad_words"]) || !isset($data["ref_token"])) {
+    die("[html2pdf] Sorry, you provided the wrong data format!");
+}
 
-    $targetUrl = $data["target_url"];
-    $scannerResults = $data["scanner_results"];
-    $ourOffers = $data["our_offers"];
-    $badWords = $data["bad_words"];
-    $refToken = $data["ref_token"];
+$targetUrl = $data["target_url"];
+$scannerResults = $data["scanner_results"];
+$ourOffers = $data["our_offers"];
+$badWords = $data["bad_words"];
+$refToken = $data["ref_token"];
 ?>
 
 <!--
@@ -39,7 +39,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -48,7 +49,7 @@
     <style>
         body {
             font-family: Arial;
-            padding:20px;
+            padding: 20px;
         }
 
         .container {
@@ -83,28 +84,68 @@
         }
 
         .bottom {
-            font-family:'Courier New', Courier, monospace;
-            margin-top:10px;
-            margin-bottom: 0!important;
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 10px;
+            margin-bottom: 0 !important;
         }
     </style>
 
     <!-- Table Style -->
     <style type="text/css">
-        .tg  {border-collapse:collapse;border-spacing:0;}
-        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
-        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-        .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
-        .tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
-        thead {background: #b5b5b5;}
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-c3ow {
+            border-color: inherit;
+            text-align: center;
+            vertical-align: top
+        }
+
+        .tg .tg-fymr {
+            border-color: inherit;
+            font-weight: bold;
+            text-align: left;
+            vertical-align: top
+        }
+
+        thead {
+            background: #b5b5b5;
+        }
     </style>
 </head>
 
 <body>
 <div class="container">
-    <center><button class="btn btn-primary btn-lg mb-2" id="button"><i class="fa fa-cogs"></i> Generate PDF</button></center>
+    <center>
+        <button class="btn btn-primary btn-lg mb-2" id="button"><i class="fa fa-cogs"></i> Generate PDF</button>
+    </center>
     <div class="card" id="makepdf">
-        <img class="logo" src="https://etage-4.de/etage4_wp/wp-content/uploads/2020/05/Logo_3000_dark.png" />
+        <img class="logo" src="https://etage-4.de/etage4_wp/wp-content/uploads/2020/05/Logo_3000_dark.png"/>
 
         <p class="imprint">
             <strong>Imprint</strong><br>
@@ -129,21 +170,21 @@
             </thead>
             <tbody>
             <?php
-                if(count($scannerResults) === 0) {
-                    echo "<tr>
+            if (count($scannerResults) === 0) {
+                echo "<tr>
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                           </tr>";;
-                } else {
-                    foreach ($scannerResults as $result) {
-                        echo "<tr>
+            } else {
+                foreach ($scannerResults as $result) {
+                    echo "<tr>
                                 <td contenteditable class=\"tg-c3ow\">{$result["testName"]}</td>
                                 <td contenteditable class=\"tg-c3ow\">{$result["distance"]}</td>
                                 <td contenteditable class=\"tg-c3ow\">{$result["normalized"]}%</td>
                               </tr>";
-                    }
                 }
+            }
             ?>
             </tbody>
         </table>
@@ -161,22 +202,22 @@
             </thead>
             <tbody>
             <?php
-                if (count($ourOffers) === 0) {
-                    echo "<tr>
+            if (count($ourOffers) === 0) {
+                echo "<tr>
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                          </tr>";
-                } else {
-                    foreach ($ourOffers as $offer) {
-                        $comment = (isset($offer["comment"]) && $offer["comment"] !== "") ? $offer["comment"] : "&mdash;";
-                        echo "<tr>
+            } else {
+                foreach ($ourOffers as $offer) {
+                    $comment = (isset($offer["comment"]) && $offer["comment"] !== "") ? $offer["comment"] : "&mdash;";
+                    echo "<tr>
                                 <td contenteditable class=\"tg-c3ow\">{$offer["caption"]}</td>
                                 <td contenteditable class=\"tg-c3ow\">{$offer["price"]}</td>
                                 <td contenteditable class=\"tg-c3ow\">{$comment}</td>
                              </tr>";
-                    }
                 }
+            }
             ?>
             </tbody>
         </table>
