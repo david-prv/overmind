@@ -114,8 +114,10 @@
                 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> &mdash; Deselect all tools
                 <hr/>
                 <h6>Technical:</h6>
-                current_finger_print
+                <i class="fa fa-lock" aria-hidden="true"></i> personal_secret_key<br/>
                 <code style="font-size:13px;">%CURRENT_FINGER_PRINT%</code>
+                <i class="fa fa-id-badge" aria-hidden="true"></i> personal_ref_token<br/>
+                <code style="font-size:13px;">%PERSONAL_TOKEN%</code>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -416,6 +418,7 @@
     <!-- Runtime JS -->
     <script type="text/javascript">
         const DATA = JSON.parse('%TOOLS_JSON%');
+        const PERSONAL_REF_TOKEN = '%PERSONAL_TOKEN%';
     </script>
     <script src="/static/js/bundle.min.js"></script>
     <script src="/static/js/hotkeys.min.js"></script>

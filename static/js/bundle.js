@@ -13,6 +13,7 @@ var finishedIDs = [];
 var temp = [];
 var lastTarget = "";
 var lastTargetDiff = [];
+var maxPreviewLength = 50;
 
 // code ignition
 (function () {
@@ -434,7 +435,7 @@ function getText(id) {
             var type = request.getResponseHeader('Content-Type');
             if (type.indexOf("text") !== 1) {
                 // console.log(request.responseText, k);
-                document.getElementById("body-" + k).innerText = request.responseText;
+                document.getElementById("body-" + k).innerText = request.responseText.slice(0, maxPreviewLength) + "...";
             }
         }
     }
@@ -474,10 +475,15 @@ function correctDistanceColoring(id, score) {
     let el = document.getElementById("distance-" + id);
     let i_score = parseInt(score);
     switch(true) {
+        case (i_score < 0):
+            el.style.color = "darkgray";
+            el.innerHTML += "&nbsp;<i title=\"Missing reference or integrity not verifiable\" " +
+                "class=\"fa fa-exclamation-circle\" aria-hidden=\"true\"></i>";
+            break;
         case (i_score === 0):
             el.style.color = "green";
             break;
-        case (i_score <= 15):
+        case (i_score <= 1000):
             el.style.color = "orange";
             break;
         default:
@@ -531,6 +537,7 @@ function selectSearch() {
     }
 }
 
+// parse selected offers from html view
 function parseOffers(zone) {
     let elements = zone.children;
     if (elements.length <= 0) {
@@ -549,6 +556,7 @@ function parseOffers(zone) {
     return tmp;
 }
 
+// parse scan results from html view
 function parseResults(results) {
 
     function bounds(l) {
@@ -583,12 +591,13 @@ function parseResults(results) {
     }
 
     for(let k = 0; k < elements.length; k++) {
-        tmp[k].normalized = normalize(k, dist);
+        tmp[k].normalized = Math.round(normalize(k, dist) * 100) / 100;
     }
 
     return tmp;
 }
 
+// collect scan and offer information and redirect to html2pdf util
 function collectInfoAndRedirect() {
     let dropZone = document.getElementById("dropzone");
     let resultContent = document.getElementById("result-content");
@@ -605,10 +614,9 @@ function collectInfoAndRedirect() {
         target_url: lastTarget,
         scanner_results: results,
         our_offers: offers,
-        bad_words: lastTargetDiff
+        bad_words: lastTargetDiff,
+        ref_token: PERSONAL_REF_TOKEN
     });
 
-    console.log(result_information);
-
-    window.location.href = "/app/utils/html2pdf/index.php?data=" + result_information;
+    window.open("/app/utils/html2pdf/index.php?data=" + result_information, '_blank').focus();
 }

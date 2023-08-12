@@ -69,8 +69,8 @@ abstract class Reference
     }
 
     /**
-     * Generates a fingerprint for your system
-     * to ensure data integrity
+     * Generates a fingerprint which is used as personal secret
+     * for your system to ensure data integrity within the host system
      *
      * @return string
      */
@@ -78,5 +78,25 @@ abstract class Reference
     {
         $fingerprint = [php_uname(), disk_total_space('.'), filectime('/'), phpversion()];
         return hash('sha256', json_encode($fingerprint));
+    }
+
+    /**
+     * Returns the personal token which is used as reference ID
+     * for exported reports. This way, one can draw conclusions
+     * from a generated PDF who generated the respective report and
+     * performed the scan (I think this could be relevant).
+     *
+     * This function just produces a Cyclic-Redundancy-Check (CRC)
+     * of the personal secret, which is used to verify data integrity
+     * within the host system. CRC's are not secure and also not meant
+     * to be used as a security algorithm, thus, one should consider using a salt.
+     *
+     * @param string $salt
+     * @return string
+     */
+    public static function getPersonalToken(string $salt = ""): string
+    {
+        $pfp = Reference::getFingerPrint();
+        return hash("crc32", $pfp . $salt);
     }
 }

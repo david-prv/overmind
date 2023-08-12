@@ -14,7 +14,7 @@
     // parsing data...
 
     if (!isset($data["target_url"]) || !isset($data["scanner_results"])
-        || !isset($data["our_offers"]) || !isset($data["bad_words"])) {
+        || !isset($data["our_offers"]) || !isset($data["bad_words"]) || !isset($data["ref_token"])) {
         die("[html2pdf] Sorry, you provided the wrong data format!");
     }
 
@@ -22,6 +22,7 @@
     $scannerResults = $data["scanner_results"];
     $ourOffers = $data["our_offers"];
     $badWords = $data["bad_words"];
+    $refToken = $data["ref_token"];
 ?>
 
 <!--
@@ -128,12 +129,20 @@
             </thead>
             <tbody>
             <?php
-                foreach ($scannerResults as $result) {
+                if(count($scannerResults) === 0) {
                     echo "<tr>
-                            <td contenteditable class=\"tg-c3ow\">{$result["testName"]}</td>
-                            <td contenteditable class=\"tg-c3ow\">{$result["distance"]}</td>
-                            <td contenteditable class=\"tg-c3ow\">{$result["normalized"]}%</td>
-                          </tr>";
+                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
+                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
+                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
+                          </tr>";;
+                } else {
+                    foreach ($scannerResults as $result) {
+                        echo "<tr>
+                                <td contenteditable class=\"tg-c3ow\">{$result["testName"]}</td>
+                                <td contenteditable class=\"tg-c3ow\">{$result["distance"]}</td>
+                                <td contenteditable class=\"tg-c3ow\">{$result["normalized"]}%</td>
+                              </tr>";
+                    }
                 }
             ?>
             </tbody>
@@ -152,13 +161,21 @@
             </thead>
             <tbody>
             <?php
-                foreach ($ourOffers as $offer) {
-                    $comment = (isset($offer["comment"]) && $offer["comment"] !== "") ? $offer["comment"] : "&mdash;";
+                if (count($ourOffers) === 0) {
                     echo "<tr>
-                            <td contenteditable class=\"tg-c3ow\">{$offer["caption"]}</td>
-                            <td contenteditable class=\"tg-c3ow\">{$offer["price"]}</td>
-                            <td contenteditable class=\"tg-c3ow\">{$comment}</td>
+                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
+                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
+                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                          </tr>";
+                } else {
+                    foreach ($ourOffers as $offer) {
+                        $comment = (isset($offer["comment"]) && $offer["comment"] !== "") ? $offer["comment"] : "&mdash;";
+                        echo "<tr>
+                                <td contenteditable class=\"tg-c3ow\">{$offer["caption"]}</td>
+                                <td contenteditable class=\"tg-c3ow\">{$offer["price"]}</td>
+                                <td contenteditable class=\"tg-c3ow\">{$comment}</td>
+                             </tr>";
+                    }
                 }
             ?>
             </tbody>
@@ -170,8 +187,9 @@
         <textarea rows="10" class="txt-comment">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</textarea>
 
         <p class="bottom">
-            Snapshot created at <span id="timestamp"></span><br>
-            Target-URL: <span id="target"></span>
+            Report generated at <span id="timestamp"></span><br/>
+            Target-URL: <span id="target"></span><br/>
+            Ref-Token: <span id="ref"><?php echo $refToken; ?></span>
         </p>
     </div>
 </div>
