@@ -53,7 +53,7 @@ if ($fileIsPresent) {
             }
 
         } else {
-            writeLog("Sorry, upload failed. Your file was okay, but something else went wrong! Aborted!", 3);
+            writeLog("Sorry, upload failed. There are two reasons: Your file's name was invalid or an unknown issue occurred! Aborted!", 3);
         }
     }
 }
@@ -85,7 +85,7 @@ if ($fileIsPresent) {
                 </p>
             </div>
             <form style="background:whitesmoke;padding:20px;" action="index.php" method="post" enctype="multipart/form-data">
-                <input type="file" id="integrationFile" name="integrationFile">
+                <input type="file" accept="application/zip" id="integrationFile" name="integrationFile">
                 <button type="submit" class="btn btn-primary">Run Integration Bot</button>
             </form>
         </div>';

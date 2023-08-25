@@ -60,6 +60,9 @@ abstract class Reference
     {
         $reference = file_get_contents("$refPath/ref_$id.txt");
         $_explode = explode("|", $reference);
+
+        if (count($_explode) < 2) return false;
+
         $hashSum = $_explode[1];
         $encodedData = $_explode[0];
 

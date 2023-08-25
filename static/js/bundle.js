@@ -477,7 +477,7 @@ function correctDistanceColoring(id, score) {
     switch(true) {
         case (i_score < 0):
             el.style.color = "darkgray";
-            el.innerHTML += "&nbsp;<i title=\"Missing reference or integrity not verifiable\" " +
+            el.innerHTML = "<i title=\"Missing reference or integrity not verifiable\" " +
                 "class=\"fa fa-exclamation-circle\" aria-hidden=\"true\"></i>";
             break;
         case (i_score === 0):

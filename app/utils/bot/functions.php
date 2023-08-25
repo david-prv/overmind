@@ -132,6 +132,7 @@ function cleanUpTemporaryFiles(string $tmpFolder, string $root): bool
  */
 function initIntegration(string $tmpFolder): bool
 {
+    // TODO: POST requests internal (CURL, file_get_contents, ... ??)
     $uploadEndpoint = "index.php?integrate"; // post data required
     $scheduleEndpoint = "index.php?schedule"; // get data id & interactions required
     $referenceEndpoint = "index.php?reference"; // get data id & reference (base64) required

@@ -46,7 +46,7 @@ $refToken = $data["ref_token"];
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- General Style -->
-    <style>
+    <style type="text/css">
         body {
             padding: 20px;
         }
@@ -189,11 +189,16 @@ $refToken = $data["ref_token"];
                           </tr>";;
             } else {
                 foreach ($scannerResults as $result) {
+                    // prepare scanner result fields
+                    $testName = (isset($result["testName"])) ? $result["testName"] : "&mdash;";
+                    $testDistance = (isset($result["distance"])) ? $result["distance"] : "&mdash;";
+                    $testNormalized = (isset($result["normalized"])) ? $result["normalized"] . "%" : "&mdash;";
+
                     echo "<tr>
-                                <td contenteditable class=\"tg-c3ow\">{$result["testName"]}</td>
-                                <td contenteditable class=\"tg-c3ow\">{$result["distance"]}</td>
-                                <td contenteditable class=\"tg-c3ow\">{$result["normalized"]}%</td>
-                              </tr>";
+                             <td contenteditable class=\"tg-c3ow\">{$testName}</td>
+                             <td contenteditable class=\"tg-c3ow\">{$testDistance}</td>
+                             <td contenteditable class=\"tg-c3ow\">{$testNormalized}</td>
+                          </tr>";
                 }
             }
             ?>
