@@ -1,10 +1,17 @@
 <?php
 require_once "functions.php";
+require_once "../../../core/steam/Reference.php";
 
-$logToPrint = "<h1>Bot Log</h1>";
 $maxFileSize = 500000;
 $uploadTargetDir = "/tmp";
 $uploadFileName = "integrationFile";
+$logToPrint = "<h1>Bot Log</h1>
+               <hr/>
+               <small>Maximum Filesize: $maxFileSize</small><br />
+               <small>Uploadfolder: $uploadTargetDir</small><br />
+               <small>Fingerprint: " . Reference::getFingerPrint() . "</small><br />
+               <small>Timestamp: " . time() . "</small><br />
+               <hr/>";
 
 $fileIsPresent = isset($_FILES[$uploadFileName]);
 $uploadOK = true;
@@ -45,14 +52,11 @@ if ($fileIsPresent) {
             if (!unzipArchive($target_file, $target_dir)) {
                 writeLog("Could not unzip archive! Abort!", 3);
             } else {
-
                 // init actual integration process
                 (doIntegration($target_dir))
                     ? writeLog("Success! Tools were integrated successfully!")
                     : writeLog("Integration process aborted! For more details see information above.", 3);
-
             }
-
         } else {
             writeLog("Sorry, upload failed. There are two reasons: Your file's name was invalid or an unknown issue occurred! Aborted!", 3);
         }
@@ -74,12 +78,12 @@ if ($fileIsPresent) {
 </head>
 
 <body>
-<div <?php if($fileIsPresent) echo "style='height:100vh;overflow-y:scroll;'"; ?> class="container mt-3">
+<div <?php if ($fileIsPresent) echo "style='height:100vh;overflow-y:scroll;'"; ?> class="container mt-3">
     <?php if (!$fileIsPresent) {
         echo '<div class="p-3">
             <h1>Integration Bot</h1>
             <div>
-                <p style=" border-left: 4px solid blue;padding: 0.5em;">
+                <p style="border-left:4px solid blue;padding:0.5em;">
                     Please select a valid import-file below. Make sure, that it follows the correct folder structure. When the
                     button is pressed, the integration procedure will start automatically and give you detailled debug information once it is done.
                     The bot cannot be stopped. There is no further warning. For extreme cases, backup your <code>/app/tools</code> folder.
