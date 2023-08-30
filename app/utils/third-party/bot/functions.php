@@ -230,8 +230,9 @@ function doIntegration(string $tmpFolder): bool
         $_description = $toolInfo[7];
         $_keywords = $toolInfo[8];
 
-        writeLog("Parsed all tool details: " . json_encode([$_name, $_author, $_url, $_version, $_engine,
-                $_index, $_cmdLine, $_description, $_keywords]));
+        writeLog("Parsed all tool details: <a style=\"cursor:pointer;text-decoration:underline;\"
+                       onclick=\"alert('" . htmlentities(json_encode([$_name, $_author, $_url, $_version, $_engine,
+                       $_index, $_cmdLine, $_description, $_keywords])) . "')\">show</a>");
 
         // assemble info
         $toolData = array(
@@ -375,7 +376,7 @@ function _writeReference(string $id, string $reference): bool
     $hashSum = hash('sha256', $encodedReference . "." . Reference::getFingerPrint());
     $dataToStore = $encodedReference."|".$hashSum;
 
-    writeLog("Integrity checksum => $hashSum");
+    writeLog("Calculated integrity hash: <a style=\"cursor:pointer;text-decoration:underline;\" onclick=\"alert('$hashSum');\">show</a>");
 
     // write ref file
     $storeLocation = __DIR__ . "/../../../../refs/ref_$id.txt";
