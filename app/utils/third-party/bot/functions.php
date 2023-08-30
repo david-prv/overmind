@@ -1,6 +1,9 @@
 <?php
 
+/** @var $skippedTools */
 $skippedTools = [];
+
+/** @var $lastError */
 $lastError = "";
 
 // -------------------- [ AUXILIARY FUNCTIONS ] --------------------
@@ -295,7 +298,7 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
         writeLog("Tool was assigned ID=$toolID");
 
         // (3) write tool reference
-        if (!_writeReference($tool["reference"])) {
+        if (!_writeReference($toolID, $tool["reference"])) {
             writeLog("Could not create and write to reference! Skipped!", 2);
             _skipped($tool["name"]);
             continue;
@@ -305,7 +308,7 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
 
         // [ (4) if necessary, write schedule ]
         if ($tool["interactive"]) {
-            if (!_writeSchedule($tool["schedule"])) {
+            if (!_writeSchedule($toolID, $tool["schedule"])) {
                 writeLog("Could not register scheduled input! Skipped!", 2);
                 _skipped($tool["name"]);
                 continue;
@@ -320,22 +323,70 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
 /**
  * Write scheduled inputs to ~/app/tools/interactions.json
  *
+ * @param string $id
  * @param array $scheduledInOrder
  * @return bool
  */
-function _writeSchedule(array $scheduledInOrder): bool
+function _writeSchedule(string $id, array $scheduledInOrder): bool
 {
+    // read and verify schedule file
+    $scheduleFile = __DIR__ . "/../../../tools/interactions.json";
+    if (!file_exists($scheduleFile)) {
+        writeLog("Could not find schedule file!", 2);
+        return false;
+    }
+    $scheduleContent = file_get_contents(realpath($scheduleFile));
+    if (!$scheduleContent) {
+        writeLog("Could not read schedule file!", 2);
+        return false;
+    }
+    $scheduleContent = json_decode($scheduleContent, true);
+    if (is_null($scheduleContent)) {
+        writeLog("Could not decode schedule content!", 2);
+        return false;
+    }
+
+    writeLog("Successfully read schedule content!");
+
+    // write new schedule to file
+    $scheduleContent[$id] = $scheduledInOrder;
+
+    if (!file_put_contents(realpath($scheduleFile), json_encode($scheduleContent))) {
+        writeLog("Could not update schedule file!", 2);
+        return false;
+    }
+
+    writeLog("Successfully updated schedule content!");
+
     return true;
 }
 
 /**
  * Write reference to ~/refs
  *
+ * @param string $id
  * @param string $reference
  * @return bool
  */
-function _writeReference(string $reference): bool
+function _writeReference(string $id, string $reference): bool
 {
+    // encode and fingerprint data
+    $encodedReference = base64_encode($reference);
+    $hashSum = hash('sha256', $encodedReference . "." . Reference::getFingerPrint());
+    $dataToStore = $encodedReference."|".$hashSum;
+
+    writeLog("Integrity checksum => $hashSum");
+
+    // write ref file
+    $storeLocation = __DIR__ . "/../../../../refs/ref_$id.txt";
+    if (file_exists($storeLocation)) {
+        writeLog("Reference file already exists! This isn't a big deal, make sure to verify it is up-to-date!", 1);
+    }
+    if (!file_put_contents($storeLocation, $dataToStore)) {
+        writeLog("Could not write to reference file!", 2);
+        return false;
+    }
+
     return true;
 }
 
@@ -421,7 +472,7 @@ function _appendToMap(string $name, string $engine, string $index, string $args,
 function _skipped(string $toolName, ?string $reason = NULL): void
 {
     global $skippedTools, $lastError;
-    $skippedTools[$toolName] = $reason ?? "maybe because: " . $lastError;
+    $skippedTools[$toolName] = $reason ?? "Maybe because: " . $lastError;
 }
 
 /**

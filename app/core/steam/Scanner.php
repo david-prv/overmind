@@ -465,7 +465,7 @@ class Scanner implements Runnable, Integrable
         if ($namespace === "" || !is_dir($this->cwd . "/" . $namespace)) return false;
 
         $workspace = $this->cwd . "/" . $namespace;
-        // TODO: Map is not cleared correctly!
+        // TODO: Also clear interactions.json
         $currentMap = $this->removeToolFrom($currentMap, $this->id);
 
         return $this->deleteToolFolder($workspace)
