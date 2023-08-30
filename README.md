@@ -16,6 +16,27 @@ Disclaimer: This tool is not intended to be used for any criminal act. It's used
  - Python (>= 3.9.13)
  - Composer (>= 2.1.2)
 
+## Snapshot Structure
+
+```
+snapshot/
+├── _extra/
+│   └── empty
+├── _tools/
+│   ├── sampleTool
+│   │   ├── sampleTool.info
+│   │   ├── sampleTool.reference
+│   │   ├── sampleTool.schedule
+│   │   └── sampleTool.zip
+│   └── sampleTool2
+│       ├── sampleTool2.info
+│       ├── sampleTool2.reference
+│       ├── sampleTool2.schedule
+│       └── sampleTool2.zip
+├── .author
+└── .info
+```
+
 ## Installation
 Clone repository:
 ```bash
