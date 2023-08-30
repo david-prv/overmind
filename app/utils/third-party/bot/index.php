@@ -15,7 +15,7 @@ if ($fileIsPresent) {
     $target_file = $target_dir . basename($_FILES[$uploadFileName]["name"]);
     $fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     $fileSize = $_FILES[$uploadFileName]["size"];
-    writeLog("Received file $target_file");
+    writeLog("Received file " . basename($_FILES[$uploadFileName]["name"]));
 
     // check if file exists
     if (file_exists($target_file)) {
@@ -46,7 +46,8 @@ if ($fileIsPresent) {
                 writeLog("Could not unzip archive! Abort!", 3);
             } else {
 
-                (initIntegration($target_dir))
+                // init actual integration process
+                (doIntegration($target_dir))
                     ? writeLog("Success! Tools were integrated successfully!")
                     : writeLog("Integration process aborted! For more details see information above.", 3);
 
@@ -73,7 +74,7 @@ if ($fileIsPresent) {
 </head>
 
 <body>
-<div class="container mt-3">
+<div <?php if($fileIsPresent) echo "style='height:100vh;overflow-y:scroll;'"; ?> class="container mt-3">
     <?php if (!$fileIsPresent) {
         echo '<div class="p-3">
             <h1>Integration Bot</h1>

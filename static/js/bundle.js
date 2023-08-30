@@ -618,5 +618,5 @@ function collectInfoAndRedirect() {
         ref_token: PERSONAL_REF_TOKEN
     });
 
-    window.open("/app/utils/html2pdf/index.php?data=" + result_information, '_blank').focus();
+    window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, '_blank').focus();
 }

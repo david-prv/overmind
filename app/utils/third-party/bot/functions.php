@@ -1,5 +1,7 @@
 <?php
 
+// -------------------- [ AUXILIARY FUNCTIONS ] --------------------
+
 /**
  * Function to write to log that is being
  * display after execution of the PHP code,
@@ -43,6 +45,9 @@ function unzipArchive(string $file, string $extractTo): bool
     $zip = new ZipArchive();
     $res = $zip->open($file);
     if ($res) {
+        if (!is_dir($extractTo)) {
+            if (!mkdir($extractTo)) return false;
+        }
         $zip->extractTo($extractTo);
         $zip->close();
         return unlink($file);
@@ -110,6 +115,13 @@ function enumerateTools(string $tmpFolder): array
     return $tools;
 }
 
+/**
+ * Final cleanup of temporary working directory
+ *
+ * @param string $tmpFolder
+ * @param string $root
+ * @return bool
+ */
 function cleanUpTemporaryFiles(string $tmpFolder, string $root): bool
 {
     foreach (scandir($tmpFolder) as $object) {
@@ -124,19 +136,16 @@ function cleanUpTemporaryFiles(string $tmpFolder, string $root): bool
     else return true;
 }
 
+// -------------------- [ INTEGRATION STEPS ] --------------------
+
 /**
  * The "main" function for tool integration
  *
  * @param string $tmpFolder
  * @return bool
  */
-function initIntegration(string $tmpFolder): bool
+function doIntegration(string $tmpFolder): bool
 {
-    // TODO: POST requests internal (CURL, file_get_contents, ... ??)
-    $uploadEndpoint = "index.php?integrate"; // post data required
-    $scheduleEndpoint = "index.php?schedule"; // get data id & interactions required
-    $referenceEndpoint = "index.php?reference"; // get data id & reference (base64) required
-
     $author = readHiddenInfoFile($tmpFolder, "author");
     $info = readHiddenInfoFile($tmpFolder, "info");
 
@@ -153,6 +162,7 @@ function initIntegration(string $tmpFolder): bool
 
     writeLog("Found " . count($enumeration) . " tool(s) to integrate");
 
+    $toolsToIntegrate = [];
     foreach ($enumeration as $tool) {
         $array = explode("/", $tool);
         $toolName = end($array);
@@ -211,7 +221,129 @@ function initIntegration(string $tmpFolder): bool
 
         writeLog("Parsed all tool details: " . json_encode([$_name, $_author, $_url, $_version, $_engine,
                 $_index, $_cmdLine, $_description, $_keywords]));
+
+        // assemble info
+        $toolData = array(
+            "name" => $_name,
+            "author" => $_author,
+            "url" => $_url,
+            "version" => $_version,
+            "engine" => $_engine,
+            "index" => $_index,
+            "cmdline" => $_cmdLine,
+            "description" => $_description,
+            "keywords" => $_keywords,
+            "file" => "$toolZip",
+            "reference" => $toolReference,
+            "schedule" => $toolSchedule,
+            "interactive" => $toolIsInteractive
+        );
+
+        $toolsToIntegrate[$_name] = $toolData;
     }
 
-    return cleanUpTemporaryFiles($tmpFolder, $tmpFolder);
+    return _integrateArray($toolsToIntegrate, "cleanUpTemporaryFiles", $tmpFolder, $tmpFolder);
+}
+
+/**
+ * Run subsequent integration tasks after
+ * parsing and checking the input
+ *
+ * @param array $tools
+ * @param callable $callback
+ * @param ...$callbackArgs
+ * @return bool
+ */
+function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bool
+{
+    foreach ($tools as $tool) {
+        $finalDestination = __DIR__ . "/../../../tools/" . $tool["name"];
+
+        // (1) unzip tool archive to ~/app/tools folder
+        if (!unzipArchive($tool["file"], $finalDestination)) {
+            writeLog("Could not unzip tool archive '" . $tool["name"] . "'! Skipped.", 2);
+            continue;
+        }
+
+        writeLog("Unzipped tool archive '" . $tool["name"] . "' to: " . realpath($finalDestination));
+
+        // (2) add tool data to map
+        $toolID = _appendToMap($tool["name"], $tool["engine"], $tool["index"], $tool["cmdline"], $tool["description"],
+            $tool["version"], $tool["author"], $tool["url"], $tool["keywords"]);
+
+        if (is_null($toolID)) {
+            writeLog("Could not append tool data to map! Skipped!", 2);
+            continue;
+        }
+
+        writeLog("Successfully appended data to ~/app/tools/map.json");
+        writeLog("Tool was assigned ID=$toolID");
+
+        // (3) write tool reference
+        if (!_writeReference($tool["reference"])) {
+            writeLog("Could not create and write to reference! Skipped!", 2);
+            continue;
+        }
+
+        writeLog("Successfully wrote reference to ~/refs");
+
+        // [ (4) if necessary, write schedule ]
+        if ($tool["interactive"]) {
+            if (!_writeSchedule($tool["schedule"])) {
+                writeLog("Could not register scheduled input! Skipped!", 2);
+                continue;
+            }
+            writeLog("Successfully registered inputs to interaction mgr in ~/app/tools/interactions.json");
+        }
+    }
+
+    return call_user_func($callback, ...$callbackArgs);
+}
+
+/**
+ * Write scheduled inputs to ~/app/tools/interactions.json
+ *
+ * @param array $scheduledInOrder
+ * @return bool
+ */
+function _writeSchedule(array $scheduledInOrder): bool
+{
+    return true;
+}
+
+/**
+ * Write reference to ~/refs
+ *
+ * @param string $reference
+ * @return bool
+ */
+function _writeReference(string $reference): bool
+{
+    return true;
+}
+
+/**
+ * Append tool data to ~/app/tools/map.json to
+ * make it accessible to the framework. Also,
+ * fetch and return the newly assigned toolID.
+ * Returns NULL on error.
+ *
+ * @param string $name
+ * @param string $engine
+ * @param string $index
+ * @param string $args
+ * @param string $description
+ * @param string $version
+ * @param string $author
+ * @param string $url
+ * @param string $keywords
+ * @param bool $ignore
+ * @return int|null
+ */
+function _appendToMap(string $name, string $engine, string $index, string $args, string $description, string $version,
+                      string $author, string $url, string $keywords, bool $ignore = false): ?int
+{
+    // reminder: fetch new id first!
+    // return new id or NULL
+    return -1;
 }
