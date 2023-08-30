@@ -433,7 +433,7 @@ function _appendToMap(string $name, string $engine, string $index, string $args,
 
     // fetch the latest ID (they are always increasing, but not necessarily
     // one-by-one comparable with their index)
-    $latestItem = $mapContent[count($mapContent) - 1];
+    $latestItem = (count($mapContent) > 0) ? $mapContent[count($mapContent) - 1] : ["id" => 0];
     $latestID = $latestItem["id"];
     $newID = (int)$latestID + 1;
 
