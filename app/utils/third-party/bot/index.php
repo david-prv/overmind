@@ -14,7 +14,7 @@ $logToPrint = "<h1>Bot Log</h1>
                <small>Timestamp: " . time() . "</small><br />
                <hr/>";
 
-$fileIsPresent = isset($_FILES[$uploadFileName]);
+$fileIsPresent = isset($_FILES[$uploadFileName]) && $_FILES[$uploadFileName]["name"] !== "";
 $uploadOK = true;
 
 // init upload code, iff present
@@ -51,7 +51,7 @@ if ($fileIsPresent) {
             writeLog("File passed all checks, continuing...");
 
             if (!unzipArchive($targetFile, $targetDir)) {
-                writeLog("Could not unzip archive! Abort!", 3);
+                writeLog("Could not unzip archive! Aborted!", 3);
             } else {
                 // init actual integration process
                 if(!doIntegration($targetDir)) {
