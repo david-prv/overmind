@@ -92,7 +92,10 @@ function deleteTool(id) {
         if (data === "done") {
             $('#tool-' + id).remove();
             if (($('.list-group').children()).length <= 0) {
-                $('.list-group').html("<h2 class=\"text-muted text-center\">No tools found</h2>");
+                $('.list-group').html("<h2 class='text-muted text-center'>No tools found</h2>\n" +
+                    "                                                          <a class='no-cursor' href='https://vecteezy.com'>\n" +
+                    "                                                            <img class='img-center' src='/static/img/sleep.jpg' />\n" +
+                    "                                                          </a>");
             }
         }
     });
@@ -174,6 +177,10 @@ function resetStatesAndOffers() {
 
 // show edit tools
 function editTools() {
+    let alertNotice = document.getElementById("edit-mode-alert");
+    if (alertNotice.classList.contains("hidden")) alertNotice.classList.remove("hidden");
+    else alertNotice.classList.add("hidden");
+
     $('#launchAll, #launchOptions').prop('disabled', (i, v) => !v);
     for (let i = 0; i < DATA.length; i++) {
         $(`#options-tool-${DATA[i]["id"]}`).toggleClass("hidden");
