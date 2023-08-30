@@ -6,8 +6,8 @@ Disclaimer: This tool is not intended to be used for any criminal act. It's used
 
 ## Todo
 - Support for more native runners
-- Automatic risk assessment
 - Adjust tool integration to work with standard github-master ZIPs
+- Write snapshot creation tool
 
 ## Prerequisites
 
