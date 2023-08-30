@@ -93,7 +93,7 @@ function deleteTool(id) {
             $('#tool-' + id).remove();
             if (($('.list-group').children()).length <= 0) {
                 $('.list-group').html("<h2 class='text-muted text-center'>No tools found</h2>\n" +
-                    "                                                          <a class='no-cursor' href='https://vecteezy.com'>\n" +
+                    "                                                          <a class='no-cursor' title='Vector by https://vecteezy.com'>\n" +
                     "                                                            <img class='img-center' src='/static/img/sleep.jpg' />\n" +
                     "                                                          </a>");
             }

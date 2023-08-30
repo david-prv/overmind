@@ -54,10 +54,10 @@ if ($fileIsPresent) {
                 writeLog("Could not unzip archive! Abort!", 3);
             } else {
                 // init actual integration process
-                (doIntegration($targetDir))
-                    ? writeLog("Success! Tools were integrated successfully!")
-                    : writeLog("Integration process aborted! For more details see information above.", 3);
-                _summarize();
+                if(!doIntegration($targetDir)) {
+                    writeLog("Something went wrong! Please contact an administrator!", 3);
+                    exit();
+                }
             }
         } else {
             writeLog("Sorry, upload failed. There are two reasons: Your file's name was invalid or an unknown issue occurred! Aborted!", 3);

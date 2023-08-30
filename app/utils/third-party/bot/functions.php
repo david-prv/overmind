@@ -254,7 +254,7 @@ function doIntegration(string $tmpFolder): bool
         $toolsToIntegrate[$_name] = $toolData;
     }
 
-    return _integrateArray($toolsToIntegrate, "cleanUpTemporaryFiles", $tmpFolder, $tmpFolder);
+    return _integrateArray($toolsToIntegrate, "cleanUpTemporaryFiles", $tmpFolder, $tmpFolder) && _summarize();
 }
 
 /**
@@ -481,7 +481,7 @@ function _skipped(string $toolName, ?string $reason = NULL): void
  *
  * @return void
  */
-function _summarize(): void
+function _summarize(): bool
 {
     global $logToPrint, $skippedTools;
 
@@ -499,4 +499,5 @@ function _summarize(): void
     if (count($skippedTools) === 0) $logToPrint .= "none";
 
     $logToPrint .= "</small><hr/>";
+    return true;
 }

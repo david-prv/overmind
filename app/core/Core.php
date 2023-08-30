@@ -442,7 +442,7 @@ class Core
     public function renderToolsAsHtml(): string
     {
         $html = (count($this->getToolsObject()) === 0) ? "<h2 class='text-muted text-center'>No tools found</h2>
-                                                          <a class='no-cursor' href='https://vecteezy.com'>
+                                                          <a class='no-cursor' title='Vector by https://vecteezy.com'>
                                                             <img class='img-center' src='/static/img/sleep.jpg' />
                                                           </a>" : "";
         foreach ($this->getToolsObject() as $tool) {
