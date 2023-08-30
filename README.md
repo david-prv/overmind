@@ -19,7 +19,7 @@ Disclaimer: This tool is not intended to be used for any criminal act. It's used
 ## Snapshot Structure
 
 ```
-snapshot/
+snapshot.zip/
 ├── _extra/
 │   └── empty
 ├── _tools/
