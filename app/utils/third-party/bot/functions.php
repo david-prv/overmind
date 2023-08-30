@@ -1,5 +1,8 @@
 <?php
 
+$skippedTools = [];
+$lastError = "";
+
 // -------------------- [ AUXILIARY FUNCTIONS ] --------------------
 
 /**
@@ -13,7 +16,7 @@
  */
 function writeLog(string $msg, int $level = 0)
 {
-    global $logToPrint;
+    global $logToPrint, $lastError;
 
     $prefix = "<span style='color:cornflowerblue;'>[INFO]</span>";
 
@@ -30,6 +33,7 @@ function writeLog(string $msg, int $level = 0)
         default:
             break;
     }
+    if ($level > 1) $lastError = $msg;
     $logToPrint .= "$prefix $msg <br/>";
 }
 
@@ -177,11 +181,13 @@ function doIntegration(string $tmpFolder): bool
 
         if (!checkForToolZip($toolZip)) {
             writeLog("Tool '$toolName' is missing the corresponding zip archive $toolName.zip! Skipped.", 2);
+            _skipped($toolName);
             continue;
         }
 
         if ($toolInfo === "" || $toolReference === "") {
             writeLog("Tool '$toolName' does not contain all necessary information (info, reference)! Skipped.", 2);
+            _skipped($toolName);
             continue;
         }
 
@@ -207,6 +213,8 @@ function doIntegration(string $tmpFolder): bool
         $providedFields = count($toolInfo);
         if ($providedFields !== 9) {
             writeLog("Tool '$toolName' is missing important information. There are only $providedFields, should be 9! Skipped.", 2);
+            _skipped($toolName);
+            continue;
         }
 
         $_name = $toolInfo[0];
@@ -229,7 +237,7 @@ function doIntegration(string $tmpFolder): bool
             "url" => $_url,
             "version" => $_version,
             "engine" => $_engine,
-            "index" => $_index,
+            "index" => $_name . "/" .$_index,
             "cmdline" => $_cmdLine,
             "description" => $_description,
             "keywords" => $_keywords,
@@ -258,10 +266,16 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
 {
     foreach ($tools as $tool) {
         $finalDestination = __DIR__ . "/../../../tools/" . $tool["name"];
+        if (is_dir(realpath($finalDestination))) {
+            writeLog("Detected duplication, this tool already exists! Skipped!", 2);
+            _skipped($tool["name"]);
+            continue;
+        }
 
         // (1) unzip tool archive to ~/app/tools folder
         if (!unzipArchive($tool["file"], $finalDestination)) {
             writeLog("Could not unzip tool archive '" . $tool["name"] . "'! Skipped.", 2);
+            _skipped($tool["name"]);
             continue;
         }
 
@@ -273,6 +287,7 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
 
         if (is_null($toolID)) {
             writeLog("Could not append tool data to map! Skipped!", 2);
+            _skipped($tool["name"]);
             continue;
         }
 
@@ -282,6 +297,7 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
         // (3) write tool reference
         if (!_writeReference($tool["reference"])) {
             writeLog("Could not create and write to reference! Skipped!", 2);
+            _skipped($tool["name"]);
             continue;
         }
 
@@ -291,6 +307,7 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
         if ($tool["interactive"]) {
             if (!_writeSchedule($tool["schedule"])) {
                 writeLog("Could not register scheduled input! Skipped!", 2);
+                _skipped($tool["name"]);
                 continue;
             }
             writeLog("Successfully registered inputs to interaction mgr in ~/app/tools/interactions.json");
@@ -343,7 +360,91 @@ function _writeReference(string $reference): bool
 function _appendToMap(string $name, string $engine, string $index, string $args, string $description, string $version,
                       string $author, string $url, string $keywords, bool $ignore = false): ?int
 {
-    // reminder: fetch new id first!
-    // return new id or NULL
-    return -1;
+    // read and verify mapper file
+    $mapFile = __DIR__ . "/../../../tools/map.json";
+    if (!file_exists($mapFile)) {
+        writeLog("Could not find mapper file!", 2);
+        return NULL;
+    }
+    $mapContent = file_get_contents(realpath($mapFile));
+    if (!$mapContent) {
+        writeLog("Could not read mapper file!", 2);
+        return NULL;
+    }
+    $mapContent = json_decode($mapContent, true);
+    if (is_null($mapContent)) {
+        writeLog("Could not decode mapper content!", 2);
+        return NULL;
+    }
+
+    writeLog("Successfully read mapper content. Continuing...");
+
+    // fetch the latest ID (they are always increasing, but not necessarily
+    // one-by-one comparable with their index)
+    $latestItem = $mapContent[count($mapContent) - 1];
+    $latestID = $latestItem["id"];
+    $newID = (int)$latestID + 1;
+
+    writeLog("Last mapped tool has ID=$latestID. $name will be assigned ID=$newID");
+
+    // append tool to mapper file
+    $mapContent[] = [
+        "id" => "$newID",
+        "name" => $name,
+        "engine" => $engine,
+        "index" => $index,
+        "args" => $args,
+        "description" => $description,
+        "version" => $version,
+        "author" => $author,
+        "url" => $url,
+        "keywords" => $keywords,
+        "ignore" => $ignore
+    ];
+
+    // write to mapper file
+    if(!file_put_contents(realpath($mapFile), json_encode($mapContent))) {
+        writeLog("Could not append $name to mapper file!", 2);
+        return NULL;
+    }
+
+    return $newID;
+}
+
+/**
+ * Keep track of skipped tools
+ *
+ * @param string $toolName
+ * @param string|null $reason
+ * @return void
+ */
+function _skipped(string $toolName, ?string $reason = NULL): void
+{
+    global $skippedTools, $lastError;
+    $skippedTools[$toolName] = $reason ?? "maybe because: " . $lastError;
+}
+
+/**
+ * Give short summary at the end
+ *
+ * @return void
+ */
+function _summarize(): void
+{
+    global $logToPrint, $skippedTools;
+
+    $logToPrint .= "<hr />
+                    <small>Integration Bot has stopped!</small><br />
+                    <small>Timestamp: " . time() . "</small><br />
+                    <small>Tools skipped: " . count($skippedTools) . "</small><br />
+                    <small>Details: ";
+
+    foreach ($skippedTools as $tool => $reason) {
+        $logToPrint .= "<a style='cursor:pointer;text-decoration:underline;' title='click for details'
+                        onclick='alert(\"$reason\")'>$tool</a> ";
+    }
+
+    if (count($skippedTools) === 0) $logToPrint .= "none";
+
+    $logToPrint .= "</small><hr/>";
 }

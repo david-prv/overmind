@@ -7,6 +7,7 @@ $uploadTargetDir = "/tmp";
 $uploadFileName = "integrationFile";
 $logToPrint = "<h1>Bot Log</h1>
                <hr/>
+               <small>Integration Bot has started!</small><br />
                <small>Maximum Filesize: $maxFileSize</small><br />
                <small>Uploadfolder: $uploadTargetDir</small><br />
                <small>Fingerprint: " . Reference::getFingerPrint() . "</small><br />
@@ -18,14 +19,14 @@ $uploadOK = true;
 
 // init upload code, iff present
 if ($fileIsPresent) {
-    $target_dir = __DIR__ . $uploadTargetDir . "/";
-    $target_file = $target_dir . basename($_FILES[$uploadFileName]["name"]);
-    $fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    $targetDir = __DIR__ . $uploadTargetDir . "/";
+    $targetFile = $targetDir . basename($_FILES[$uploadFileName]["name"]);
+    $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
     $fileSize = $_FILES[$uploadFileName]["size"];
     writeLog("Received file " . basename($_FILES[$uploadFileName]["name"]));
 
     // check if file exists
-    if (file_exists($target_file)) {
+    if (file_exists($targetFile)) {
         writeLog("File already exists as temporary file! Something went really wrong here.", 2);
         $uploadOK = false;
     }
@@ -46,16 +47,17 @@ if ($fileIsPresent) {
     if (!$uploadOK) {
         writeLog("Upload aborted!", 3);
     } else {
-        if (move_uploaded_file($_FILES[$uploadFileName]["tmp_name"], $target_file)) {
+        if (move_uploaded_file($_FILES[$uploadFileName]["tmp_name"], $targetFile)) {
             writeLog("File passed all checks, continuing...");
 
-            if (!unzipArchive($target_file, $target_dir)) {
+            if (!unzipArchive($targetFile, $targetDir)) {
                 writeLog("Could not unzip archive! Abort!", 3);
             } else {
                 // init actual integration process
-                (doIntegration($target_dir))
+                (doIntegration($targetDir))
                     ? writeLog("Success! Tools were integrated successfully!")
                     : writeLog("Integration process aborted! For more details see information above.", 3);
+                _summarize();
             }
         } else {
             writeLog("Sorry, upload failed. There are two reasons: Your file's name was invalid or an unknown issue occurred! Aborted!", 3);
