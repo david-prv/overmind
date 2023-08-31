@@ -1,4 +1,4 @@
-![v617batch2-bb-01-technology](https://github.com/david-prv/scanner-bundle/assets/66866223/72400cc8-de20-4733-bd09-16d6775f33c5)
+![](https://raw.githubusercontent.com/david-prv/scanner-bundle/main/assets/hero-banner.png)
 # Scanner-Bundle: Control Framework
 A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.  
 
