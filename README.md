@@ -4,10 +4,12 @@ A small framework to run open-source tools that inspect and scan any kind of web
 
 Disclaimer: This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
-## Todo
-- Support for more native runners
-- Adjust tool integration to work with standard github-master ZIPs
-- Write snapshot creation tool
+## Roadmap
+- FIX tool deletion issue in bundle.js
+- FIX tool removal procedure to clear interactions
+- ADD support for more native runners
+- ADD support for standard github-master ZIPs as integrables
+- ADD snapshot creation tool
 
 ## Prerequisites
 
@@ -63,6 +65,6 @@ php -S localhost:8080
 ```
 Now open a web browser and navigate to `http://localhost:8080/`. The scanner-bundle framework should appear.
 
-## Screenshots
+## Getting Started
 
-TBD
+Information about getting started will be provided [here](https://wiki.etage-4.de/books/eigenentwicklung/chapter/scanner-bundle). For guests, check out the [wiki](/#).
