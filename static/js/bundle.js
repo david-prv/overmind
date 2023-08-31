@@ -88,6 +88,7 @@ function getToolIndexById(id) {
 
 // handler for tool deletion button
 function deleteTool(id) {
+    // TODO: Sometimes, "No tools found" isn't displayed!
     $.get('index.php?delete&id=' + id, function (data) {
         if (data === "done") {
             $('#tool-' + id).remove();
