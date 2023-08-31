@@ -7,7 +7,7 @@ Disclaimer: This tool is not intended to be used for any criminal act. It's used
 ## Roadmap
 - FIX tool deletion issue in bundle.js
 - FIX tool removal procedure to clear interactions
-- ADD virustotal scan for newly uploaded scanners
+- ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 - ADD support for standard github-master ZIPs as integrables
 - ADD snapshot creation tool
