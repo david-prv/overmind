@@ -35,6 +35,14 @@ body {
     padding-top:0.5rem;
 }
 
+.running-alert {
+    height:50px;
+    width:100%;
+    background: #f6a50a;
+    color:white;
+    padding-top:0.5rem;
+}
+
 @keyframes blink {
     50% {
         opacity: 0;

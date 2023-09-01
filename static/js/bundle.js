@@ -235,6 +235,7 @@ function invokeLaunchSelected(event) {
     lastTarget = target;
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
+    $('#running-alert').removeClass("hidden");
 
     let inputs = $('#selection-list input');
     let selectedInputs = inputs
@@ -277,6 +278,7 @@ function invokeLaunchAll(event) {
     lastTarget = target;
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
+    $('#running-alert').removeClass("hidden");
 
     for (let i = 0; i < DATA.length; i++) {
         let currentTool = DATA[i];
@@ -343,8 +345,10 @@ function invokeLaunchAll(event) {
 
 // handles the current progress state for launchSelected event
 function finishedSelected(index, selected) {
+    let evalProg = $('#evaluation-progress');
     counterS++;
     console.log("[INFO] Finished task (" + counterS + " / " + selected.length + ")");
+    evalProg.html("(" + counterS + " / " + selected.length + ")");
 
     if (counterS === selected.length) {
         let resContent = document.getElementById("result-content");
@@ -385,6 +389,8 @@ function finishedSelected(index, selected) {
         });
         resultModal.show();
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
+        $('#running-alert').addClass("hidden");
+        evalProg.html("");
         counterS = 0;
         finishedIDs = [];
     }
@@ -392,8 +398,10 @@ function finishedSelected(index, selected) {
 
 // handles the current progress state
 function finished(index, max) {
+    let evalProg = $('#evaluation-progress');
     counter++;
     console.log("[INFO] Finished task (" + counter + " / " + max + ")");
+    evalProg.html("(" + counter + " / " + max + ")");
 
     if (counter === max) {
         let resContent = document.getElementById("result-content");
@@ -427,6 +435,8 @@ function finished(index, max) {
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
         resultModal.show();
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
+        $('#running-alert').addClass("hidden");
+        evalProg.html("");
         counter = 0;
     }
 }
