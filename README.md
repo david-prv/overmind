@@ -4,8 +4,8 @@ A small framework to run open-source tools that inspect and scan any kind of web
 Disclaimer: This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
 ## Roadmap
-- FIX tool deletion issue in bundle.js
-- FIX tool removal procedure to clear interactions
+- FIX tool deletion issue in bundle.js ([issue](https://github.com/david-prv/scanner-bundle/issues/1))
+- FIX tool removal procedure to clear interactions ([issue](https://github.com/david-prv/scanner-bundle/issues/2))
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 - ADD support for standard github-master ZIPs as integrables

@@ -87,10 +87,11 @@ function getToolIndexById(id) {
 }
 
 // handler for tool deletion button
-function deleteTool(id) {
-    // TODO: Sometimes, "No tools found" isn't displayed!
-    $.get('index.php?delete&id=' + id, function (data) {
-        if (data === "done") {
+function deleteTool(id, debug=false) {
+    // Reminder: https://github.com/david-prv/scanner-bundle/issues/1
+    let route = (debug === true) ? "" : "delete&id=";
+    $.get('index.php?' + route + id, function (data) {
+        if (data === "done" || debug) {
             $('#tool-' + id).remove();
             if (($('.list-group').children()).length <= 0) {
                 $('.list-group').html("<h2 class='text-muted text-center'>No tools found</h2>\n" +
