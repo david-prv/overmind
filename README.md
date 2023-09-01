@@ -1,7 +1,7 @@
 # Scanner-Bundle: Control Framework
 
 > **Warning**  
-> This framework is in an early development state. Expect bugs, errors and undefined behaviour all the time.
+> This framework is in an early development state. Expect bugs, errors and undefined behaviour all the time. I will not provide any support for damaged caused by the framework. You are responsible for your own actions. You have been warned.
 
 A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.  
 
