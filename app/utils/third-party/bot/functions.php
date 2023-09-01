@@ -38,6 +38,7 @@ function writeLog(string $msg, int $level = 0)
     }
     if ($level > 1) $lastError = $msg;
     $logToPrint .= "$prefix $msg <br/>";
+    if ($level === 3) _summarize();
 }
 
 /**

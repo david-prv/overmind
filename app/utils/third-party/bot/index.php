@@ -55,8 +55,7 @@ if ($fileIsPresent) {
             } else {
                 // init actual integration process
                 if(!doIntegration($targetDir)) {
-                    writeLog("Something went wrong! Please contact an administrator!", 3);
-                    exit();
+                    writeLog("Archive integration has failed. Possible reason could be that your file was malformed.", 3);
                 }
             }
         } else {
