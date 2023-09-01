@@ -33,6 +33,7 @@ body {
     background:#198754;
     color:white;
     padding-top:0.5rem;
+    display:none!important;
 }
 
 .running-alert {
@@ -41,6 +42,7 @@ body {
     background: #f6a50a;
     color:white;
     padding-top:0.5rem;
+    display:none!important;
 }
 
 @keyframes blink {

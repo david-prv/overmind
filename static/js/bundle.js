@@ -349,6 +349,7 @@ function finishedSelected(index, selected) {
     counterS++;
     console.log("[INFO] Finished task (" + counterS + " / " + selected.length + ")");
     evalProg.html("(" + counterS + " / " + selected.length + ")");
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching... (" + counterS + " / " + selected.length + ")");
 
     if (counterS === selected.length) {
         let resContent = document.getElementById("result-content");
@@ -402,6 +403,7 @@ function finished(index, max) {
     counter++;
     console.log("[INFO] Finished task (" + counter + " / " + max + ")");
     evalProg.html("(" + counter + " / " + max + ")");
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching... (" + counter + " / " + max + ")");
 
     if (counter === max) {
         let resContent = document.getElementById("result-content");
