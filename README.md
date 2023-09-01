@@ -56,7 +56,7 @@ Run compressor:
 ```bash
 php compressor.php
 ```
-## Launch
+## Firing Up
 
 This application is only meant to be running locally. It's not supposed to be a public accessible application in the web. To run a local instance, you can either use `XAMPP` to run a local web-server, or just launch a PHP development server.
 ```bash
