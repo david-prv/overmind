@@ -7,6 +7,7 @@ Disclaimer: This tool is not intended to be used for any criminal act. It's used
 - FIX tool deletion issue in bundle.js ([issue](https://github.com/david-prv/scanner-bundle/issues/1))
 - FIX tool removal procedure to clear interactions ([issue](https://github.com/david-prv/scanner-bundle/issues/2))
 - FIX faulty launch issue ([issue](https://github.com/david-prv/scanner-bundle/issues/3))
+- FIX running alert issue ([issue](https://github.com/david-prv/scanner-bundle/issues/4))
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 - ADD support for standard github-master ZIPs as integrables
