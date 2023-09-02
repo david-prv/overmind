@@ -13,7 +13,7 @@ A small framework to run open-source tools that inspect and scan any kind of web
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 - ADD support for standard github-master ZIPs as integrables
-- ADD snapshot creation tool
+- ADD snapshot creation tool integration (+ hotkey impl)
 
 ## Prerequisites
 
