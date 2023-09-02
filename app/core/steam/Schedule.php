@@ -128,6 +128,6 @@ abstract class Schedule
             $stored[$for] = $schedule;
         }
 
-        return file_put_contents($schedulePlan, json_encode($stored));
+        return file_put_contents($schedulePlan, json_encode((object)$stored));
     }
 }
