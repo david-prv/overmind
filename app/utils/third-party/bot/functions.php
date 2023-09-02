@@ -373,9 +373,8 @@ function _writeSchedule(string $id, array $scheduledInOrder): bool
 function _writeReference(string $id, string $reference): bool
 {
     // encode and fingerprint data
-    $encodedReference = base64_encode($reference);
-    $hashSum = hash('sha256', $encodedReference . "." . Reference::getFingerPrint());
-    $dataToStore = $encodedReference."|".$hashSum;
+    $hashSum = hash('sha256', $reference . "." . Reference::getFingerPrint());
+    $dataToStore = $reference."|".$hashSum;
 
     writeLog("Calculated integrity hash: <a style=\"cursor:pointer;text-decoration:underline;\" onclick=\"alert('$hashSum');\">show</a>");
 
@@ -434,7 +433,7 @@ function _appendToMap(string $name, string $engine, string $index, string $args,
 
     // fetch the latest ID (they are always increasing, but not necessarily
     // one-by-one comparable with their index)
-    $latestItem = (count($mapContent) > 0) ? $mapContent[count($mapContent) - 1] : ["id" => 0];
+    $latestItem = (count($mapContent) > 0) ? $mapContent[count($mapContent) - 1] : ["id" => -1];
     $latestID = $latestItem["id"];
     $newID = (int)$latestID + 1;
 

@@ -2,7 +2,6 @@
 
 import subprocess
 import sys
-import re
 
 """
 This runner allows us to run arbitrary
