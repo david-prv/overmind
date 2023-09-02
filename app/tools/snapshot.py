@@ -36,8 +36,8 @@ def ask_info() -> list:
     _description = input("> snapshot description = ")
     return [_author, _description]
 
-def prepare_snapshot(snap_info: list) -> None:
-    target_base_dir = os.path.abspath(os.getcwd() + "/snapshot")
+def prepare_snapshot(used_cwd: str, snap_info: list) -> None:
+    target_base_dir = os.path.abspath(used_cwd + "/snapshot")
     if os.path.isdir(target_base_dir): raise Exception(f"Folder {target_base_dir} already exists!")
 
     # create folder structure
@@ -104,7 +104,7 @@ def main() -> None:
     # asking for information
     print(f"[*] Please enter the snapshot details:")
     given_info = ask_info()
-    prepare_snapshot(snap_info=given_info)
+    prepare_snapshot(used_cwd=root_dir, snap_info=given_info)
 
     for tool in map_data:
         # tool id for reference and schedule
