@@ -2,6 +2,8 @@
 
 import subprocess
 import sys
+import re
+import os
 
 """
 This runner allows us to run arbitrary
@@ -61,6 +63,7 @@ def main() -> None:
     args = [engine, app]
     args.extend(cmd.split(" "))
 
+    print(os.getcwd())
     print(args)
 
     r = subprocess.run(args, stdout=subprocess.PIPE, timeout=getExecTimeout())

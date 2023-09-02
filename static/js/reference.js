@@ -88,7 +88,7 @@ function executeTool(btn_icon, btn_caption, ref_txt) {
 /* Submits the reference report and redirects */
 function submitRef() {
     // POST: index.php?reference, {"id": ID, "data": FORM_DATA}
-    $.post("index.php?reference", {"id": CURRENT_ID, "reference": btoa($("#reference").val())}, function (data) {
+    $.post("index.php?reference", {"id": CURRENT_ID, "reference": Base64.encode($("#reference").val())}, function (data) {
         console.log(data);
         window.location.href = "index.php";
     });
