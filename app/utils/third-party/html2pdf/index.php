@@ -5,11 +5,8 @@ if (!isset($_GET["data"])) die("Invalid data provided!");
 
 // try to decode data...
 
-try {
-    $data = json_decode($_GET["data"], true);
-} catch (Exception $ex) {
-    die("Whoops! Couldn't parse your data!");
-}
+$data = json_decode(urldecode($_GET["data"]), true);
+if (is_null($data)) die("Whoops! Couldn't parse your data!");
 
 // parsing data...
 

@@ -15,6 +15,7 @@ var lastTarget = "";
 var lastTargetDiff = [];
 var maxPreviewLength = 50;
 
+
 // code ignition
 (function () {
     /*
@@ -631,13 +632,13 @@ function collectInfoAndRedirect() {
     let offers = parseOffers(dropZone);
     let results = parseResults(resultContent);
 
-    let result_information = JSON.stringify({
+    let result_information = encodeURIComponent(JSON.stringify({
         target_url: lastTarget,
         scanner_results: results,
         our_offers: offers,
         bad_words: lastTargetDiff,
         ref_token: PERSONAL_REF_TOKEN
-    });
+    }).escapeSpecialChars());
 
     window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, '_blank').focus();
 }
