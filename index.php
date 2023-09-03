@@ -8,7 +8,7 @@ require __DIR__ . '/vendor/autoload.php';
 /**
  * Include framework autoloader
  */
-require __DIR__ . '/app/core/Autoloader.php';
+require __DIR__ . '/app/Autoloader.php';
 
 /**
  * Include main application

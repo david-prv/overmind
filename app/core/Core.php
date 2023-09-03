@@ -19,7 +19,6 @@ class Core
     private $TOOLS_OBJECT;
 
     private string $APP_PATH;
-    private string $VIEW_PATH;
     private string $TOOLS_PATH;
 
     private Pages $pages;
@@ -74,7 +73,6 @@ class Core
     private function __construct(?string $tp = NULL, ?string $tip = NULL)
     {
         $this->APP_PATH = getcwd();
-        $this->VIEW_PATH = $this->APP_PATH . "/app/views";
         $this->TOOLS_PATH = ($tp === NULL) ? $this->APP_PATH . "/app/tools" : $tp;
         $this->TOOLS_OBJECT = json_decode(file_get_contents(($tip === NULL)
             ? $this->APP_PATH . "/app/tools/map.json"
@@ -370,7 +368,7 @@ class Core
     }
 
     /**
-     * Getter for tools objects
+     * Getter for tools _objects
      *
      * @return array
      */
@@ -380,7 +378,7 @@ class Core
     }
 
     /**
-     * Getter for tools objects json encoded
+     * Getter for tools _objects json encoded
      *
      * @return string
      */
@@ -435,7 +433,7 @@ class Core
     }
 
     /**
-     * Renders tools objects to html
+     * Renders tools _objects to html
      *
      * @return string
      */

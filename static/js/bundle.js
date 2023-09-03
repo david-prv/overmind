@@ -502,10 +502,10 @@ function correctDistanceColoring(id, score) {
             el.innerHTML = "<i title=\"Missing reference or integrity not verifiable\" " +
                 "class=\"fa fa-exclamation-circle\" aria-hidden=\"true\"></i>";
             break;
-        case (i_score === 0):
+        case (i_score <= 1000):
             el.style.color = "green";
             break;
-        case (i_score <= 1000):
+        case (i_score <= 5000):
             el.style.color = "orange";
             break;
         default:

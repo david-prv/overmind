@@ -123,8 +123,8 @@ class StringComparator
         $a = $this->string1;
         $b = $this->string2;
 
-        $a_words = preg_split("/[\n\r, ]+/",$a); //explode(" ", $a);
-        $b_words = preg_split("/[\n\r, ]+/",$b); //explode(" ", $b);
+        $a_words = preg_split("/[\n\r, ]+/", $a); //explode(" ", $a);
+        $b_words = preg_split("/[\n\r, ]+/", $b); //explode(" ", $b);
 
         //var_dump($a);
         //var_dump($b_words);
@@ -147,7 +147,7 @@ class StringComparator
                 $this->convertStrToBinary(trim($b_words[$i]))
             );
             $accumulator = $accumulator + $hDist;
-            if($hDist > 0) $this->badWords[] = [$a_words[$i] => $b_words[$i]];
+            if ($hDist > 0) $this->badWords[] = [$a_words[$i] => $b_words[$i]];
         }
 
         // total diff of arrays is also text difference

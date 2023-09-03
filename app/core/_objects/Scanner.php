@@ -275,7 +275,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Searches for a specific tool in a json objects
+     * Searches for a specific tool in a json _objects
      * and returns its index
      *
      * @param array $json
@@ -294,7 +294,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Searches for a specific tool in a json objects
+     * Searches for a specific tool in a json _objects
      * and returns its currently saved path (relative to cwd)
      *
      * @param array $json
@@ -320,14 +320,14 @@ class Scanner implements Runnable, Integrable
      * @param $dir
      * @return bool
      */
-    private function deleteToolFolder($dir): bool
+    private function _deleteToolFolder($dir): bool
     {
         if (is_dir($dir)) {
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
                     if (filetype($dir . "/" . $object) == "dir")
-                        $this->deleteToolFolder($dir . "/" . $object);
+                        $this->_deleteToolFolder($dir . "/" . $object);
                     else unlink($dir . "/" . $object);
                 }
             }
@@ -342,7 +342,7 @@ class Scanner implements Runnable, Integrable
      * @param string $id
      * @return bool
      */
-    private function deleteToolReference(string $id): bool
+    private function _deleteToolReference(string $id): bool
     {
         $refPath = $this->cwd . "/../../refs/ref_$id.txt";
 
@@ -358,7 +358,7 @@ class Scanner implements Runnable, Integrable
      * @param string $id
      * @return array
      */
-    private function removeToolFrom(array $map, string $id): array
+    private function _deleteToolFromMap(array $map, string $id): array
     {
         $newMap = array();
         foreach ($map as $tool) {
@@ -466,11 +466,11 @@ class Scanner implements Runnable, Integrable
 
         $workspace = $this->cwd . "/" . $namespace;
         // Reminder: https://github.com/david-prv/scanner-bundle/issues/2
-        $currentMap = $this->removeToolFrom($currentMap, $this->id);
+        $currentMap = $this->_deleteToolFromMap($currentMap, $this->id);
 
-        return $this->deleteToolFolder($workspace)
+        return $this->_deleteToolFolder($workspace)
             && file_put_contents($mapPath, json_encode($currentMap)) !== false
-            && $this->deleteToolReference($this->id);
+            && $this->_deleteToolReference($this->id);
     }
 
     /**

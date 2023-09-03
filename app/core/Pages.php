@@ -36,10 +36,10 @@ class Pages
      */
     public static function getInstance(): Pages
     {
-       if (self::$instance === NULL) {
-           self::$instance = new Pages();
-       }
-       return self::$instance;
+        if (self::$instance === NULL) {
+            self::$instance = new Pages();
+        }
+        return self::$instance;
     }
 
     /**

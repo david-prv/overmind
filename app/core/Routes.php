@@ -65,7 +65,7 @@ class Routes
      */
     public function get(string $name): ?closure
     {
-        return  $this->routes[strtolower($name)]
-                ?? NULL;
+        return $this->routes[strtolower($name)]
+            ?? NULL;
     }
 }

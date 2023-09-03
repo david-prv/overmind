@@ -143,16 +143,16 @@ class App
 
         // Background endpoint for reference creation
         $this->routes->add("reference", function () {
-           Core::getInstance()->reference();
+            Core::getInstance()->reference();
         });
 
         // Background endpoint for report analysis
-        $this->routes->add("analyze", function() {
+        $this->routes->add("analyze", function () {
             Core::getInstance()->analyze();
         });
 
         // Background endpoint for tool removal
-        $this->routes->add("delete",function () {
+        $this->routes->add("delete", function () {
             Core::getInstance()->delete();
         });
 

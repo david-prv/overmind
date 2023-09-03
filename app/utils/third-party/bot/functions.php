@@ -233,7 +233,7 @@ function doIntegration(string $tmpFolder): bool
 
         writeLog("Parsed all tool details: <a style=\"cursor:pointer;text-decoration:underline;\"
                        onclick=\"alert('" . htmlentities(json_encode([$_name, $_author, $_url, $_version, $_engine,
-                       $_index, $_cmdLine, $_description, $_keywords])) . "')\">show</a>");
+                $_index, $_cmdLine, $_description, $_keywords])) . "')\">show</a>");
 
         // assemble info
         $toolData = array(
@@ -374,7 +374,7 @@ function _writeReference(string $id, string $reference): bool
 {
     // encode and fingerprint data
     $hashSum = hash('sha256', $reference . "." . Reference::getFingerPrint());
-    $dataToStore = $reference."|".$hashSum;
+    $dataToStore = $reference . "|" . $hashSum;
 
     writeLog("Calculated integrity hash: <a style=\"cursor:pointer;text-decoration:underline;\" onclick=\"alert('$hashSum');\">show</a>");
 
@@ -455,7 +455,7 @@ function _appendToMap(string $name, string $engine, string $index, string $args,
     ];
 
     // write to mapper file
-    if(!file_put_contents(realpath($mapFile), json_encode($mapContent))) {
+    if (!file_put_contents(realpath($mapFile), json_encode($mapContent))) {
         writeLog("Could not append $name to mapper file!", 2);
         return NULL;
     }
