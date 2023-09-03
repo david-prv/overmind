@@ -147,6 +147,8 @@ class Core
 
     /**
      * Builds the Runnable and executes it
+     *
+     * @return void
      */
     public function scan(): void
     {
@@ -175,6 +177,8 @@ class Core
 
     /**
      * Runs an analysis of the actual report and the reference
+     *
+     * @return void
      */
     public function analyze(): void
     {
@@ -196,6 +200,8 @@ class Core
 
     /**
      * Integrates a new tool to the bundle locally
+     *
+     * @return void
      */
     public function integrate(): void
     {
@@ -234,6 +240,8 @@ class Core
 
     /**
      * Creates a reference report for a tool
+     *
+     * @return void
      */
     public function reference(): void
     {
@@ -255,6 +263,8 @@ class Core
 
     /**
      * Deletes an existing tool from the bundle
+     *
+     * @return void
      */
     public function delete(): void
     {
@@ -272,6 +282,8 @@ class Core
 
     /**
      * Updates an existing tool in the bundle
+     *
+     * @return void
      */
     public function edit(): void
     {
@@ -316,6 +328,8 @@ class Core
 
     /**
      * Schedules interactions for a tool
+     *
+     * @return void
      */
     public function schedule(): void
     {
@@ -334,6 +348,19 @@ class Core
             ->withInteractions($interactions);
 
         if ($scanner->schedule()) App::finishWithSuccess();
+        else App::finishWithError();
+    }
+
+    /**
+     * Creates a snapshot of the current instance
+     *
+     * @return void
+     */
+    public function snapshot(): void
+    {
+        $this->preCondition();
+
+        if(Snapshot::create($this->APP_PATH)) App::finishWithSuccess();
         else App::finishWithError();
     }
 
@@ -368,7 +395,7 @@ class Core
     }
 
     /**
-     * Getter for tools _objects
+     * Getter for tools _classes
      *
      * @return array
      */
@@ -378,7 +405,7 @@ class Core
     }
 
     /**
-     * Getter for tools _objects json encoded
+     * Getter for tools _classes json encoded
      *
      * @return string
      */
@@ -427,13 +454,18 @@ class Core
         return $this->PROJECT_DESCRIPTION;
     }
 
+    /**
+     * Getter for project logo
+     *
+     * @return string
+     */
     public function getProjectLogo(): string
     {
         return $this->PROJECT_LOGO;
     }
 
     /**
-     * Renders tools _objects to html
+     * Renders tools _classes to html
      *
      * @return string
      */

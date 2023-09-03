@@ -642,3 +642,8 @@ function collectInfoAndRedirect() {
 
     window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, '_blank').focus();
 }
+
+// triggers snapshot backend endpoint
+function createSnapshot() {
+    $.get("/index.php?snapshot", function (data, status) { console.log(data, status); });
+}

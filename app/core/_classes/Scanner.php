@@ -46,7 +46,7 @@ class Scanner implements Runnable, Integrable
     {
         $st = microtime(true);
 
-        $retVal = shell_exec($cmd);
+        $retVal = shell_exec(escapeshellcmd($cmd));
 
         $et = microtime(true);
         $dt = $et - $st;
@@ -275,7 +275,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Searches for a specific tool in a json _objects
+     * Searches for a specific tool in a json _classes
      * and returns its index
      *
      * @param array $json
@@ -294,7 +294,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Searches for a specific tool in a json _objects
+     * Searches for a specific tool in a json _classes
      * and returns its currently saved path (relative to cwd)
      *
      * @param array $json

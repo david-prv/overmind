@@ -21,12 +21,15 @@ function showSearchBar() {
 
 // detects the hotkeys and invokes handlers
 function handle(evt) {
+    console.log(evt.keyCode);
     if (!evt) evt = event;
-    else if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 83) { // Ctrl + Shift + S
+    else if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 83) { // Ctrl + Shift + S
         showSearchBar();
-    } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 90) { // Ctrl + Shift + Z
+    } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 90) { // Ctrl + Shift + Z
         deselectTools();
-    } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 65) { // Ctrl + Shift + A
+    } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 65) { // Ctrl + Shift + A
         selectAllTools();
+    } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 69) { // Ctrl + Shift + E
+        createSnapshot();
     }
 }

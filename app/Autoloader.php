@@ -27,7 +27,7 @@ class Autoloader
     private static array $locations = [
         "./app/",
         "./app/core/",
-        "./app/core/_objects/",
+        "./app/core/_classes/",
         "./app/core/_wrappers/",
         "./app/core/_types/",
         "./app/core/_interfaces/",

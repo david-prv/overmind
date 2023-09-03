@@ -165,6 +165,11 @@ class App
         $this->routes->add("schedule", function () {
             Core::getInstance()->schedule();
         });
+
+        // Background endpoint for snapshot creation
+        $this->routes->add("snapshot", function () {
+            Core::getInstance()->snapshot();
+        });
     }
 
     /**

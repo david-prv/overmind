@@ -1,4 +1,4 @@
-import shutil, json, os, sys
+import shutil, json, os, sys, time
 
 def folder_to_archive(dir: str, out_name: str = None) -> None:
     shutil.make_archive(base_name=dir if out_name == None else out_name, format="zip", root_dir=dir)
@@ -101,9 +101,17 @@ def main() -> None:
     map_data = parse_mapper(used_cwd=root_dir)
     print(f"[*] Found {len(map_data)} tools!")
 
+    # check for passed data
+    passed_author = sys.argv[2] if len(sys.argv) >= 3 else None
+    passed_description = sys.argv[3] if len(sys.argv) >= 4 else None
+    did_pass_valid = passed_author != None and passed_description != None
+
     # asking for information
-    print(f"[*] Please enter the snapshot details:")
-    given_info = ask_info()
+    if not did_pass_valid:
+        print(f"[*] Please enter the snapshot details:")
+        given_info = ask_info()
+    else:
+        given_info = [passed_author, passed_description]
     prepare_snapshot(used_cwd=root_dir, snap_info=given_info)
 
     for tool in map_data:
@@ -137,7 +145,7 @@ def main() -> None:
         create_tool_zip(used_cwd=root_dir, tool_name=_name)
 
     # deflating whole temp folder
-    folder_to_archive(dir=root_dir + "/snapshot")
+    folder_to_archive(dir=root_dir + "/snapshot", out_name=root_dir + "/snapshot-" + str(int(time.time())))
 
     # clean everything up
     print("[*] Cleaning up...")

@@ -30,7 +30,7 @@ class Page
     }
 
     /**
-     * Renders a Page _objects
+     * Renders a Page _classes
      *
      * @param Page $view
      * @return bool
