@@ -275,7 +275,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Searches for a specific tool in a json object
+     * Searches for a specific tool in a json objects
      * and returns its index
      *
      * @param array $json
@@ -294,7 +294,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Searches for a specific tool in a json object
+     * Searches for a specific tool in a json objects
      * and returns its currently saved path (relative to cwd)
      *
      * @param array $json

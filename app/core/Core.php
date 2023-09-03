@@ -370,7 +370,7 @@ class Core
     }
 
     /**
-     * Getter for tools object
+     * Getter for tools objects
      *
      * @return array
      */
@@ -380,7 +380,7 @@ class Core
     }
 
     /**
-     * Getter for tools object json encoded
+     * Getter for tools objects json encoded
      *
      * @return string
      */
@@ -435,7 +435,7 @@ class Core
     }
 
     /**
-     * Renders tools object to html
+     * Renders tools objects to html
      *
      * @return string
      */

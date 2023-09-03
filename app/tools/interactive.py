@@ -12,13 +12,13 @@ it loads the pre-defined answers and communicates them to the running tool.
 
 EXEC_TIMEOUT = 20
 
-def getExecTimeout() -> int:
+def get_exec_timeout() -> int:
     try:
         return int(open('./app/tools/timeout').readline())
     except:
         return EXEC_TIMEOUT
 
-def removeANSIFromOutput(fileLocation) -> None:
+def remove_ansi_from_file(fileLocation) -> None:
     # Stolen from:
     # https://stackoverflow.com/questions/2424000/read-and-overwrite-a-file-in-python
     ansi_escape = re.compile(r'''
@@ -85,7 +85,7 @@ def main() -> None:
     out = open("./reports/report_" + str(id) + ".txt", "w", encoding="utf-8")
 
     p = Popen(args, stdout=out, stdin=PIPE, stderr=out)
-    timer = Timer(getExecTimeout(), p.kill)
+    timer = Timer(get_exec_timeout(), p.kill)
 
     try:
         print("Starting timer...")
@@ -100,7 +100,7 @@ def main() -> None:
     out.close()
 
     # clean up output
-    removeANSIFromOutput("./reports/report_" + str(id) + ".txt")
+    remove_ansi_from_file("./reports/report_" + str(id) + ".txt")
 
     # exit application
     exit()

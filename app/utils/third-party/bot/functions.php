@@ -242,7 +242,7 @@ function doIntegration(string $tmpFolder): bool
             "url" => $_url,
             "version" => $_version,
             "engine" => $_engine,
-            "index" => $_name . "/" .$_index,
+            "index" => $_index,
             "cmdline" => $_cmdLine,
             "description" => $_description,
             "keywords" => $_keywords,
