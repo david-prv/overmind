@@ -1,6 +1,6 @@
 <?php
 require_once "functions.php";
-require_once "../../../core/_wrappers/Reference.php";
+require_once "../../../core/wrappers/Reference.php";
 
 $maxFileSize = 500000;
 $uploadTargetDir = "/tmp";
