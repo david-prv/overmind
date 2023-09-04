@@ -13,12 +13,28 @@ it loads the pre-defined answers and communicates them to the running tool.
 EXEC_TIMEOUT = 20
 
 def get_exec_timeout() -> int:
+    """Reads the execution timeout
+
+    Returns
+    ----------
+    int
+        The execution timeout
+    """
+
     try:
         return int(open('./app/tools/timeout').readline())
     except:
         return EXEC_TIMEOUT
 
-def remove_ansi_from_file(fileLocation) -> None:
+def remove_ansi_from_file(file_location: str) -> None:
+    """Removes any ANSI characters from a file
+
+    Parameters
+    ----------
+    file_location: str
+        The file that should get cleaned up
+    """
+
     # Stolen from:
     # https://stackoverflow.com/questions/2424000/read-and-overwrite-a-file-in-python
     ansi_escape = re.compile(r'''
@@ -34,12 +50,11 @@ def remove_ansi_from_file(fileLocation) -> None:
         ''', re.VERBOSE)
 
     try:
-        f = open(fileLocation, 'r+', encoding="utf-8")
+        f = open(file_location, 'r+', encoding="utf-8")
         content = f.read()
         f.truncate(0)
-        new_content = ansi_escape.sub('', content)
         f.seek(0)
-        f.write(new_content)
+        f.write(ansi_escape.sub('', content))
 
         f.close()
     except:
@@ -47,6 +62,8 @@ def remove_ansi_from_file(fileLocation) -> None:
         return
 
 def main() -> None:
+    """The main section of the script"""
+
     try:
         j = open('./app/tools/interactions.json')
     except FileNotFoundError:

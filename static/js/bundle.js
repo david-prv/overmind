@@ -370,8 +370,9 @@ function finishedSelected(index, selected) {
                 "      </button>" +
                 "    </h2>" +
                 "    <div id=\"flush-collapse" + i + "\" class=\"accordion-collapse collapse\" aria-labelledby=\"flush-heading" + i + "\" data-bs-parent=\"#accordion\">" +
-                "       (<a class='mt-3 p-2' target='_blank' href='/reports/report_" + tool["id"] + ".txt'>Open Full</a>)" +
-                "       <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
+                //"       (<a class='mt-3 p-2' target='_blank' href='/reports/report_" + tool["id"] + ".txt'>Open Full</a>)" +
+                // "       <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
+                "       <textarea style='height:400px;resize:none;width:100%;border:none;' id='body-" + tool["id"] + "' placeholder='Loading...'></textarea> " +
                 "    </div>" +
                 "  </div>";
             finishedIDs.push(tool["id"]);
@@ -420,8 +421,9 @@ function finished(index, max) {
                 "      </button>" +
                 "    </h2>" +
                 "    <div id=\"flush-collapse" + i + "\" class=\"accordion-collapse collapse\" aria-labelledby=\"flush-heading" + i + "\" data-bs-parent=\"#accordion\">" +
-                "       (<a class='mt-3' target='_blank' href='/reports/report_" + tool["id"] + ".txt'>Open Full</a>)" +
-                "       <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
+                //"       (<a class='mt-3' target='_blank' href='/reports/report_" + tool["id"] + ".txt'>Open Full</a>)" +
+                // "       <div id='body-" + tool["id"] + "' class=\"accordion-body\"></div>" +
+                "       <textarea style='height:400px;resize:none;width:100%;border:none;' id='body-" + tool["id"] + "' placeholder='Loading...'></textarea> " +
                 "    </div>" +
                 "  </div>";
         }
@@ -456,8 +458,8 @@ function getText(id) {
         if (request.readyState === 4 && request.status === 200) {
             var type = request.getResponseHeader('Content-Type');
             if (type.indexOf("text") !== 1) {
-                // console.log(request.responseText, k);
-                document.getElementById("body-" + k).innerText = request.responseText.slice(0, maxPreviewLength) + "...";
+                console.log(request.responseText);
+                document.getElementById("body-" + k).value = request.responseText.replace("\r\n", "\\r\\n")
             }
         }
     }
