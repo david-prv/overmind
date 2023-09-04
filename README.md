@@ -9,8 +9,8 @@ A small framework to run open-source tools that inspect and scan any kind of web
 **Disclaimer**: This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
 ## 📡 Threat Model
-![](https://github.com/david-prv/scanner-bundle/assets/66866223/a2d26735-7028-44ad-a8e2-8bb171b41604#gh-dark-mode-only)
-![](https://github.com/david-prv/scanner-bundle/assets/66866223/9dd177a2-234b-4baa-8c12-1b13085811b4gh-light-mode-only)
+![](https://github.com/david-prv/scanner-bundle/blob/main/assets/dark-diagram.png#gh-dark-mode-only)
+![](https://github.com/david-prv/scanner-bundle/blob/main/assets/light-diagram.png#gh-light-mode-only)
 
 ## 🧪 Roadmap
 - FIX tool deletion issue in bundle.js ([issue #1](https://github.com/david-prv/scanner-bundle/issues/1))
