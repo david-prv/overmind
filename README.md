@@ -8,7 +8,7 @@ A small framework to run open-source tools that inspect and scan any kind of web
 
 **Disclaimer**: This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
-## Roadmap
+## 🧪 Roadmap
 - FIX tool deletion issue in bundle.js ([issue #1](https://github.com/david-prv/scanner-bundle/issues/1))
 - FIX tool removal procedure to clear interactions ([issue #2](https://github.com/david-prv/scanner-bundle/issues/2))
 - FIX faulty launch issue ([issue #3](https://github.com/david-prv/scanner-bundle/issues/3))
@@ -19,14 +19,14 @@ A small framework to run open-source tools that inspect and scan any kind of web
 - ADD support for standard github-master ZIPs as integrables
 - ADD report removal after successful finished process (mitigates weird results)
 
-## Prerequisites
+## 📋 Prerequisites
 
  - Apache2
  - PHP (>= 8.2.0)
  - Python (>= 3.9.13)
  - Composer (>= 2.1.2)
 
-## Snapshot Structure
+## 📦 Snapshot Structure
 
 ```
 snapshot.zip/
@@ -47,7 +47,7 @@ snapshot.zip/
 └── .info
 ```
 
-## Installation
+## 📥 Installation
 Clone repository:
 ```bash
 git clone https://github.com/david-prv/scanner-bundle.git
@@ -64,7 +64,7 @@ Run compressor:
 ```bash
 php compressor.php
 ```
-## Firing Up
+## 🔥 Firing Up & Getting Started
 
 This application is only meant to be running locally. It's not supposed to be a public accessible application in the web. To run a local instance, you can either use `XAMPP` to run a local web-server, or just launch a PHP development server.
 ```bash
@@ -73,10 +73,8 @@ php -S localhost:8080
 ```
 Now open a web browser and navigate to `http://localhost:8080/`. The scanner-bundle framework should appear.
 
-## Getting Started
+Information about what to do next will be provided [here](https://wiki.etage-4.de/books/eigenentwicklung/chapter/scanner-bundle). For guests, check out the [github wiki](/#).
 
-Information about getting started will be provided [here](https://wiki.etage-4.de/books/eigenentwicklung/chapter/scanner-bundle). For guests, check out the [wiki](/#).
-
-## License
+## 📝 License
 
 Released under [MIT](/LICENSE) by [@david-prv](https://github.com/david-prv).
