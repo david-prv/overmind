@@ -80,7 +80,6 @@ def main() -> None:
     args = [engine, app]
     args.extend(cmd.split(" "))
 
-    print(os.getcwd())
     print(args)
 
     r = subprocess.run(args, stdout=subprocess.PIPE, timeout=get_exec_timeout())

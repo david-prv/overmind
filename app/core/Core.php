@@ -395,7 +395,7 @@ class Core
     }
 
     /**
-     * Getter for tools _classes
+     * Getter for tools object
      *
      * @return array
      */
@@ -405,7 +405,7 @@ class Core
     }
 
     /**
-     * Getter for tools _classes json encoded
+     * Getter for tools object json encoded
      *
      * @return string
      */
@@ -465,7 +465,7 @@ class Core
     }
 
     /**
-     * Renders tools _classes to html
+     * Renders tools object to html
      *
      * @return string
      */

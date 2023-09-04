@@ -130,4 +130,33 @@ abstract class Schedule
 
         return file_put_contents($schedulePlan, json_encode((object)$stored));
     }
+
+    /**
+     * Takes the current working directory and a toolID,
+     * which will be deleted from the interaction manager.
+     *
+     * @param string $cwd
+     * @param string $for
+     * @return bool
+     */
+    public static function clear(string $cwd, string $for): bool
+    {
+        if(!Schedule::isPresent($cwd, $for)) return true;
+
+        $schedulePlan = $cwd . "/app/tools/interactions.json";
+
+        if (!file_exists($schedulePlan)) {
+            return false;
+        }
+
+        $stored = json_decode(file_get_contents($schedulePlan), true);
+
+        if (is_null($stored)) {
+            return false;
+        }
+
+        unset($stored[$for]);
+
+        return file_put_contents($schedulePlan, json_encode((object)$stored));
+    }
 }

@@ -275,7 +275,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Searches for a specific tool in a json _classes
+     * Searches for a specific tool in a json object
      * and returns its index
      *
      * @param array $json
@@ -294,7 +294,7 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
-     * Searches for a specific tool in a json _classes
+     * Searches for a specific tool in a json object
      * and returns its currently saved path (relative to cwd)
      *
      * @param array $json
@@ -345,6 +345,21 @@ class Scanner implements Runnable, Integrable
     private function _deleteToolReference(string $id): bool
     {
         $refPath = $this->cwd . "/../../refs/ref_$id.txt";
+
+        if (!is_file($refPath)) return true;
+        return unlink($refPath);
+    }
+
+    /**
+     * Delete the (maybe existing) tool
+     * reports from the filesystem
+     *
+     * @param string $id
+     * @return bool
+     */
+    private function _deleteToolReport(string $id): bool
+    {
+        $refPath = $this->cwd . "/../../reports/report_$id.txt";
 
         if (!is_file($refPath)) return true;
         return unlink($refPath);
@@ -465,12 +480,13 @@ class Scanner implements Runnable, Integrable
         if ($namespace === "" || !is_dir($this->cwd . "/" . $namespace)) return false;
 
         $workspace = $this->cwd . "/" . $namespace;
-        // Reminder: https://github.com/david-prv/scanner-bundle/issues/2
         $currentMap = $this->_deleteToolFromMap($currentMap, $this->id);
 
         return $this->_deleteToolFolder($workspace)
             && file_put_contents($mapPath, json_encode($currentMap)) !== false
-            && $this->_deleteToolReference($this->id);
+            && $this->_deleteToolReference($this->id)
+            && $this->_deleteToolReport($this->id)
+            && Schedule::clear($this->cwd . "/../..", $this->id);
     }
 
     /**

@@ -459,7 +459,9 @@ function getText(id) {
             var type = request.getResponseHeader('Content-Type');
             if (type.indexOf("text") !== 1) {
                 console.log(request.responseText);
-                document.getElementById("body-" + k).value = request.responseText.replace("\r\n", "\\r\\n")
+                document.getElementById("body-" + k).value = request.responseText
+                    .replace("\
+                    ", "\n");
             }
         }
     }
