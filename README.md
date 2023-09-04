@@ -31,16 +31,16 @@ snapshot.zip/
 ├── _extra/
 │   └── empty
 ├── _tools/
-│   ├── sampleTool
-│   │   ├── sampleTool.info
-│   │   ├── sampleTool.reference
-│   │   ├── sampleTool.schedule
-│   │   └── sampleTool.zip
-│   └── sampleTool2
-│       ├── sampleTool2.info
-│       ├── sampleTool2.reference
-│       ├── sampleTool2.schedule
-│       └── sampleTool2.zip
+│   ├── sample
+│   │   ├── sample.info
+│   │   ├── sample.reference
+│   │   ├── sample.schedule
+│   │   └── sample.zip
+│   └── sample2
+│       ├── sample2.info
+│       ├── sample2.reference
+│       ├── sample2.schedule
+│       └── sample2.zip
 ├── .author
 └── .info
 ```
