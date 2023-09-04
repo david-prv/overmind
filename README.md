@@ -2,8 +2,7 @@
 [![david-prv - scanner-bundle](https://img.shields.io/static/v1?label=david-prv&message=scanner-bundle&color=blue&logo=github)](https://github.com/david-prv/scanner-bundle "Go to GitHub repo")
 ![maintained - yes](https://img.shields.io/badge/maintained-yes-blue)
 [![issues - scanner-bundle](https://img.shields.io/github/issues/david-prv/scanner-bundle)](https://github.com/david-prv/scanner-bundle/issues)
-  
-[![Disclaimer - Use at own risk!](https://img.shields.io/badge/Disclaimer-Use_at_own_risk!-critical?style=for-the-badge)](https://)
+[![PHP Composer](https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml/badge.svg)](https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml)
 
 A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.  
 
