@@ -1,44 +1,121 @@
 import shutil, json, os, sys, time
 
 def folder_to_archive(dir: str, out_name: str = None) -> None:
+    """Deflates a folder to a zip-archive
+
+    Parameters
+    ----------
+    dir: str
+        The source directory which will be compressed
+    our_name: str
+        The output archive name (without extension)
+    """
+
     shutil.make_archive(base_name=dir if out_name == None else out_name, format="zip", root_dir=dir)
 
 def parse_mapper(used_cwd: str, mapper_file: str = "/app/tools/map.json") -> list:
+    """Parses the map.json file
+
+    Parameters
+    ----------
+    used_cwd: str
+        The current root directory of the framework
+    mapper_file: str
+        The expected location of the mapper file
+
+    Returns
+    ----------
+    list
+        A list of json interpreted data of tools
+    """
+
     real_mf = os.path.abspath(used_cwd + mapper_file)
-    # TODO: Add file checks here
+
+    if not os.path.isfile(real_mf):
+        raise Exception(f"Could not find mapper file: {real_mf}")
+
     f_handle = open(real_mf, "r")
+
     return json.loads(f_handle.read())
 
-def parse_schedules_refs(used_cwd: str, tool_id: str, schedule_file: str = "/app/tools/interactions.json") -> list:
+def parse_schedules_refs(used_cwd: str, tool_id: str, schedule_file: str = "/app/tools/interactions.json") -> tuple:
+    """Parses the interactions.json and reads the ref file
+
+    Parameters
+    ----------
+    used_cwd: str
+        The current root directory of the framework
+    tool_id: str
+        The currently visited tool's id
+    schedule_file: str
+        The expected location of the schedule file
+
+    Returns
+    ----------
+    tuple
+        A tuple containing the schedule and the reference
+    """
+
     # (1) parse schedule
     real_sf = os.path.abspath(used_cwd + schedule_file)
-    # TODO: Add file checks here too
+
+    if not os.path.isfile(real_sf):
+        raise Exception(f"Could not find schedule: {real_sf}")
+
     f_handle = open(real_sf, "r")
     all_schedules = json.loads(f_handle.read())
+
     schedule = []
     if tool_id in all_schedules:
         schedule = all_schedules[tool_id]
+
     f_handle.close()
     
     # (2) parse reference
     ref_path = os.path.abspath(used_cwd + f"/refs/ref_{tool_id}.txt")
-    if not os.path.isfile(ref_path): raise Exception(f"Could not find reference: {ref_path}")
+
+    if not os.path.isfile(ref_path):
+        raise Exception(f"Could not find reference: {ref_path}")
+
     f_handle = open(ref_path, "r")
     f_content = f_handle.read()
     f_handle.close()
-    if not "|" in f_content: raise Exception(f"Reference '{tool_id}' doesn't contain a hashsum")
+
+    if not "|" in f_content:
+        raise Exception(f"Reference '{tool_id}' doesn't contain a hash-sum")
+
     reference = f_content.split("|")[0]
 
-    return [schedule, reference]
+    return (schedule, reference)
 
-def ask_info() -> list:
+def ask_info() -> tuple:
+    """Reads user information which will be used as snapshot details
+
+    Returns
+    ----------
+    tuple
+        A tuple containing the author and the description
+    """
+
     _author = input("> snapshot author = ")
     _description = input("> snapshot description = ")
-    return [_author, _description]
 
-def prepare_snapshot(used_cwd: str, snap_info: list) -> None:
+    return (_author, _description)
+
+def prepare_snapshot(used_cwd: str, snap_info: tuple) -> None:
+    """Prepares a temporary folder to create the snapshot
+
+    Parameters
+    ----------
+    used_cwd: str
+        The current root directory of the framework
+    snap_info: tuple
+        The provided snapshot details
+    """
+
     target_base_dir = os.path.abspath(used_cwd + "/snapshot")
-    if os.path.isdir(target_base_dir): raise Exception(f"Folder {target_base_dir} already exists!")
+    if os.path.isdir(target_base_dir):
+        raise Exception(f"Folder {target_base_dir} already exists!")
 
     # create folder structure
     os.mkdir(target_base_dir)
@@ -58,41 +135,99 @@ def prepare_snapshot(used_cwd: str, snap_info: list) -> None:
     f_handle_info.close()
 
 def create_tool_folder(used_cwd: str, tool_name: str) -> None:
+    """Creates a sub-folder in the _tools section of the snapshot
+
+    Parameters
+    ----------
+    used_cwd: str
+        The current root directory of the framework
+    tool_name: str
+        The currently visited tool's name
+    """
+
     tool_namespace = tool_name.lower()
     target_tool_dir = os.path.abspath(used_cwd + f"/snapshot/_tools/{tool_namespace}")
-    if os.path.isdir(target_tool_dir): raise Exception(f"Folder {target_tool_dir} already exists!")
+
+    if os.path.isdir(target_tool_dir):
+        raise Exception(f"Folder {target_tool_dir} already exists!")
+
     os.mkdir(target_tool_dir)
 
 def create_tool_infos(used_cwd: str, tool_name: str, tool_info: str, tool_schedule: str, tool_reference: str) -> None:
+    """Parses the interactions.json and reads the ref file
+
+    Parameters
+    ----------
+    used_cwd: str
+        The current root directory of the framework
+    tool_name: str
+        The currently visited tool's name
+    tool_info: str
+        The provided tool information for .info file
+    tool_schedule: str
+        The provided tool information for .schedule file
+    tool_reference: str
+        The provided tool information for .reference file
+    """
+
     tool_namespace = tool_name.lower()
     target_tool_dir = os.path.abspath(used_cwd + f"/snapshot/_tools/{tool_namespace}")
-    # TODO: You know what belongs here, right?
+    if not os.path.isdir(target_tool_dir):
+        raise Exception(f"Tool target dir is missing: {target_tool_dir}")
 
+    # write .info file
     f_handle_info = open(target_tool_dir + f"/{tool_namespace}.info", "w")
     f_handle_info.write(tool_info)
     f_handle_info.close()
 
+    # write .schedule file
     f_handle_schedule = open(target_tool_dir + f"/{tool_namespace}.schedule", "w")
     f_handle_schedule.write(tool_schedule)
     f_handle_schedule.close()
 
+    # write .reference file
     f_handle_reference = open(target_tool_dir + f"/{tool_namespace}.reference", "w")
     f_handle_reference.write(tool_reference)
     f_handle_reference.close()
 
 def create_tool_zip(used_cwd: str, tool_name: str) -> None:
+    """Deflates a tool's files and puts it into the snapshot
+
+    Parameters
+    ----------
+    used_cwd: str
+        The current root directory of the framework
+    tool_id: str
+        The currently visited tool's name
+    """
+
+    # "namespace" = the used name for snapshot, which is
+    # always the lowercase name
     tool_namespace = tool_name.lower()
     source_tool_dir = os.path.abspath(used_cwd + f"/app/tools/{tool_name}")
     target_tool_dir = os.path.abspath(used_cwd + f"/snapshot/_tools/{tool_namespace}")
+
+    # now we create the zip archive
     target_zip = target_tool_dir + f"/{tool_namespace}"
     folder_to_archive(dir=source_tool_dir, out_name=target_zip)
 
 def clean_up_temp_folder(used_cwd: str) -> None:
+    """Cleans up the created temporary folder
+
+    Parameters
+    ----------
+    used_cwd: str
+        The current root directory of the framework
+    """
     temp_folder = os.path.abspath(used_cwd + "/snapshot")
-    if not os.path.isdir(temp_folder): raise Exception("Could not clean-up temp folder!")
+    if not os.path.isdir(temp_folder):
+        raise Exception("Could not clean-up temp folder!")
+
     shutil.rmtree(temp_folder)
 
 def main() -> None:
+    """The main section of the script"""
+
     print(f"[*] Snapshot Creator started!")
     print(f"[*] Reading data...")
 
