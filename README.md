@@ -1,4 +1,9 @@
 # Scanner-Bundle: Control Framework
+[![david-prv - scanner-bundle](https://img.shields.io/static/v1?label=david-prv&message=scanner-bundle&color=blue&logo=github)](https://github.com/david-prv/scanner-bundle "Go to GitHub repo")
+![maintained - yes](https://img.shields.io/badge/maintained-yes-blue)
+[![issues - scanner-bundle](https://img.shields.io/github/issues/david-prv/scanner-bundle)](https://github.com/david-prv/scanner-bundle/issues)
+  
+[![Disclaimer - Use at own risk!](https://img.shields.io/badge/Disclaimer-Use_at_own_risk!-critical?style=for-the-badge)](https://)
 
 A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.  
 
@@ -72,3 +77,7 @@ Now open a web browser and navigate to `http://localhost:8080/`. The scanner-bun
 ## Getting Started
 
 Information about getting started will be provided [here](https://wiki.etage-4.de/books/eigenentwicklung/chapter/scanner-bundle). For guests, check out the [wiki](/#).
+
+## License
+
+Released under [MIT](/LICENSE) by [@david-prv](https://github.com/david-prv).
