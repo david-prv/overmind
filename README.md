@@ -8,7 +8,7 @@ A small framework to run open-source tools that inspect and scan any kind of web
 
 **Disclaimer**: This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
-## ➤ Roadmap
+## Roadmap
 - FIX tool deletion issue in bundle.js ([issue #1](https://github.com/david-prv/scanner-bundle/issues/1))
 - FIX integration bot namespace issue ([issue #7](https://github.com/david-prv/scanner-bundle/issues/7))
 - ADD anti-virus scan for newly uploaded scanners
@@ -16,14 +16,14 @@ A small framework to run open-source tools that inspect and scan any kind of web
 - ADD support for standard github-master ZIPs as integrables
 - ADD report removal after successful finished process (mitigates weird results)
 
-## ➤ Requirements
+## Requirements
 
  - Apache2
  - PHP (>= 8.2.0)
  - Python (>= 3.9.13)
  - Composer (>= 2.1.2)
 
-## ➤ Snapshot Structure
+## Snapshot Structure
 
 ```
 snapshot.zip/
@@ -44,7 +44,7 @@ snapshot.zip/
 └── .info
 ```
 
-## ➤ Installation
+## Installation
 Clone repository:
 ```bash
 git clone https://github.com/david-prv/scanner-bundle.git
@@ -61,7 +61,7 @@ Run compressor:
 ```bash
 php compressor.php
 ```
-## ➤ Firing Up & Getting Started
+## Firing Up & Getting Started
 
 This application is only meant to be running locally. It's not supposed to be a public accessible application in the web. To run a local instance, you can either use `XAMPP` to run a local web-server, or just launch a PHP development server.
 ```bash
@@ -72,6 +72,6 @@ Now open a web browser and navigate to `http://localhost:8080/`. The scanner-bun
 
 Information about what to do next will be provided [here](https://wiki.etage-4.de/books/eigenentwicklung/chapter/scanner-bundle). For guests, check out the [github wiki](/#).
 
-## ➤ License
+## License
 
 Released under [MIT](/LICENSE) by [@david-prv](https://github.com/david-prv).
