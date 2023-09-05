@@ -10,8 +10,6 @@ A small framework to run open-source tools that inspect and scan any kind of web
 
 ## Roadmap
 - FIX tool deletion issue in bundle.js ([issue #1](https://github.com/david-prv/scanner-bundle/issues/1))
-- UPDATE `getArg()` method to be nullable
-- UPDATE `Core.php` code (chunk code removal)
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 

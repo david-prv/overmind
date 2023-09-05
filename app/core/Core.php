@@ -26,7 +26,7 @@ class Core
 
     private string $PROJECT_NAME = "Scanner Bundle";
     private string $PROJECT_AUTHOR = "David Dewes";
-    private string $PROJECT_VERSION = "1.2.0";
+    private string $PROJECT_VERSION = "1.2.1";
     private string $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of web pages.";
@@ -155,11 +155,11 @@ class Core
     {
         $this->preCondition();
 
-        $target = (isset($this->argv["target"])) ? $this->argv["target"] : NULL;
-        $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : NULL;
-        $app = (isset($this->argv["index"])) ? $this->argv["index"] : NULL;
-        $args = (isset($this->argv["args"])) ? $this->argv["args"] : NULL;
-        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
+        $target = $this->getArgNullable("target");
+        $engine = $this->getArgNullable("engine");
+        $app = $this->getArgNullable("index");
+        $args = $this->getArgNullable("args");
+        $id = $this->getArgNullable("id");
 
         $this->verifyArgs($target, $engine, $app, $args, $id);
 
@@ -185,7 +185,7 @@ class Core
     {
         $this->preCondition();
 
-        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
+        $id = $this->getArgNullable("id");
 
         $this->verifyArgs($id);
         $res = $this->analyzer->get($this->TOOLS_PATH, $id);
@@ -208,15 +208,15 @@ class Core
     {
         $this->preCondition();
 
-        $name = (isset($this->argv["name"])) ? $this->argv["name"] : NULL;
-        $creator = (isset($this->argv["author"])) ? $this->argv["author"] : NULL;
-        $url = (isset($this->argv["url"])) ? $this->argv["url"] : NULL;
-        $version = (isset($this->argv["version"])) ? $this->argv["version"] : NULL;
-        $cmdline = (isset($this->argv["cmdline"])) ? $this->argv["cmdline"] : NULL;
-        $description = (isset($this->argv["description"])) ? $this->argv["description"] : NULL;
-        $engine = (isset($this->argv["engine"])) ? $this->argv["engine"] : NULL;
-        $index = (isset($this->argv["index"])) ? $this->argv["index"] : NULL;
-        $keywords = (isset($this->argv["keywords"])) ? $this->argv["keywords"] : NULL;
+        $name = $this->getArgNullable("name");
+        $creator = $this->getArgNullable("author");
+        $url = $this->getArgNullable("url");
+        $version = $this->getArgNullable("version");
+        $cmdline = $this->getArgNullable("cmdline");
+        $description = $this->getArgNullable("description");
+        $engine = $this->getArgNullable("engine");
+        $index = $this->getArgNullable("index");
+        $keywords = $this->getArgNullable("keywords");
 
         $this->verifyArgs($name, $creator, $url, $version, $cmdline, $description,
             $engine, $index, $keywords);
@@ -236,7 +236,7 @@ class Core
 
         $res = $scanner->create();
         if ($res !== -1) App::finishWithRedirect("page=schedule&edit=$res");
-        else App::finishWithError("<h1>Something went wrong! Please try again.</h1>");
+        else App::finishWithError("<h1>Something went wrong for '$name'! Please try again.</h1>");
     }
 
     /**
@@ -248,8 +248,8 @@ class Core
     {
         $this->preCondition();
 
-        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
-        $reference = (isset($this->argv["reference"])) ? $this->argv["reference"] : NULL;
+        $id = $this->getArgNullable("id");
+        $reference = $this->getArgNullable("reference");
 
         $this->verifyArgs($id, $reference);
 
@@ -271,7 +271,7 @@ class Core
     {
         $this->preCondition();
 
-        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
+        $id = $this->getArgNullable("id");
 
         $this->verifyArgs($id);
 
@@ -290,7 +290,7 @@ class Core
     {
         $this->preCondition();
 
-        $jsonObj = (isset($this->argv["json"])) ? $this->argv["json"] : NULL;
+        $jsonObj = $this->getArgNullable("json");
 
         $this->verifyArgs($jsonObj);
 
@@ -336,8 +336,8 @@ class Core
     {
         $this->preCondition();
 
-        $interactions = (isset($this->argv["interactions"])) ? $this->argv["interactions"] : NULL;
-        $id = (isset($this->argv["id"])) ? $this->argv["id"] : NULL;
+        $interactions = $this->getArgNullable("interactions");
+        $id = $this->getArgNullable("id");
 
         $this->verifyArgs($interactions, $id);
 
@@ -381,6 +381,19 @@ class Core
         if (!is_null($this->argv) && isset($this->argv[$arg]))
             return $this->argv[$arg];
         return "";
+    }
+
+    /**
+     * Failsafe getter for nullable arguments
+     *
+     * @param string|null $arg
+     * @return mixed
+     */
+    public function getArgNullable(?string $arg)
+    {
+        $_resolved = $this->getArg($arg);
+        if ($_resolved === "") return NULL;
+        else return $_resolved;
     }
 
     /**
