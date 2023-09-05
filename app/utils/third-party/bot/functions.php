@@ -270,7 +270,15 @@ function doIntegration(string $tmpFolder): bool
 function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bool
 {
     foreach ($tools as $tool) {
-        $finalDestination = __DIR__ . "/../../../tools/" . $tool["name"];
+        $namespace = $tool["name"];
+        $tmp_namespace = explode("/", $tool["index"])[0];
+
+        if ($tmp_namespace !== $namespace) {
+            writeLog("Tool name '$namespace' did not match namespace of index. Correcting to '$tmp_namespace'...");
+            $namespace = $tmp_namespace;
+        }
+
+        $finalDestination = __DIR__ . "/../../../tools/" . $namespace;
         if (is_dir(realpath($finalDestination))) {
             writeLog("Detected duplication, this tool already exists! Skipped!", 2);
             _skipped($tool["name"]);
