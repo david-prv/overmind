@@ -87,6 +87,23 @@
 
 <!-- Main -->
 <div class="container mt-5 mb-5">
+    <div id="disclaimer" class="jumbotron mb-5 %SHOW_DISCLAIMER%">
+        <div class="jumbotron-close">
+            <button onclick="$('#disclaimer').toggleClass('hidden')" type="button" class="btn-close"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <h1 style="font-weight: 300;"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Development Build
+        </h1>
+        <p class="lead disclaimer">
+            You are currently using an early dev-version, so please expect bugs, errors or unexpected behaviour at any
+            time. Please make sure to backup all relevant tool files in advance and run this framework only on a trusted
+            machine. If you need any help, consult the <a
+                href="https://wiki.etage-4.de/books/eigenentwicklung/page/installation-erste-schritte">wiki</a>.
+            In case of any issue or bug feel free to report it on the
+            <a href="https://github.com/david-prv/scanner-bundle/issues/new">github page</a>.
+        </p>
+    </div>
+
     <div class="d-grid gap-1 d-md-flex justify-content-md-end mb-3">
 
         <button onclick="editTools();" class="btn btn-navbar btn-secondary" type="button">
@@ -96,7 +113,8 @@
                 type="button">
             <i class="fa fa-plug"></i> Integrate Tool
         </button>
-        <button onclick="window.location.href = '/app/utils/third-party/bot/index.php';" class="btn btn-navbar btn-secondary" type="button">
+        <button onclick="window.location.href = '/app/utils/third-party/bot/index.php';"
+                class="btn btn-navbar btn-secondary" type="button">
             <i class="fa fa-wrench"></i> Integration Bot
         </button>
     </div>
@@ -345,7 +363,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-download"></i> Save</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa fa-download"></i>
+                    Save
+                </button>
                 <button type="button" class="btn btn-secondary" onclick="(function() {dropHistory.undo();})();">
                     <i class="fa fa-undo" aria-hidden="true"></i>
                     Undo
