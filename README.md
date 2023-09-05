@@ -1,12 +1,22 @@
-# Scanner-Bundle: Control Framework
-[![david-prv - scanner-bundle](https://img.shields.io/static/v1?label=david-prv&message=scanner-bundle&color=blue&logo=github)](https://github.com/david-prv/scanner-bundle "Go to GitHub repo")
-![maintained - yes](https://img.shields.io/badge/maintained-yes-blue)
-[![issues - scanner-bundle](https://img.shields.io/github/issues/david-prv/scanner-bundle)](https://github.com/david-prv/scanner-bundle/issues)
-[![PHP Composer](https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml/badge.svg)](https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml)
+<h1 align="center">
+ Scanner-Bundle: Control Framework
+</h1>
+<p align="center">
+ <a href="https://github.com/david-prv/scanner-bundle" title="Go to GitHub repo"><img src="https://img.shields.io/static/v1?label=david-prv&amp;message=scanner-bundle&amp;color=blue&amp;logo=github" alt="david-prv - scanner-bundle"></a>
+ <img src="https://img.shields.io/badge/maintained-yes-blue" alt="maintained - yes">
+ <a href="https://github.com/david-prv/scanner-bundle/issues"><img src="https://img.shields.io/github/issues/david-prv/scanner-bundle" alt="issues - scanner-bundle"></a>
+ <a href="https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml"><img src="https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml/badge.svg" alt="PHP Composer"></a>
+</p>
+<p align="center">
+ A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.  
+</p>
 
-A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.  
+![image](https://github.com/david-prv/scanner-bundle/assets/66866223/2e6f6e4e-dc5f-4dd4-8164-20b50d92cfea)
 
-**Disclaimer**: This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
+
+## Disclaimer
+
+This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
 ## Roadmap
 - FIX tool deletion issue in bundle.js ([issue #1](https://github.com/david-prv/scanner-bundle/issues/1))
