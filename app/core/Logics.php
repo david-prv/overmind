@@ -1,38 +1,37 @@
 <?php
 
 /**
- * Class Routes
+ * Class Logics
  *
  * <p>
- * This class is here to serve as a "Route" Manager.
- * It is very easy now to manage existing pages because of this class.
- * Simply use the "registerPages()" method in "App" to add new pages and placeholders,
- * which should be replaced during rendering procedure.
+ * This class is here to serve as a Logics Manager.
+ * Logics are logical operations that the framework can perform
+ * which are (mostly) of non-visual nature, e.g. updating data.
  * </p>
  *
  * <p>
  * Do not confuse: This micro-framework does not support
- * any "routes" in classical meaning. Pages are requested by GET parameters,
- * defining a "Route", which can look like follows:
- * localhost:8080/index.php?page=PAGE_NAME
+ * "routes" in classical meaning. Logical operations are triggered
+ * by GET parameters which can look like follows:
+ * localhost:8080/index.php?snapshot
  * </p>
  *
  * @author David Dewes <hello@david-dewes.de>
  */
-class Routes
+class Logics
 {
-    private static ?Routes $instance = NULL;
-    private array $routes;
+    private static ?Logics $instance = NULL;
+    private array $logics;
 
     /**
      * Returns instance
      *
-     * @return Routes
+     * @return Logics
      */
-    public static function getInstance(): Routes
+    public static function getInstance(): Logics
     {
         if (self::$instance === NULL) {
-            self::$instance = new Routes();
+            self::$instance = new Logics();
         }
         return self::$instance;
     }
@@ -53,11 +52,11 @@ class Routes
      */
     public function add(string $name, closure $callback): void
     {
-        $this->routes[strtolower($name)] = $callback;
+        $this->logics[strtolower($name)] = $callback;
     }
 
     /**
-     * Public getter for the routes
+     * Public getter for a logical operator
      * (the only publicly exposed method)
      *
      * @param string $name
@@ -65,7 +64,7 @@ class Routes
      */
     public function get(string $name): ?closure
     {
-        return $this->routes[strtolower($name)]
+        return $this->logics[strtolower($name)]
             ?? NULL;
     }
 }

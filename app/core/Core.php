@@ -190,12 +190,12 @@ class Core
         $res = $this->analyzer->get($this->TOOLS_PATH, $id);
 
         if (is_null($res)) {
-            echo "-1|[]";
+            App::finishWithError("-1|[]");
             return;
         }
 
         $analysisResult = $res->analyze();
-        echo $analysisResult->returnValue() . "|" . json_encode($analysisResult->diff());
+        App::finishWithSuccess($analysisResult->returnValue() . "|" . json_encode($analysisResult->diff()));
     }
 
     /**

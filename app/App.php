@@ -26,13 +26,12 @@ class App
     private Pages $pages;
 
     /**
-     * Keeps track of all available routes
-     * and manages how they will be handled
-     * (e.g. render a page)
+     * Keeps track of all available logical operations
+     * and manages how they will be handled, e.g. render a page
      *
-     * @var Routes
+     * @var Logics
      */
-    private Routes $routes;
+    private Logics $logics;
 
     /**
      * Method for closing HTTP requests by
@@ -64,11 +63,11 @@ class App
      * would redirect to INDEX view and passing the args
      * {'edit': 2} to it.
      *
-     * @param string $routeIdentifier
+     * @param string $logicalOperator
      */
-    public static function finishWithRedirect(string $routeIdentifier): void
+    public static function finishWithRedirect(string $logicalOperator): void
     {
-        header("Location: index.php?$routeIdentifier");
+        header("Location: index.php?$logicalOperator");
         die();
     }
 
@@ -80,9 +79,9 @@ class App
         spl_autoload_register(Autoloader::getInstance()->getLoader());
 
         $this->pages = Pages::getInstance();
-        $this->routes = Routes::getInstance();
+        $this->logics = Logics::getInstance();
 
-        $this->registerRoutes();
+        $this->registerLogics();
         $this->registerPages();
     }
 
@@ -102,7 +101,7 @@ class App
     }
 
     /**
-     * Manages all routes.
+     * Manages all logical operators.
      *
      * <p>
      * Usually you don't need to modify the handles
@@ -120,54 +119,54 @@ class App
      *
      * @return void
      */
-    private function registerRoutes(): void
+    private function registerLogics(): void
     {
         // Updates internal parameters (GET or POST),
         // used by all application functions
         $this->updateParams();
 
         // Access a page (register them below)
-        $this->routes->add("page", function () {
+        $this->logics->add("page", function () {
             Core::getInstance()->render();
         });
 
         // Background runner for scanners
-        $this->routes->add("run", function () {
+        $this->logics->add("run", function () {
             Core::getInstance()->scan();
         });
 
         // Background endpoint for tool upload
-        $this->routes->add("upload", function () {
+        $this->logics->add("upload", function () {
             Core::getInstance()->integrate();
         });
 
         // Background endpoint for reference creation
-        $this->routes->add("reference", function () {
+        $this->logics->add("reference", function () {
             Core::getInstance()->reference();
         });
 
         // Background endpoint for report analysis
-        $this->routes->add("analyze", function () {
+        $this->logics->add("analyze", function () {
             Core::getInstance()->analyze();
         });
 
         // Background endpoint for tool removal
-        $this->routes->add("delete", function () {
+        $this->logics->add("delete", function () {
             Core::getInstance()->delete();
         });
 
         // Background endpoint for tool edition
-        $this->routes->add("edit", function () {
+        $this->logics->add("edit", function () {
             Core::getInstance()->edit();
         });
 
         // Background endpoint for interaction schedules
-        $this->routes->add("schedule", function () {
+        $this->logics->add("schedule", function () {
             Core::getInstance()->schedule();
         });
 
         // Background endpoint for snapshot creation
-        $this->routes->add("snapshot", function () {
+        $this->logics->add("snapshot", function () {
             Core::getInstance()->snapshot();
         });
     }
@@ -237,10 +236,10 @@ class App
     /** @return closure */
     private function getHandle(): closure
     {
-        $default = $this->routes->default();
+        $default = $this->logics->default();
 
         $key = (count(array_keys($_GET)) >= 1) ? array_keys($_GET)[0] : -1;
-        return $this->routes->get(strtolower($key)) ?? $default;
+        return $this->logics->get(strtolower($key)) ?? $default;
     }
 
     /** Run */

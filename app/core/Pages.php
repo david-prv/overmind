@@ -4,7 +4,7 @@
  * Class Pages
  *
  * <p>
- * This class is here to serve as a "Route" Manager.
+ * This class is here to serve as a "View" Manager.
  * It is very easy now to manage existing pages because of this class.
  * Simply use the "registerPages()" method in "App" to add new pages and placeholders,
  * which should be replaced during rendering procedure.
