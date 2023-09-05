@@ -2,6 +2,43 @@ body {
     padding-bottom: 20px;
 }
 
+.jumbotron {
+    background: #E9ECEF !important;
+    padding: 2rem 2rem;
+    position: relative;
+    /*border-radius: .3rem;*/
+}
+
+.jumbotron-close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+}
+
+.disclaimer h1 {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+    font-weight: 300 !important;
+}
+
+.disclaimer a {
+    font-weight: 400;
+    color: black;
+    text-decoration: none;
+}
+
+.disclaimer a:after {
+    content: "";
+    width: 11px;
+    height: 11px;
+    margin-left: 4px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z'/%3E%3Cpath fill-rule='evenodd' d='M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+}
+
 .btn-check:focus + .btn-primary, .btn-primary:focus, .btn-check:focus + .btn-secondary, .btn-secondary:focus, .dropdown-toggle,
 .btn-outline-secondary {
     box-shadow: none !important;
@@ -17,7 +54,7 @@ body {
 }
 
 .no-cursor {
-    cursor: initial!important;
+    cursor: initial !important;
 }
 
 .img-center {
@@ -28,21 +65,21 @@ body {
 }
 
 .edit-mode-alert {
-    height:50px;
-    width:100%;
-    background:#198754;
-    color:white;
-    padding-top:0.5rem;
-    display:none!important;
+    height: 50px;
+    width: 100%;
+    background: #198754;
+    color: white;
+    padding-top: 0.5rem;
+    display: none !important;
 }
 
 .running-alert {
-    height:50px;
-    width:100%;
+    height: 50px;
+    width: 100%;
     background: #f6a50a;
-    color:white;
-    padding-top:0.5rem;
-    display:none!important;
+    color: white;
+    padding-top: 0.5rem;
+    display: none !important;
 }
 
 @keyframes blink {
@@ -71,7 +108,7 @@ body {
 }
 
 .animated-show {
-    opacity: 1!important;
+    opacity: 1 !important;
 }
 
 #selection-list li::marker {

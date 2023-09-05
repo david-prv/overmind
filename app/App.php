@@ -204,7 +204,8 @@ class App
             array("%PROJECT_DESCRIPTION%", Core::getInstance()->getProjectDescription()),
             array("%TOOLS_JSON%", Core::getInstance()->getToolsJson()),
             array("%CURRENT_FINGER_PRINT%", Reference::getFingerPrint()),
-            array("%PERSONAL_TOKEN%", Reference::getPersonalToken())
+            array("%PERSONAL_TOKEN%", Reference::getPersonalToken()),
+            array("%SHOW_DISCLAIMER%", Core::getInstance()->isRelease() ? "hidden" : "")
         ));
 
         /* Interactive input schedule */

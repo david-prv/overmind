@@ -30,6 +30,7 @@ class Core
     private string $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of web pages.";
+    private bool $PROJECT_RELEASE_VERSION = false;
     private string $PROJECT_LOGO = "<i class=\"fa fa-shield\" aria-hidden=\"true\"></i>";
 
     ////////////////////
@@ -462,6 +463,16 @@ class Core
     public function getProjectLogo(): string
     {
         return $this->PROJECT_LOGO;
+    }
+
+    /**
+     * Getter for release state
+     *
+     * @return bool
+     */
+    public function isRelease(): bool
+    {
+        return $this->PROJECT_RELEASE_VERSION;
     }
 
     /**
