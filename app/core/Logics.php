@@ -45,7 +45,7 @@ class Logics
     }
 
     /**
-     * Adds a new route
+     * Adds a new logic
      *
      * @param string $name
      * @param closure $callback
