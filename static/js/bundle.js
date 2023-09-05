@@ -235,9 +235,6 @@ function invokeLaunchSelected(event) {
     if (target.indexOf("://") === -1) target = $("#protocol-alt").val() + "://" + target;
     lastTarget = target;
 
-    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
-    $('#running-alert').removeClass("hidden");
-
     let inputs = $('#selection-list input');
     let selectedInputs = inputs
         .filter(function (index) {
@@ -246,6 +243,14 @@ function invokeLaunchSelected(event) {
     selectedInputs = selectedInputs.map(function (index) {
         return selectedInputs[index].value;
     });
+
+    if (selectedInputs.length <= 0) {
+        console.error("[ERROR] All tools unselected!");
+        return;
+    }
+
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
+    $('#running-alert').removeClass("hidden");
 
     for (let i = 0; i < DATA.length; i++) {
         let currentTool = DATA[i];
@@ -458,7 +463,6 @@ function getText(id) {
         if (request.readyState === 4 && request.status === 200) {
             var type = request.getResponseHeader('Content-Type');
             if (type.indexOf("text") !== 1) {
-                console.log(request.responseText);
                 document.getElementById("body-" + k).value = request.responseText
                     .replace("\
                     ", "\n");
