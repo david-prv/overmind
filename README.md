@@ -1,5 +1,6 @@
 <h1 align="center">
- Scanner-Bundle<br/>Control Framework
+ Scanner-Bundle<br/>
+ Control Framework
 </h1>
 <p align="center">
  <a href="https://github.com/david-prv/scanner-bundle" title="Go to GitHub repo"><img src="https://img.shields.io/static/v1?label=david-prv&amp;message=scanner-bundle&amp;color=blue&amp;logo=github" alt="david-prv - scanner-bundle"></a>
@@ -8,7 +9,8 @@
  <a href="https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml"><img src="https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml/badge.svg" alt="PHP Composer"></a>
 </p>
 <p align="center">
- A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.  
+ A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.<br>
+ This software meant to find, analyze and fix security issues.
 </p>
 
 ![image](https://github.com/david-prv/scanner-bundle/assets/66866223/2e6f6e4e-dc5f-4dd4-8164-20b50d92cfea)
