@@ -190,7 +190,7 @@ def create_tool_infos(used_cwd: str, tool_name: str, tool_info: str, tool_schedu
     f_handle_reference.write(tool_reference)
     f_handle_reference.close()
 
-def create_tool_zip(used_cwd: str, tool_name: str) -> None:
+def create_tool_zip(used_cwd: str, tool_name: str, tool_src: str = None) -> None:
     """Deflates a tool's files and puts it into the snapshot
 
     Parameters
@@ -199,12 +199,16 @@ def create_tool_zip(used_cwd: str, tool_name: str) -> None:
         The current root directory of the framework
     tool_id: str
         The currently visited tool's name
+    tool_src: str
+        Overrides the locally used namespace
     """
 
     # "namespace" = the used name for snapshot, which is
     # always the lowercase name
     tool_namespace = tool_name.lower()
-    source_tool_dir = os.path.abspath(used_cwd + f"/app/tools/{tool_name}")
+    tool_src = tool_src if tool_src != None else tool_name
+    source_tool_dir = os.path.abspath(used_cwd + f"/app/tools/{tool_src}")
+    print(f"[!] Took it from {source_tool_dir}")
     target_tool_dir = os.path.abspath(used_cwd + f"/snapshot/_tools/{tool_namespace}")
 
     # now we create the zip archive
@@ -275,9 +279,11 @@ def main() -> None:
         print(f"[*] Deflating {_name}...")
 
         # write tool data to snapshot folder
+        _tmp = _index.split("/")
+        _local_name = _tmp[len(_tmp)-2]
         create_tool_folder(used_cwd=root_dir, tool_name=_name)
         create_tool_infos(used_cwd=root_dir, tool_name=_name, tool_info=_str_info, tool_schedule=_str_schedule, tool_reference=_str_reference)
-        create_tool_zip(used_cwd=root_dir, tool_name=_name)
+        create_tool_zip(used_cwd=root_dir, tool_name=_name, tool_src=_name if _name == _local_name else _local_name)
 
     # deflating whole temp folder
     folder_to_archive(dir=root_dir + "/snapshot", out_name=root_dir + "/snapshot-" + str(int(time.time())))

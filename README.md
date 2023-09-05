@@ -10,7 +10,6 @@ A small framework to run open-source tools that inspect and scan any kind of web
 
 ## Roadmap
 - FIX tool deletion issue in bundle.js ([issue #1](https://github.com/david-prv/scanner-bundle/issues/1))
-- FIX snapshot creator namespace issue ([issue #7](https://github.com/david-prv/scanner-bundle/issues/8))
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 - ADD support for standard github-master ZIPs as integrables

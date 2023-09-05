@@ -2,7 +2,7 @@
 require_once "functions.php";
 require_once "../../../core/wrappers/Reference.php";
 
-$maxFileSize = 500000;
+$maxFileSize = 1000000;
 $uploadTargetDir = "/tmp";
 $uploadFileName = "integrationFile";
 $logToPrint = "<h1>Bot Log</h1>
@@ -39,7 +39,7 @@ if ($fileIsPresent) {
 
     // check file size
     if ($fileSize > $maxFileSize) {
-        writeLog("Provided file exceeds maximum filesize!", 2);
+        writeLog("Provided file exceeds maximum filesize (size=$fileSize)!", 2);
         $uploadOK = false;
     }
 
