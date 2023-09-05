@@ -13,6 +13,8 @@ A small framework to run open-source tools that inspect and scan any kind of web
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 
+*Don't forget issues, that should be re-opened: [label:willreopen](https://github.com/david-prv/scanner-bundle/issues?q=is%3Aissue+label%3Awillreopen)*
+
 ## Requirements
 
  - Apache2
