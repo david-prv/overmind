@@ -1,5 +1,5 @@
 <h1 align="center">
- Scanner-Bundle: Control Framework
+ Scanner-Bundle<br/>Control Framework
 </h1>
 <p align="center">
  <a href="https://github.com/david-prv/scanner-bundle" title="Go to GitHub repo"><img src="https://img.shields.io/static/v1?label=david-prv&amp;message=scanner-bundle&amp;color=blue&amp;logo=github" alt="david-prv - scanner-bundle"></a>
