@@ -10,7 +10,6 @@
 </p>
 <p align="center">
  A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.<br>
- This software meant to find, analyze and fix security issues.
 </p>
 
 ![image](https://github.com/david-prv/scanner-bundle/assets/66866223/2e6f6e4e-dc5f-4dd4-8164-20b50d92cfea)
@@ -22,8 +21,10 @@ This tool is not intended to be used for any criminal act. It's used to find vul
 
 ## Roadmap
 - FIX tool deletion issue in bundle.js ([issue #1](https://github.com/david-prv/scanner-bundle/issues/1))
+- ADD snapshot feedback
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
+- ADD AI-assistent for report analysis
 
 *Don't forget issues, that should be re-opened: [label:willreopen](https://github.com/david-prv/scanner-bundle/issues?q=is%3Aissue+label%3Awillreopen)*
 
