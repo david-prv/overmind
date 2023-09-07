@@ -19,11 +19,13 @@ function submitIntegration(event) {
         return;
     }
 
-    _submitFiles(function(html) {
+    _submitForm();
+
+    /*_submitFiles(function(html) {
         alertSuccess("Submitted files for investigation!");
         $(submitButton).html(html);
         setTimeout(_submitForm, 1000);
-    });
+    });*/
 }
 
 function _validateForm() {
