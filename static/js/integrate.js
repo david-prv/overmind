@@ -22,7 +22,7 @@ function submitIntegration(event) {
     _submitFiles(function(html) {
         alertSuccess("Submitted files for investigation!");
         $(submitButton).html(html);
-        //setTimeout(_submitForm, 1000);
+        setTimeout(_submitForm, 1000);
     });
 }
 
