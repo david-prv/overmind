@@ -27,9 +27,16 @@ const TEST_TARGET = "https://etage-4.de";
     let btn_caption = $('#button-caption')[0];
     let ref_txt = $('#reference')[0];
 
+    window.onbeforeunload = confirmUnloadReference;
+
     isBeingExecuted(btn_icon, btn_caption, ref_txt);
     executeTool(btn_icon, btn_caption, ref_txt);
 })();
+
+/* Show unload warning */
+function confirmUnloadReference() {
+    return "The integration process is not finished yet! Are you sure?";
+}
 
 /* Show "is being executed" UI */
 function isBeingExecuted(btn_icon, btn_caption, ref_txt) {

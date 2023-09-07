@@ -11,7 +11,16 @@ var list;
 // code ignition
 (function () {
     list = $('#interactions');
+
+    if(!SKIP_REDIRECT) {
+        window.onbeforeunload = confirmUnloadSchedule;
+    }
 })();
+
+/* Show unload warning */
+function confirmUnloadSchedule() {
+    return "The integration process is not finished yet! Are you sure?";
+}
 
 // moves an element up
 function moveUp(pos) {

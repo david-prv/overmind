@@ -67,7 +67,7 @@ var lastTargetDiff = [];
 // helper to show tools list with fade-in animation
 function showToolListAnimated() {
     let tools = $('#tool-list').children();
-    for(let i = 0; i < tools.length; i++) {
+    for (let i = 0; i < tools.length; i++) {
         setTimeout(
             (c = i) => {
                 tools[c].classList.add("animated-show");
@@ -87,7 +87,7 @@ function getToolIndexById(id) {
 }
 
 // handler for tool deletion button
-function deleteTool(id, debug=false) {
+function deleteTool(id, debug = false) {
     let route = (debug === true) ? "" : "delete&id=";
     $.get('index.php?' + route + id, function (data) {
         if (data === "done" || debug) {
@@ -273,7 +273,12 @@ function invokeLaunchSelected(event) {
         $("#state-" + selectedInputs[j]).html("<span class='blinking'>Running...</span>");
         $.get("/index.php" + queue[j], function (data, status, xhr, id = selectedInputs[j], callback = finishedSelected, max = queue.length) {
             if (data === "done") $("#state-" + selectedInputs[j]).html("<span style='color:green!important;'>Finished</span>");
-            else $("#state-" + selectedInputs[j]).html("<span style='color:red!important;'>Cancelled</span>");
+            else {
+                $("#state-" + selectedInputs[j]).html("<span style='color:red!important;'>Cancelled</span>");
+                let idx = getToolIndexById(selectedInputs[j]);
+                let name = (idx === -1) ? "Unknown" : DATA[idx]["name"];
+                alertError(`${name} was cancelled!`);
+            }
             callback(id, selectedInputs);
         });
     }
@@ -343,6 +348,8 @@ function invokeLaunchAll(event) {
 
     for (let j = 0; j < queue.length; j++) {
         let id = DATA[j]["id"];
+        let name = DATA[j]["name"];
+
         if (skip.includes(parseInt(id))) {
             finished(j, queue.length);
             continue;
@@ -351,9 +358,12 @@ function invokeLaunchAll(event) {
         console.log("[DEBUG] Running Tool with ID", id);
 
         $("#state-" + id).html("<span class='blinking'>Running...</span>");
-        $.get("/index.php" + queue[j], function (data, status, xhr, identity = id, callback = finished, max = queue.length) {
+        $.get("/index.php" + queue[j], function (data, status, xhr, identity = id, callback = finished, max = queue.length, display = name) {
             if (data === "done") $("#state-" + identity).html("<span style='color:green!important;'>Finished</span>");
-            else $("#state-" + identity).html("<span style='color:red!important;'>Cancelled</span>");
+            else {
+                $("#state-" + identity).html("<span style='color:red!important;'>Cancelled</span>");
+                alertError(`${display} was cancelled!`)
+            }
             temp.push(identity);
             callback(identity, max);
         });
@@ -515,7 +525,7 @@ function getDistance(id) {
 function correctDistanceColoring(id, score) {
     let el = document.getElementById("distance-" + id);
     let i_score = parseInt(score);
-    switch(true) {
+    switch (true) {
         case (i_score < 0):
             el.style.color = "darkgray";
             el.innerHTML = "<i title=\"Missing reference or integrity not verifiable\" " +
@@ -586,7 +596,7 @@ function parseOffers(zone) {
     }
 
     let tmp = [];
-    for(let i = 0; i < elements.length; i++) {
+    for (let i = 0; i < elements.length; i++) {
         let identifier = elements[i].getAttribute("id");
         tmp.push({
             caption: elements[i].getAttribute("data-text"),
@@ -601,7 +611,11 @@ function parseOffers(zone) {
 function parseResults(results) {
 
     function bounds(l) {
-        let t = [...l].map((x) => {return parseInt(x);}).sort(function(a, b){return a-b});
+        let t = [...l].map((x) => {
+            return parseInt(x);
+        }).sort(function (a, b) {
+            return a - b
+        });
         return [t[0], t[t.length - 1]];
     }
 
@@ -620,7 +634,7 @@ function parseResults(results) {
 
     let tmp = [];
     let dist = [];
-    for(let j = 0; j < elements.length; j++) {
+    for (let j = 0; j < elements.length; j++) {
         let name = results.firstChild.children[j].children[0].children[0].innerText.trim().split("\n")[0];
         let distance = results.firstChild.children[j].children[0].children[0].innerText.trim().split("\n")[1];
         dist.push(distance);
@@ -631,7 +645,7 @@ function parseResults(results) {
         });
     }
 
-    for(let k = 0; k < elements.length; k++) {
+    for (let k = 0; k < elements.length; k++) {
         tmp[k].normalized = Math.round(normalize(k, dist) * 100) / 100;
     }
 
@@ -643,7 +657,7 @@ function collectInfoAndRedirect() {
     let dropZone = document.getElementById("dropzone");
     let resultContent = document.getElementById("result-content");
 
-    if(dropZone === null || resultContent === null) {
+    if (dropZone === null || resultContent === null) {
         console.error("[ERROR] dropzone or result-content could not be found!");
         alertError("Dropzone or result content not available!");
         return -1;
