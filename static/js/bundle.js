@@ -336,7 +336,7 @@ function invokeLaunchAll(event) {
 
     if (skip.length === queue.length) {
         console.error("[ERROR] All tools skipped...");
-        alertError("Exclusion rule too strict! Nothing to do.");
+        alertError("No tool could be executed!");
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
         return;
     }
