@@ -19,7 +19,7 @@ use MatthiasMullie\Minify;
  */
 
 $path = getcwd();
-$js_files = array("bundle", "schedule", "hotkeys", "reference", "dropzone", "prototype", "toasts");
+$js_files = array("bundle", "schedule", "hotkeys", "reference", "dropzone", "prototype", "toasts", "integrate");
 $css_files = array("main");
 
 /*

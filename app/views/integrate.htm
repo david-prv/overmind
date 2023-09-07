@@ -12,6 +12,9 @@
     <!-- FontAwesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
     <!-- Static CSS -->
     <link rel="stylesheet" href="/static/css/main.min.css">
 
@@ -22,7 +25,7 @@
 </head>
 <body>
 <div class="container p-3">
-    <form class="row g-3" enctype="multipart/form-data" action="/index.php?upload" method="POST">
+    <form id="integration" class="row g-3" enctype="multipart/form-data" action="/index.php?upload" method="POST">
         <h1>Scanner Integration</h1>
         <div>
             <p class="left-border">
@@ -77,7 +80,8 @@
         </div>
         <div>
             <label for="keywords" class="form-label">Keywords:</label>
-            <input name="keywords" id="keywords" type="text" class="form-control" placeholder="e.g. wordpress, scanner, ..."
+            <input name="keywords" id="keywords" type="text" class="form-control"
+                   placeholder="e.g. wordpress, scanner, ..."
                    required>
         </div>
         <div>
@@ -88,9 +92,24 @@
             </p>
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary p-2" type="submit" name="submit">Upload protected by <img class="clam-av" src="/static/img/clamav.png" height="15px" /></button>
+            <button id="submit" onclick="(function(event) { submitIntegration(event); })(event);"
+                    class="btn btn-primary p-2">
+                Upload protected by <img class="clam-av"
+                                         src="/static/img/clamav.png"
+                                         height="15px"
+                                         alt="ClamAV"/>
+            </button>
         </div>
+        <button id="ghost-submit" class="hidden" type="submit" name="submit"></button>
     </form>
 </div>
 </body>
+<footer>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <!-- Runtime JS -->
+    <script src="/static/js/toasts.min.js"></script>
+    <script src="/static/js/integrate.min.js"></script>
+</footer>
 </html>

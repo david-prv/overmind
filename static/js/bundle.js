@@ -13,15 +13,15 @@ var finishedIDs = [];
 var temp = [];
 var lastTarget = "";
 var lastTargetDiff = [];
-var maxPreviewLength = 50;
 
 
-// code ignition
+// main view preparation
 (function () {
     /*
      * Registration of all necessary
-     * EventListeners
+     * EventListeners if in main view
      */
+    if (window.location.search !== "") return;
 
     let launchAll = document.getElementById("launchAll");
     launchAll.addEventListener("click", function (event) {
@@ -62,7 +62,6 @@ var maxPreviewLength = 50;
     });
 
     showToolListAnimated();
-
 })();
 
 // helper to show tools list with fade-in animation
