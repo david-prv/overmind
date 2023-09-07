@@ -183,7 +183,7 @@ $refToken = $data["ref_token"];
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
                             <td contenteditable class=\"tg-c3ow\">&mdash;</td>
-                          </tr>";;
+                          </tr>";
             } else {
                 foreach ($scannerResults as $result) {
                     // prepare scanner result fields
