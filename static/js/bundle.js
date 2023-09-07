@@ -72,7 +72,7 @@ function showToolListAnimated() {
             (c = i) => {
                 tools[c].classList.add("animated-show");
             },
-        i * 100);
+            i * 100);
     }
 }
 
@@ -88,13 +88,16 @@ function getToolIndexById(id) {
 
 // handler for tool deletion button
 function deleteTool(id, debug=false) {
-    // Reminder: https://github.com/david-prv/scanner-bundle/issues/1
     let route = (debug === true) ? "" : "delete&id=";
     $.get('index.php?' + route + id, function (data) {
         if (data === "done" || debug) {
             $('#tool-' + id).remove();
-            if (($('.list-group').children()).length <= 0) {
-                $('.list-group').html("<h2 class='text-muted text-center'>No tools found</h2>\n" +
+            if (($('#tool-list').children()).length <= 0) {
+                // re-enable buttons
+                $('#launchAll, #launchOptions').prop('disabled', (i, v) => !v);
+
+                // write empty message
+                $('#tool-list').html("<h2 class='text-muted text-center'>No tools found</h2>\n" +
                     "                                                          <a class='no-cursor' title='Vector by https://vecteezy.com'>\n" +
                     "                                                            <img class='img-center' src='/static/img/sleep.jpg' />\n" +
                     "                                                          </a>");
