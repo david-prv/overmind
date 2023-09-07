@@ -19,7 +19,7 @@ use MatthiasMullie\Minify;
  */
 
 $path = getcwd();
-$js_files = array("bundle", "schedule", "hotkeys", "reference", "dropzone", "prototype");
+$js_files = array("bundle", "schedule", "hotkeys", "reference", "dropzone", "prototype", "toasts");
 $css_files = array("main");
 
 /*
@@ -45,7 +45,7 @@ $css_files = array("main");
 
 if (substr_compare($path, "scanner-bundle", -strlen("scanner-bundle")) !== 0 && substr_compare($path, "scanner-bundle-main", -strlen("scanner-bundle-main")) !== 0) {
     echo "ERROR: you are probably running this script from the wrong " .
-         "location. Please navigate to the root directory of this project and run: php compressor.php\n";
+        "location. Please navigate to the root directory of this project and run: php compressor.php\n";
     echo "Press ENTER if you wish to continue anyway...\n";
     fgetc(STDIN);
 }

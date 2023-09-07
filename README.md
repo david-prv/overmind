@@ -20,12 +20,9 @@
 This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
 ## Roadmap
-- FIX tool deletion issue in bundle.js ([issue #1](https://github.com/david-prv/scanner-bundle/issues/1))
-- ADD snapshot feedback
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 - ADD AI-assistent for report analysis
-- ADD toasts
 
 *Don't forget issues, that should be re-opened: [label:willreopen](https://github.com/david-prv/scanner-bundle/issues?q=is%3Aissue+label%3Awillreopen)*
 

@@ -109,6 +109,7 @@ function editTool(id) {
     let tool = getToolIndexById(id);
     if (tool === -1) {
         console.error("[ERROR] Could not find tool in map.");
+        alertError("Unknown tool ID!");
         return;
     }
 
@@ -230,6 +231,7 @@ function invokeLaunchSelected(event) {
     let target = $("#target-url-alt").val();
     if (target === '' || target === null || target === undefined) {
         console.error("[ERROR] Missing target...");
+        alertError("No target URL defined!");
         return;
     }
     if (target.indexOf("://") === -1) target = $("#protocol-alt").val() + "://" + target;
@@ -246,6 +248,7 @@ function invokeLaunchSelected(event) {
 
     if (selectedInputs.length <= 0) {
         console.error("[ERROR] All tools unselected!");
+        alertError("No tools selected!");
         return;
     }
 
@@ -261,6 +264,8 @@ function invokeLaunchSelected(event) {
         queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\""
             + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"] + "&target=" + target);
     }
+
+    alertSuccess(`Running ${queue.length} scanners...`);
 
     for (let j = 0; j < queue.length; j++) {
         $("#state-" + selectedInputs[j]).html("<span class='blinking'>Running...</span>");
@@ -278,6 +283,7 @@ function invokeLaunchAll(event) {
     let target = $("#target-url").val();
     if (target === '' || target === null || target === undefined) {
         console.error("[ERROR] Missing target...");
+        alertError("No target URL defined!");
         return;
     }
     if (target.indexOf("://") === -1) target = $("#protocol").val() + "://" + target;
@@ -323,12 +329,15 @@ function invokeLaunchAll(event) {
 
     if (skip.length === queue.length) {
         console.error("[ERROR] All tools skipped...");
+        alertError("Exclusion rule too strict! Nothing to do.");
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
         return;
     }
 
     $('#exclusion').val("");
     $('#whitelist').val("");
+
+    alertSuccess(`Running ${queue.length} scanners...`)
 
     for (let j = 0; j < queue.length; j++) {
         let id = DATA[j]["id"];
@@ -634,6 +643,7 @@ function collectInfoAndRedirect() {
 
     if(dropZone === null || resultContent === null) {
         console.error("[ERROR] dropzone or result-content could not be found!");
+        alertError("Dropzone or result content not available!");
         return -1;
     }
 
@@ -653,5 +663,11 @@ function collectInfoAndRedirect() {
 
 // triggers snapshot backend endpoint
 function createSnapshot() {
-    $.get("/index.php?snapshot", function (data, status) { console.log(data, status); });
+    $.get("/index.php?snapshot", function (data, status) {
+        if (status === "success" && data === "done") {
+            alertSuccess("Snapshot was created successfully!");
+        } else {
+            alertError("Snapshot creation has failed!");
+        }
+    });
 }
