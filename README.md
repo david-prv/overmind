@@ -25,6 +25,7 @@ This tool is not intended to be used for any criminal act. It's used to find vul
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 - ADD AI-assistent for report analysis
+- ADD Toasts
 
 *Don't forget issues, that should be re-opened: [label:willreopen](https://github.com/david-prv/scanner-bundle/issues?q=is%3Aissue+label%3Awillreopen)*
 
