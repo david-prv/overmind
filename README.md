@@ -20,6 +20,7 @@
 This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
 
 ## Roadmap
+- ADD advanced search params (e.g. `not:wordpress`, `engine:php`)
 - ADD anti-virus scan for newly uploaded scanners
 - ADD support for more native runners
 - ADD AI-assistent for report analysis
