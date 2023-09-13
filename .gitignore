@@ -4,6 +4,5 @@
 /vendor/*
 /reports/*.txt
 /refs/*.txt
+/app/tools/*.json
 /app/tools/*/
-/app/tools/interactions.json
-/app/tools/map.json

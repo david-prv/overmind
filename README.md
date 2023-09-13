@@ -14,26 +14,28 @@
 
 ![image](https://github.com/david-prv/scanner-bundle/assets/66866223/2e6f6e4e-dc5f-4dd4-8164-20b50d92cfea)
 
-
 ## Disclaimer
 
-This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners have given me express permission to do so! You are responsible for all your decisions.
+This tool is not intended to be used for any criminal act. It's used to find vulnerabilites on websites whose owners
+have given me express permission to do so! You are responsible for all your decisions.
 
 ## Roadmap
+
 - ADD automated requirement installation to integration bot
 - ADD advanced search params (e.g. `not:wordpress`, `engine:php`)
-- ADD anti-virus scan for newly uploaded scanners
+- ADD antivirus scan for newly uploaded scanners
 - ADD support for more native runners
-- ADD AI-assistent for report analysis
+- ADD AI-assistant for report analysis
 
-*Don't forget issues, that should be re-opened: [label:willreopen](https://github.com/david-prv/scanner-bundle/issues?q=is%3Aissue+label%3Awillreopen)*
+*Don't forget issues, that should be
+re-opened: [label:willreopen](https://github.com/david-prv/scanner-bundle/issues?q=is%3Aissue+label%3Awillreopen)*
 
 ## Requirements
 
- - Apache2
- - PHP (>= 8.2.0)
- - Python (>= 3.9.13)
- - Composer (>= 2.1.2)
+- Apache2
+- PHP (>= 8.2.0)
+- Python (>= 3.9.13)
+- Composer (>= 2.1.2)
 
 ## Snapshot Structure
 
@@ -57,32 +59,47 @@ snapshot.zip/
 ```
 
 ## Installation
+
 Clone repository:
+
 ```bash
 git clone https://github.com/david-prv/scanner-bundle.git
 ```
+
 Navigate into project's root folder:
+
 ```bash
 cd scanner-bundle
 ```
+
 Install dependencies:
+
 ```bash
 composer install
 ```
+
 Run compressor:
+
 ```bash
 php compressor.php
 ```
+
 ## Firing Up & Getting Started
 
-This application is only meant to be running locally. It's not supposed to be a public accessible application in the web. To run a local instance, you can either use `XAMPP` to run a local web-server, or just launch a PHP development server.
+This application is only meant to be running locally. It's not supposed to be a public accessible application in the
+web. To run a local instance, you can either use `XAMPP` to run a local web-server, or just launch a PHP development
+server.
+
 ```bash
 # in project's root folder...
 php -S localhost:8080
 ```
+
 Now open a web browser and navigate to `http://localhost:8080/`. The scanner-bundle framework should appear.
 
-Information about what to do next will be provided [here](https://wiki.etage-4.de/books/eigenentwicklung/chapter/scanner-bundle). For guests, check out the [github wiki](/#).
+Information about what to do next will be
+provided [here](https://wiki.etage-4.de/books/eigenentwicklung/chapter/scanner-bundle). For guests, check out
+the [github wiki](/#).
 
 ## License
 
