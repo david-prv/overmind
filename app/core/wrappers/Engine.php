@@ -20,6 +20,7 @@ abstract class Engine
     const Python2 = "python2";
     const PHP = "php";
     const PHPInline = "php -r";
+    const NodeJS = "node";
     const Default = "";
 
     /**
@@ -32,6 +33,9 @@ abstract class Engine
     public static function valueOf($value): string
     {
         switch (strtolower($value)) {
+            case "nodejs":
+            case "node":
+                return Engine::NodeJS;
             case "python3":
             case "py3":
                 return Engine::Python3;

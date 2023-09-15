@@ -68,8 +68,8 @@ class Core
     /**
      * Core constructor.
      *
-     * @param string $tp
-     * @param string $tip
+     * @param string|null $tp
+     * @param string|null $tip
      */
     private function __construct(?string $tp = NULL, ?string $tip = NULL)
     {
