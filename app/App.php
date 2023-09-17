@@ -228,11 +228,6 @@ class App
             array("%ID%", Core::getInstance()->getArg("edit"))
         ));
 
-        /* Edit sources for supply chain */
-        $this->pages->add("SOURCES", array(
-            array("%PROJECT_NAME%", Core::getInstance()->getProjectName())
-        ));
-
         /* Just a test page */
         $this->pages->add("TEST", array(
             array("%PROJECT_NAME%", Core::getInstance()->getProjectName())
