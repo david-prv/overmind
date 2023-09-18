@@ -12,7 +12,7 @@
  A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.<br>
 </p>
 
-![image](https://github.com/david-prv/scanner-bundle/assets/66866223/c238808d-c364-44ba-b59c-538e734a5dd1)
+![image](https://github.com/david-prv/scanner-bundle/assets/66866223/9625b036-4691-431d-9568-1cfb5ef8189b)
 
 ## Disclaimer
 
