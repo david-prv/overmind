@@ -248,9 +248,9 @@ kbd {
     cursor: move;
 }
 
-.clam-av {
-    margin-bottom: 5px;
-    margin-left: 2px;
+.av-brand {
+    /*margin-bottom: 5px;*/
+    margin-left: 4px;
 }
 
 #toast-container>div {
