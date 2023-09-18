@@ -55,10 +55,15 @@
         <div>
             <label for="engine" class="form-label">Used Engine</label>
             <p class="text-muted">
-                (Use <code>py2</code>, <code>py3</code>, <code>php</code>, <code>php-inline</code>, and so on as
-                abbreviations)
+                (You can only use engines, which are installed on your current system)
             </p>
-            <input name="engine" id="engine" type="text" class="form-control" placeholder="e.g. py3" required>
+            <select name="engine" id="engine" class="form-control" required>
+                <option value="py3">Python 3</option>
+                <option value="py2">Python 2</option>
+                <option value="php">PHP (LTS)</option>
+                <option value="php-inline">PHP Inline (LTS)</option>
+                <option value="nodejs">Node JS (LTS)</option>
+            </select>
         </div>
         <div>
             <label for="index" class="form-label">Index File</label>
