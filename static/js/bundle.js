@@ -264,7 +264,7 @@ function invokeLaunchSelected(event) {
         }
         $("#state-" + i).innerText = "Waiting...";
         queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\""
-            + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"] + "&target=" + target);
+            + currentTool["args"].replace("%URL%", target).replace("%RAW%", target.replace("http://", "").replace("https://", "")) + "\"&id=" + currentTool["id"] + "&target=" + target);
     }
 
     alertSuccess(`Running ${queue.length} scanners...`);
@@ -303,7 +303,7 @@ function invokeLaunchAll(event) {
         let currentTool = DATA[i];
         $("#state-" + i).innerText = "Waiting...";
         queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"]
-            + "&args=\"" + currentTool["args"].replace("%URL%", target) + "\"&id=" + currentTool["id"]
+            + "&args=\"" + currentTool["args"].replace("%URL%", target).replace("%RAW%", target.replace("http://", "").replace("https://", "")) + "\"&id=" + currentTool["id"]
             + "&target=" + target);
     }
 

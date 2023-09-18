@@ -30,7 +30,8 @@ class Core
     private string $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of web pages.";
-    private bool $PROJECT_RELEASE_VERSION = false;
+    private bool $PROJECT_IN_STABLE_VERSION = false;
+    private bool $PROJECT_IN_DEVELOPMENT = true;
     private string $PROJECT_LOGO = "<img style='transform: translateY(-2px);' src='/static/img/etage4-logo.png' width='35'>"; //"<i class=\"fa fa-shield\" aria-hidden=\"true\"></i>";
 
     ////////////////////
@@ -485,7 +486,7 @@ class Core
      */
     public function isRelease(): bool
     {
-        return $this->PROJECT_RELEASE_VERSION;
+        return $this->PROJECT_IN_STABLE_VERSION || $this->PROJECT_IN_DEVELOPMENT;
     }
 
     /**
