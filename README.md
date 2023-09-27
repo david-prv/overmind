@@ -22,7 +22,8 @@ have given me express permission to do so! You are responsible for all your deci
 ## Roadmap
 
 - ADD automated requirement installation to integration bot *(wip...)*
-- ADD support for more native runners *(wip...)*
+- ADD customization option for engines (add own runners with corresponding requirements)
+- ADD json-import for engines
 - ADD advanced search params (e.g. `not:wordpress`, `engine:php`)
 - ADD antivirus scan for newly uploaded scanners
 - ADD AI-assistant for report analysis

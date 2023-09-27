@@ -1,14 +1,21 @@
 import sys, os
 
 REQUIREMENTS = {
-    "python": "requirements.txt",
+    "python": "requirements.txt"
     "node": ["package.json", "package-lock.json"]
 }
 
 SHELL = {
-    "python": "pip install -r {}",
+    "python": "pip install -r {}"
     "node": "npm install"
 }
+
+ALIAS = {
+    "python": ["py3", "py2", "python3", "python2"],
+    "node": ["nodejs", "js", "npm"]
+}
+
+# TODO: Add aliasing to engines
 
 def get_req_files(engine: str) -> str|list:
     return REQUIREMENTS[engine.lower()] if engine.lower() in REQUIREMENTS else ""
@@ -54,9 +61,9 @@ def install_requirements(path: str, engine: str) -> bool:
         _shell = f"cd {path} && {shell.format(esc_argument(req))}"
         return os.system(_shell) == 0
 
-def main(cwd: str = "./scanner-bundle") -> None:
+def main(cwd: str = "./scanner-bundle", debug: bool = True) -> None:
     # tool information: "<toolName>|<toolEngine>[|<altToolNamespace>]"
-    # python3 setup.py "nodeTool|node" "pythonTool|python" "pythonNested|python|pythonNested/pythonNested"
+    # python3 auto-install.py "nodeTool|node" "pythonTool|python" "pythonNested|python|pythonNested/pythonNested"
     toolList = sys.argv[1:] if len(sys.argv) > 1 else None
 
     if toolList == None:
@@ -74,6 +81,8 @@ def main(cwd: str = "./scanner-bundle") -> None:
         _toolName = _toolData[0]
         _toolEngine = _toolData[1]
         _toolPath = os.path.abspath(f"{cwd}/app/tools/{_toolName}") if len(_toolData) <= 2 else os.path.abspath(f"{cwd}/app/tools/{_toolData[2]}")
+
+        if debug: print(f"Path={_toolPath}, Engine={_toolEngine}")
 
         if not os.path.isdir(_toolPath):
             print(f"[!] Tool '{_toolPath}' not found!")

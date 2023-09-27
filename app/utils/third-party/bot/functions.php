@@ -264,11 +264,13 @@ function doIntegration(string $tmpFolder): bool
  *
  * @param array $tools
  * @param callable $callback
- * @param ...$callbackArgs
+ * @param mixed ...$callbackArgs
  * @return bool
  */
 function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bool
 {
+    $installerArgs = [];
+
     foreach ($tools as $tool) {
         $namespace = $tool["name"];
         $tmp_namespace = explode("/", $tool["index"])[0];
@@ -325,7 +327,12 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
             }
             writeLog("Successfully registered inputs to interaction mgr in ~/app/tools/interactions.json");
         }
+
+        $installerArgs[] = $tool["name"] . "|" . $tool["engine"] .
+            (($tool["name"] !== $namespace) ? "|$namespace" : "");
     }
+
+    var_dump($installerArgs);
 
     return call_user_func($callback, ...$callbackArgs);
 }

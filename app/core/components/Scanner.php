@@ -454,6 +454,8 @@ class Scanner implements Runnable, Integrable
             return -1;
         }
 
+        // TODO: try to install requirements automatically with auto-install.py
+
         return (int)$newID;
     }
 
