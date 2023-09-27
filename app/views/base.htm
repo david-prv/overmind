@@ -25,59 +25,6 @@
     <!-- ChartJS -->
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-    <script>
-        window.onload = function () {
-
-            const chart = new CanvasJS.Chart("status-chart", {
-                animationEnabled: true,
-                width: 300,
-                height: 300,
-                data: [{
-                    type: "doughnut",
-                    startAngle: 320,
-                    indexLabel: " #percent %",
-                    indexLabelFontColor : "black",
-                    indexLabelPlacement: "outside",
-                    indexLabelWrap: true ,
-                    //innerRadius: 60,
-                    //indexLabelFontSize: 17,
-                    //indexLabel: "{label} - #percent%",
-                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-                    dataPoints: [
-                        {y: 7, label: "Success", color: "#198754"},
-                        {y: 1, label: "Cancelled", color: "#dc3545"},
-                        {y: 2, label: "Unverified", color: "#adb5bd"}
-                    ]
-                }]
-            });
-            chart.render();
-
-            const chart2 = new CanvasJS.Chart("distance-chart", {
-                animationEnabled: true,
-                width: 300,
-                height: 300,
-                data: [{
-                    type: "doughnut",
-                    startAngle: 320,
-                    indexLabel: " #percent %",
-                    indexLabelFontColor : "black",
-                    indexLabelPlacement: "outside",
-                    indexLabelWrap: true,
-                    //innerRadius: 60,
-                    //indexLabelFontSize: 17,
-                    //indexLabel: "{label} - #percent%",
-                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-                    dataPoints: [
-                        {y: 8, label: "OK", color: "#198754"},
-                        {y: 4, label: "Suspicious", color: "#fd7e14"},
-                        {y: 2, label: "Critical", color: "#dc3545"}
-                    ]
-                }]
-            });
-            chart2.render();
-        }
-    </script>
-
     <title>%PROJECT_NAME%</title>
 </head>
 <body>

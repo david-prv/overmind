@@ -14,6 +14,8 @@ var temp = [];
 var lastTarget = "";
 var lastTargetDiff = [];
 
+var g_status = {success:0, cancelled:0};
+var g_overview = {ok:0, suspicious:0, critical:0, unverified:0};
 
 // main view preparation
 (function () {
@@ -63,6 +65,63 @@ var lastTargetDiff = [];
 
     showToolListAnimated();
 })();
+
+// renders graphs
+async function renderGraphs() {
+    let chart = new CanvasJS.Chart("status-chart", {
+        animationEnabled: true,
+        width: 300,
+        height: 300,
+        data: [{
+            type: "doughnut",
+            startAngle: 320,
+            indexLabel: " #percent %",
+            indexLabelFontColor : "black",
+            indexLabelPlacement: "outside",
+            indexLabelWrap: true,
+            toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+            dataPoints: [
+                {y: g_status.success, label: "Success", color: "#198754"},
+                {y: g_status.cancelled, label: "Cancelled", color: "#dc3545"}
+            ]
+        }]
+    });
+    await chart.render();
+
+    let chart2 = new CanvasJS.Chart("distance-chart", {
+        animationEnabled: true,
+        width: 300,
+        height: 300,
+        data: [{
+            type: "doughnut",
+            startAngle: 320,
+            indexLabel: " #percent %",
+            indexLabelFontColor : "black",
+            indexLabelPlacement: "outside",
+            indexLabelWrap: true,
+            toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+            dataPoints: [
+                {y: g_overview.ok, label: "OK", color: "#198754"},
+                {y: g_overview.suspicious, label: "Suspicious", color: "#fd7e14"},
+                {y: g_overview.critical, label: "Critical", color: "#dc3545"},
+                {y: g_overview.unverified, label: "Unverified", color: "#adb5bd"}
+            ]
+        }]
+    });
+    await chart2.render();
+    resetGraphData();
+}
+
+// helper to reset displayed graph data
+function resetGraphData() {
+    g_overview.ok = 0;
+    g_overview.suspicious = 0;
+    g_overview.critical = 0;
+    g_overview.unverified = 0;
+
+    g_status.success = 0;
+    g_status.cancelled = 0;
+}
 
 // helper to show tools list with fade-in animation
 function showToolListAnimated() {
@@ -272,12 +331,15 @@ function invokeLaunchSelected(event) {
     for (let j = 0; j < queue.length; j++) {
         $("#state-" + selectedInputs[j]).html("<span class='blinking'>Running...</span>");
         $.get("/index.php" + queue[j], function (data, status, xhr, id = selectedInputs[j], callback = finishedSelected, max = queue.length) {
-            if (data === "done") $("#state-" + selectedInputs[j]).html("<span style='color:green!important;'>Finished</span>");
-            else {
+            if (data === "done") {
+                $("#state-" + selectedInputs[j]).html("<span style='color:green!important;'>Finished</span>");
+                g_status.success++;
+            } else {
                 $("#state-" + selectedInputs[j]).html("<span style='color:red!important;'>Cancelled</span>");
                 let idx = getToolIndexById(selectedInputs[j]);
                 let name = (idx === -1) ? "Unknown" : DATA[idx]["name"];
                 alertError(`${name} was cancelled!`);
+                g_status.cancelled++;
             }
             callback(id, selectedInputs);
         });
@@ -359,10 +421,13 @@ function invokeLaunchAll(event) {
 
         $("#state-" + id).html("<span class='blinking'>Running...</span>");
         $.get("/index.php" + queue[j], function (data, status, xhr, identity = id, callback = finished, max = queue.length, display = name) {
-            if (data === "done") $("#state-" + identity).html("<span style='color:green!important;'>Finished</span>");
-            else {
+            if (data === "done") {
+                $("#state-" + identity).html("<span style='color:green!important;'>Finished</span>");
+                g_status.success++;
+            } else {
                 $("#state-" + identity).html("<span style='color:red!important;'>Cancelled</span>");
                 alertError(`${display} was cancelled!`)
+                g_status.cancelled++;
             }
             temp.push(identity);
             callback(identity, max);
@@ -375,8 +440,8 @@ function finishedSelected(index, selected) {
     let evalProg = $('#evaluation-progress');
     counterS++;
     console.log("[INFO] Finished task (" + counterS + " / " + selected.length + ")");
-    evalProg.html("(" + counterS + " / " + selected.length + ")");
-    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching... (" + counterS + " / " + selected.length + ")");
+    evalProg.html("(" + counterS + "/" + selected.length + ")");
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching... (" + counterS + "/" + selected.length + ")");
 
     if (counterS === selected.length) {
         let resContent = document.getElementById("result-content");
@@ -412,6 +477,8 @@ function finishedSelected(index, selected) {
             getDistance(finishedIDs[j]);
         }
 
+        setTimeout(function() {renderGraphs();}, 500);
+
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {
             backdrop: 'static',
             keyboard: false
@@ -430,8 +497,8 @@ function finished(index, max) {
     let evalProg = $('#evaluation-progress');
     counter++;
     console.log("[INFO] Finished task (" + counter + " / " + max + ")");
-    evalProg.html("(" + counter + " / " + max + ")");
-    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching... (" + counter + " / " + max + ")");
+    evalProg.html("(" + counter + "/" + max + ")");
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching... (" + counter + "/" + max + ")");
 
     if (counter === max) {
         let resContent = document.getElementById("result-content");
@@ -462,6 +529,8 @@ function finished(index, max) {
             getDistance(temp[j]);
         }
         temp = [];
+
+        setTimeout(function() {renderGraphs();}, 500);
 
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
         resultModal.show();
@@ -515,6 +584,7 @@ function getDistance(id) {
                     lastTargetDiff = [];
                 }
                 document.getElementById("distance-" + k).innerText = dist;
+                console.log("[DEBUG] Updating distance coloring...");
                 correctDistanceColoring(k, dist);
             }
         }
@@ -530,15 +600,19 @@ function correctDistanceColoring(id, score) {
             el.style.color = "darkgray";
             el.innerHTML = "<i title=\"Missing reference or integrity not verifiable\" " +
                 "class=\"fa fa-exclamation-circle\" aria-hidden=\"true\"></i>";
+            g_overview.unverified++;
             break;
         case (i_score <= 1000):
             el.style.color = "green";
+            g_overview.ok++;
             break;
         case (i_score <= 5000):
             el.style.color = "orange";
+            g_overview.suspicious++;
             break;
         default:
             el.style.color = "red";
+            g_overview.critical++;
             break;
     }
 }
