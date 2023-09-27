@@ -381,7 +381,7 @@ function finishedSelected(index, selected) {
     if (counterS === selected.length) {
         let resContent = document.getElementById("result-content");
 
-        let html = "<div class=\"accordion accordion-flush\" id=\"accordion\">";
+        let html = "<div class=\"accordion\" id=\"accordion\">";
         for (let i = 0; i < DATA.length; i++) {
             let tool = DATA[i];
             if (!Object.values(selected).includes(tool["id"])) {
@@ -436,7 +436,7 @@ function finished(index, max) {
     if (counter === max) {
         let resContent = document.getElementById("result-content");
 
-        let html = "<div class=\"accordion accordion-flush\" id=\"accordion\">";
+        let html = "<div class=\"accordion\" id=\"accordion\">";
         for (let i = 0; i < temp.length; i++) {
             let tool = DATA[getToolIndexById(temp[i])];
             html += "<div class=\"accordion-item\">" +

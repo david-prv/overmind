@@ -256,3 +256,22 @@ kbd {
 #toast-container>div {
     opacity: 1;
 }
+
+.charts {
+    /*background: whitesmoke;*/
+}
+
+.canvasjs-chart-credit {display:none!important;}
+
+.chart-row {
+    /*box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;*/
+    padding:10px;
+}
+
+.chart-row.right {
+    border-left: 1px solid rgba(0,0,0,.2);
+}
+
+.modal-body {
+    max-height: 70vh; overflow-y: auto;
+}
