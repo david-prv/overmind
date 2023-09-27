@@ -332,16 +332,18 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <label for="help-offer"></label>
                 <button onclick="(function(event) {
                     event.preventDefault();
-                })(event);" type="button" data-bs-toggle="modal" data-bs-target="#offerModal" data-bs-dismiss="modal" class="btn btn-primary"><i
+                })(event);" id="help-offer" type="button" data-bs-toggle="modal" data-bs-target="#offerModal" data-bs-dismiss="modal" class="btn btn-primary"><i
                         class="fa fa-volume-control-phone"></i>
                     Help Offer
                 </button>
+                <label for="print-summary"></label>
                 <button onclick="(function(event) {
                     event.preventDefault();
                     collectInfoAndRedirect();
-                })(event);" type="button" class="btn btn-outline-secondary"><i class="fa fa-print"></i>&nbsp;
+                })(event);" id="print-summary" type="button" class="btn btn-outline-secondary"><i class="fa fa-print"></i>&nbsp;
                     Print Summary
                 </button>
             </div>

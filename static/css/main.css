@@ -275,3 +275,7 @@ kbd {
 .modal-body {
     max-height: 70vh; overflow-y: auto;
 }
+
+.modal-footer label {
+    font-size:1.2rem;
+}
