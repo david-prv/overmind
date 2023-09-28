@@ -14,8 +14,8 @@ var temp = [];
 var lastTarget = "";
 var lastTargetDiff = [];
 
-var g_status = {success:0, cancelled:0};
-var g_overview = {ok:0, suspicious:0, critical:0, unverified:0};
+var g_status = {success: 0, cancelled: 0};
+var g_overview = {ok: 0, suspicious: 0, critical: 0, unverified: 0};
 
 // main view preparation
 (function () {
@@ -74,7 +74,7 @@ async function renderGraphs() {
             type: "doughnut",
             startAngle: 320,
             indexLabel: " #percent %",
-            indexLabelFontColor : "black",
+            indexLabelFontColor: "black",
             indexLabelPlacement: "outside",
             indexLabelWrap: true,
             toolTipContent: "<b>{label}:</b> {y} (#percent%)",
@@ -94,7 +94,7 @@ async function renderGraphs() {
             type: "doughnut",
             startAngle: 320,
             indexLabel: " #percent %",
-            indexLabelFontColor : "black",
+            indexLabelFontColor: "black",
             indexLabelPlacement: "outside",
             indexLabelWrap: true,
             toolTipContent: "<b>{label}:</b> {y} (#percent%)",
@@ -526,7 +526,9 @@ function finishedSelected(index, selected) {
             getDistance(finishedIDs[j]);
         }
 
-        setTimeout(function() {renderGraphs();}, 500);
+        setTimeout(function () {
+            renderGraphs();
+        }, 500);
 
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {
             backdrop: 'static',
@@ -579,7 +581,9 @@ function finished(index, max) {
         }
         temp = [];
 
-        setTimeout(function() {renderGraphs();}, 500);
+        setTimeout(function () {
+            renderGraphs();
+        }, 500);
 
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
         resultModal.show();
@@ -804,7 +808,8 @@ function collectInfoAndRedirect() {
         offer_comment: $(comment).val()
     }).escapeSpecialChars());
 
-    window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, 'pdf-generator', 'menubar=1,resizable=0,width=350,height=250');
+    let handle = window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, 'pdf-generator', 'menubar=1,resizable=0,width=350,height=250');
+    setTimeout(function (h = handle) { h.close(); }, 5000);
 }
 
 // triggers snapshot backend endpoint

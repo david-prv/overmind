@@ -52,6 +52,7 @@ $offerComment = $data["offer_comment"];
     <style type="text/css">
         body {
             padding: 20px;
+            overflow:hidden!important;
         }
 
         .loader {
@@ -66,7 +67,7 @@ $offerComment = $data["offer_comment"];
         }
 
         .loader-h1 {
-            margin-bottom: 72px;
+            margin-bottom: 100px;
             margin-left: 120px;
             margin-top: 60px;
         }
