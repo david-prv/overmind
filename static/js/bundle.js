@@ -275,6 +275,9 @@ function resetStatesAndOffers() {
     let dropZone = document.getElementById("dropzone");
     dropZone.innerHTML = "";
 
+    let comment = document.getElementById("comment");
+    $(comment).val("");
+
     for (let i = 0; i < DATA.length; i++) {
         let el = $(`#state-${i}`)[0];
         console.log("[DEBUG] Resetting for ID " + i + " has started...");
@@ -776,10 +779,14 @@ function parseResults(results) {
 function collectInfoAndRedirect() {
     let dropZone = document.getElementById("dropzone");
     let resultContent = document.getElementById("result-content");
+    let status_chart = document.getElementsByClassName("canvasjs-chart-canvas")[1];
+    let overview_chart = document.getElementsByClassName("canvasjs-chart-canvas")[3];
+    let comment = document.getElementById("comment");
 
-    if (dropZone === null || resultContent === null) {
-        console.error("[ERROR] dropzone or result-content could not be found!");
-        alertError("Dropzone or result content not available!");
+    if (dropZone === null || resultContent === null || status_chart === null
+        || overview_chart === null || comment === null) {
+        console.error("[ERROR] dropzone, result-content, comment or any chart could not be found!");
+        alertError("Dropzone, result content, comment or any chart is not available!");
         return -1;
     }
 
@@ -791,10 +798,13 @@ function collectInfoAndRedirect() {
         scanner_results: results,
         our_offers: offers,
         bad_words: lastTargetDiff,
-        ref_token: PERSONAL_REF_TOKEN
+        ref_token: PERSONAL_REF_TOKEN,
+        status_img: status_chart.toDataURL("image/jpeg"),
+        overview_img: overview_chart.toDataURL("image/jpeg"),
+        offer_comment: $(comment).val()
     }).escapeSpecialChars());
 
-    window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, '_blank').focus();
+    window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, 'pdf-generator', 'menubar=1,resizable=0,width=350,height=250');
 }
 
 // triggers snapshot backend endpoint
