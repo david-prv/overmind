@@ -109,7 +109,55 @@ async function renderGraphs() {
         }]
     });
     await chart2.render();
+
+    renderGrades();
+
     resetGraphData();
+}
+
+function renderGrades() {
+    let grade1 = document.getElementById("grade-1");
+    let grade2 = document.getElementById("grade-2");
+
+    // status
+    let total1 = g_status.success + g_status.cancelled;
+    let f_rate1 = g_status.cancelled / total1;
+
+    // overview
+    let total2 = g_overview.ok + g_overview.suspicious + g_overview.critical + g_overview.unverified;
+    let f_rate2 = (g_overview.suspicious + g_overview.critical) / total2;
+
+    switch (true) {
+        case f_rate1 <= 0.2:
+            grade1.innerHTML = "<span style='color:#198754'>A</span>";
+            break;
+        case f_rate1 <= 0.5:
+            grade1.innerHTML = "<span style='color:#fd7e14'>B</span>";
+            break;
+        case f_rate1 <= 0.7:
+            grade1.innerHTML = "<span style='color:darkorange'>C</span>";
+            break;
+        default:
+        case f_rate1 <= 1.0:
+            grade1.innerHTML = "<span style='color:#dc3545'>D</span>";
+            break;
+    }
+
+    switch (true) {
+        case f_rate2 <= 0.2:
+            grade2.innerHTML = "<span style='color:#198754'>A</span>";
+            break;
+        case f_rate2 <= 0.5:
+            grade2.innerHTML = "<span style='color:#fd7e14'>B</span>";
+            break;
+        case f_rate2 <= 0.7:
+            grade2.innerHTML = "<span style='color:darkorange'>C</span>";
+            break;
+        default:
+        case f_rate2 <= 1.0:
+            grade2.innerHTML = "<span style='color:#dc3545'>D</span>";
+            break;
+    }
 }
 
 // helper to reset displayed graph data

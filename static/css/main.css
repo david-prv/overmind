@@ -279,3 +279,18 @@ kbd {
 .modal-footer label {
     font-size:1.2rem;
 }
+
+.wrapper {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 135px;
+    left: 159px;
+    pointer-events: none;
+}
+
+.overlay h3 {
+    font-size:50px!important;
+}
