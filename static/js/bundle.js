@@ -41,10 +41,8 @@ var g_overview = {ok:0, suspicious:0, critical:0, unverified:0};
     launchSelectedOption.addEventListener("click", prepareSelectedModal);
 
     let launchModal = document.getElementById("launchModal");
-    //launchModal.addEventListener('hidden.bs.modal', invokeLaunchAll)
 
     let selectedModal = document.getElementById("selectedModal");
-    //selectedModal.addEventListener('hidden.bs.modal', invokeLaunchSelected);
 
     let resultModal = document.getElementById("resModal");
     resultModal.addEventListener('hidden.bs.modal', resetStatesAndOffers);
