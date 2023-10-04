@@ -384,6 +384,19 @@ class Scanner implements Runnable, Integrable
     }
 
     /**
+     * Triggers auto-install script for tool
+     *
+     * @param string $namespace
+     * @param string $engine
+     * @return void
+     */
+    private function _installToolDependencies(string $namespace, string $engine): void
+    {
+        $cmd = "python ..\\..\\tools\\auto-install.py \"$namespace|$engine\"";
+        shell_exec(escapeshellcmd($cmd));
+    }
+
+    /**
      * Performs the final integration.
      * Returns -1 for failed creation or the ID
      * if the integration was successful
@@ -455,6 +468,8 @@ class Scanner implements Runnable, Integrable
         }
 
         // TODO: try to install requirements automatically with auto-install.py
+
+        $this->_installToolDependencies($namespace, Engine::valueOf($this->engine));
 
         return (int)$newID;
     }

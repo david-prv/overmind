@@ -1,12 +1,12 @@
 import sys, os
 
 REQUIREMENTS = {
-    "python": "requirements.txt"
+    "python": "requirements.txt",
     "node": ["package.json", "package-lock.json"]
 }
 
 SHELL = {
-    "python": "pip install -r {}"
+    "python": "pip install -r {}",
     "node": "npm install"
 }
 
@@ -61,9 +61,9 @@ def install_requirements(path: str, engine: str) -> bool:
         _shell = f"cd {path} && {shell.format(esc_argument(req))}"
         return os.system(_shell) == 0
 
-def main(cwd: str = "./scanner-bundle", debug: bool = True) -> None:
+def main(cwd: str, debug: bool = True) -> None:
     # tool information: "<toolName>|<toolEngine>[|<altToolNamespace>]"
-    # python3 auto-install.py "nodeTool|node" "pythonTool|python" "pythonNested|python|pythonNested/pythonNested"
+    # run from \app\core\components: python ..\..\tools\auto-install.py "SSL-Verify|python"
     toolList = sys.argv[1:] if len(sys.argv) > 1 else None
 
     if toolList == None:
@@ -71,6 +71,7 @@ def main(cwd: str = "./scanner-bundle", debug: bool = True) -> None:
         exit()
 
     print(f"[*] Recognized {len(toolList)} tools to setup!")
+    print(f"[*] Using '{cwd}' as current working directory!")
 
     for tool in toolList:
         if not "|" in tool:
@@ -82,7 +83,7 @@ def main(cwd: str = "./scanner-bundle", debug: bool = True) -> None:
         _toolEngine = _toolData[1]
         _toolPath = os.path.abspath(f"{cwd}/app/tools/{_toolName}") if len(_toolData) <= 2 else os.path.abspath(f"{cwd}/app/tools/{_toolData[2]}")
 
-        if debug: print(f"Path={_toolPath}, Engine={_toolEngine}")
+        if debug: print(f"    └> Path={_toolPath}, Engine={_toolEngine}")
 
         if not os.path.isdir(_toolPath):
             print(f"[!] Tool '{_toolPath}' not found!")
@@ -101,4 +102,6 @@ def main(cwd: str = "./scanner-bundle", debug: bool = True) -> None:
         print(f"[*] Successfully installed dependencies for {_toolName}!")
 
 if __name__ == "__main__":
-    main()
+    # runs from \app\core\components\Scanner.php
+    root = os.path.abspath(os.getcwd() + "/../../..")
+    main(root)
