@@ -23,6 +23,7 @@ have given me express permission to do so! You are responsible for all your deci
 ## Roadmap
 
 - FIX json single quote-sign parser issue
+- EXTEND dependencies for pages
 - ADD automated requirement installation to integration bot *(wip...)*
 - ADD customization option for engines (add own runners with corresponding requirements)
 - ADD json-import for engines

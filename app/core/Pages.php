@@ -16,6 +16,7 @@ class Pages
 {
     private static ?Pages $instance = NULL;
     private array $pages;
+    private array $dependencies;
     private array $placeholders;
     private string $viewPath;
 
@@ -47,11 +48,13 @@ class Pages
      *
      * @param string $name
      * @param array $placeholders
+     * @param bool $usesJS
      */
-    public function add(string $name, array $placeholders): void
+    public function add(string $name, array $placeholders, bool $usesJS = true): void
     {
         $this->placeholders[strtoupper($name)] = $placeholders;
         $this->pages[] = strtoupper($name);
+        $this->dependencies[strtoupper($name)] = ['js' => $usesJS]; // TODO
     }
 
     /**
@@ -64,7 +67,7 @@ class Pages
     public function get(string $name): Page
     {
         return in_array(strtoupper($name), $this->pages)
-            ? (((new Page($this->viewPath))
+            ? (((new Page($this->viewPath, $this->dependencies[strtoupper($name)]["js"]))
                 ->setTemplate(strtolower($name)))
                 ->setPlaceholders($this->placeholders[strtoupper($name)]))
             : ((new Page($this->viewPath))
