@@ -15,8 +15,6 @@ ALIAS = {
     "node": ["nodejs", "js", "npm"]
 }
 
-# TODO: Add aliasing to engines
-
 def resolve_req_alias(engine: str) -> str:
     for x in ALIAS:
         if engine in ALIAS[x]:
@@ -78,10 +76,10 @@ def main(debug: bool = True) -> None:
     # run from \app\core\components: python ..\..\tools\auto-install.py "SSL-Verify|python"
 
     # runs from \app\core\components\Scanner.php
-    root_dir = os.path.abspath(os.getcwd() + "/../../..")
-    sys.stdout = open(f"{root_dir}/logs/auto-installer.log", "a")
+    root_dir = root_dir = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
+    sys.stdout = open(os.path.abspath(f"{root_dir}/../../logs/auto-installer.log"), "a")
 
-    toolList = sys.argv[1:] if len(sys.argv) > 1 else None
+    toolList = sys.argv[2:] if len(sys.argv) > 2 else None
 
     print(f"[*] Auto-Installer started at {time.time()}!")
 

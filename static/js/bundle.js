@@ -300,7 +300,9 @@ function editTools() {
     if (alertNotice.classList.contains("hidden")) alertNotice.classList.remove("hidden");
     else alertNotice.classList.add("hidden");
 
-    $('#launchAll, #launchOptions').prop('disabled', (i, v) => !v);
+    $('#cmd-edit').find("i").toggleClass("fa-spin");
+
+    $('#launchAll, #launchOptions, #cmd-integrate, #cmd-exec-bot').prop('disabled', (i, v) => !v);
     for (let i = 0; i < DATA.length; i++) {
         $(`#options-tool-${DATA[i]["id"]}`).toggleClass("hidden");
         $(`#state-${DATA[i]["id"]}`).toggleClass("hidden");

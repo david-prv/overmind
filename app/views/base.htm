@@ -95,14 +95,14 @@
 <div class="container mt-5 mb-5">
     <div class="d-grid gap-1 d-md-flex justify-content-md-end mb-3">
 
-        <button onclick="editTools();" class="btn btn-navbar btn-secondary" type="button">
+        <button id="cmd-edit" onclick="editTools();" class="btn btn-navbar btn-secondary" type="button">
             <i class="fa fa-cog"></i> Configure Tools
         </button>
-        <button onclick="window.location.href = 'index.php?page=integrate';" class="btn btn-navbar btn-secondary"
+        <button id="cmd-integrate" onclick="window.location.href = 'index.php?page=integrate';" class="btn btn-navbar btn-secondary"
                 type="button">
             <i class="fa fa-plug"></i> Integrate Tool
         </button>
-        <button onclick="window.location.href = '/app/utils/third-party/bot/index.php';"
+        <button id="cmd-exec-bot" onclick="window.location.href = '/app/utils/third-party/bot/index.php';"
                 class="btn btn-navbar btn-secondary" type="button">
             <i class="fa fa-wrench"></i> Integration Bot
         </button>

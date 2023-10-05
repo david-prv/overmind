@@ -10,7 +10,7 @@
 const SPINNER_ICON = "<div class=\"spinner-border spinner-border-sm\" role=\"status\">\n" +
     "                <span class=\"sr-only\">Loading...</span>\n" +
     "            </div";
-const CHECK_ICON = "<i class=\"fa fa-check\"></i>";
+const CHECK_ICON = "<i class=\"fa fa-download\"></i>";
 
 // BUTTON CAPTIONS
 const LOADING_CAPTION = "Running... Please wait!";
