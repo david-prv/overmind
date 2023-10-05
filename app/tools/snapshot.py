@@ -190,7 +190,7 @@ def create_tool_infos(used_cwd: str, tool_name: str, tool_info: str, tool_schedu
     f_handle_reference.write(tool_reference)
     f_handle_reference.close()
 
-def create_tool_zip(used_cwd: str, tool_name: str, tool_src: str = None) -> None:
+def create_tool_zip(used_cwd: str, tool_name: str, tool_src: str = None, debug: bool = True) -> None:
     """Deflates a tool's files and puts it into the snapshot
 
     Parameters
@@ -208,7 +208,7 @@ def create_tool_zip(used_cwd: str, tool_name: str, tool_src: str = None) -> None
     tool_namespace = tool_name.lower()
     tool_src = tool_src if tool_src != None else tool_name
     source_tool_dir = os.path.abspath(used_cwd + f"/app/tools/{tool_src}")
-    print(f"[!] Took it from {source_tool_dir}")
+    if debug: print(f"    -> Took it from {source_tool_dir}")
     target_tool_dir = os.path.abspath(used_cwd + f"/snapshot/_tools/{tool_namespace}")
 
     # now we create the zip archive
