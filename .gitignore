@@ -6,3 +6,4 @@
 /refs/*.txt
 /app/tools/*.json
 /app/tools/*/
+/logs/*.log
