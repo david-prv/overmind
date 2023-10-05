@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, time
 
 REQUIREMENTS = {
     "python": "requirements.txt",
@@ -17,11 +17,23 @@ ALIAS = {
 
 # TODO: Add aliasing to engines
 
+def resolve_req_alias(engine: str) -> str:
+    for x in ALIAS:
+        if engine in ALIAS[x]:
+            return REQUIREMENTS[x]
+    return ""
+
+def resolve_shell_alias(engine: str) -> str:
+    for x in ALIAS:
+        if engine in ALIAS[x]:
+            return SHELL[x]
+    return ""
+
 def get_req_files(engine: str) -> str|list:
-    return REQUIREMENTS[engine.lower()] if engine.lower() in REQUIREMENTS else ""
+    return REQUIREMENTS[engine.lower()] if engine.lower() in REQUIREMENTS else resolve_req_alias(engine.lower())
 
 def get_req_shell(engine: str) -> str|list:
-    return SHELL[engine.lower()] if engine.lower() in SHELL else ""
+    return SHELL[engine.lower()] if engine.lower() in SHELL else resolve_shell_alias(engine.lower())
 
 def esc_argument(argument):
     return '"%s"' % (
@@ -61,17 +73,24 @@ def install_requirements(path: str, engine: str) -> bool:
         _shell = f"cd {path} && {shell.format(esc_argument(req))}"
         return os.system(_shell) == 0
 
-def main(cwd: str, debug: bool = True) -> None:
+def main(debug: bool = True) -> None:
     # tool information: "<toolName>|<toolEngine>[|<altToolNamespace>]"
     # run from \app\core\components: python ..\..\tools\auto-install.py "SSL-Verify|python"
+
+    # runs from \app\core\components\Scanner.php
+    root_dir = os.path.abspath(os.getcwd() + "/../../..")
+    sys.stdout = open(f"{root_dir}/logs/auto-installer.log", "a")
+
     toolList = sys.argv[1:] if len(sys.argv) > 1 else None
+
+    print(f"[*] Auto-Installer started at {time.time()}!")
 
     if toolList == None:
         print("[*] No tools to setup. Quitting...")
         exit()
 
     print(f"[*] Recognized {len(toolList)} tools to setup!")
-    print(f"[*] Using '{cwd}' as current working directory!")
+    print(f"[*] Using '{root_dir}' as current working directory!")
 
     for tool in toolList:
         if not "|" in tool:
@@ -81,9 +100,9 @@ def main(cwd: str, debug: bool = True) -> None:
         _toolData = tool.split("|")
         _toolName = _toolData[0]
         _toolEngine = _toolData[1]
-        _toolPath = os.path.abspath(f"{cwd}/app/tools/{_toolName}") if len(_toolData) <= 2 else os.path.abspath(f"{cwd}/app/tools/{_toolData[2]}")
+        _toolPath = os.path.abspath(f"{root_dir}/app/tools/{_toolName}") if len(_toolData) <= 2 else os.path.abspath(f"{root_dir}/app/tools/{_toolData[2]}")
 
-        if debug: print(f"    └> Path={_toolPath}, Engine={_toolEngine}")
+        if debug: print(f"    -> Path={_toolPath}, Engine={_toolEngine}")
 
         if not os.path.isdir(_toolPath):
             print(f"[!] Tool '{_toolPath}' not found!")
@@ -101,7 +120,8 @@ def main(cwd: str, debug: bool = True) -> None:
 
         print(f"[*] Successfully installed dependencies for {_toolName}!")
 
+    print("[*] Done!")
+    exit()
+
 if __name__ == "__main__":
-    # runs from \app\core\components\Scanner.php
-    root = os.path.abspath(os.getcwd() + "/../../..")
-    main(root)
+    main()

@@ -392,7 +392,7 @@ class Scanner implements Runnable, Integrable
      */
     private function _installToolDependencies(string $namespace, string $engine): void
     {
-        $cmd = "python ..\\..\\tools\\auto-install.py \"$namespace|$engine\"";
+        $cmd = "python " . $this->cwd . "/app/tools/auto-install.py \"$namespace|$engine\"";
         shell_exec(escapeshellcmd($cmd));
     }
 

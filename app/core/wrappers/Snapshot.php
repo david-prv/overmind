@@ -18,15 +18,13 @@ abstract class Snapshot
      * @param string $cwd
      * @param string $author
      * @param string $description
-     * @return bool
      */
     public static function create(string $cwd = "", string $author = "Scanner-Bundle Framework",
-                                  string $description = "Snapshot created by the framework."): bool
+                                  string $description = "Snapshot created by the framework."): void
     {
         $_author = ($author !== NULL && $author !== "") ? "\"$author\"" : "";
         $_description = ($description !== NULL && $description !== "") ? "\"$description\"" : "";
 
-        $result = shell_exec("python3 $cwd/app/tools/snapshot.py $cwd $_author $_description");
-        return !($result === false || $result === null);
+        shell_exec("python3 $cwd/app/tools/snapshot.py $cwd $_author $_description");
     }
 }

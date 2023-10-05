@@ -197,6 +197,7 @@ function deleteTool(id, debug = false) {
     $.get('index.php?' + route + id, function (data) {
         if (data === "done" || debug) {
             $('#tool-' + id).remove();
+            alertSuccess("Tool with ID=" + id + " was deleted successfully!");
             if (($('#tool-list').children()).length <= 0) {
                 // re-enable buttons
                 $('#launchAll, #launchOptions').prop('disabled', (i, v) => !v);
@@ -207,6 +208,8 @@ function deleteTool(id, debug = false) {
                     "                                                            <img class='img-center' src='/static/img/sleep.jpg' />\n" +
                     "                                                          </a>");
             }
+        } else {
+            alertError("Could not delete tool!");
         }
     });
 }
@@ -264,8 +267,10 @@ function submitEdit() {
     $.get('index.php?edit&json=' + JSON.stringify(json), function (data) {
         if (data === "done") {
             document.getElementById("edit-result").innerHTML = "<span style='color:green;'>Successfully saved.</span>";
+            alertSuccess("Successfully saved edited information!");
         } else {
             document.getElementById("edit-result").innerHTML = "<span style='color:red;'>Could not be saved.</span>";
+            alertError("Could not save edited information!");
         }
     });
 }

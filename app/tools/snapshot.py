@@ -232,11 +232,14 @@ def clean_up_temp_folder(used_cwd: str) -> None:
 def main() -> None:
     """The main section of the script"""
 
-    print(f"[*] Snapshot Creator started!")
+    # defining log output and cwd
+    root_dir = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
+    sys.stdout = open(f"{root_dir}/logs/snapshot-creator.log", "a")
+
+    print(f"[*] Snapshot Creator started at {time.time()}!")
     print(f"[*] Reading data...")
 
-    # reading map data and cwd
-    root_dir = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
+    # reading map data
     map_data = parse_mapper(used_cwd=root_dir)
     print(f"[*] Found {len(map_data)} tools!")
 

@@ -360,8 +360,8 @@ class Core
     {
         $this->preCondition();
 
-        if (Snapshot::create($this->APP_PATH)) App::finishWithSuccess();
-        else App::finishWithError();
+        Snapshot::create($this->APP_PATH);
+        App::finishWithSuccess();
     }
 
     ////////////////////
@@ -503,7 +503,7 @@ class Core
                      <button onclick='(function(event) {
                           event.stopPropagation();
                           window.location.href = \"index.php?page=schedule&edit=$tool->id&noref=1\";
-                      })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\"><i class=\"fa fa-clock-o\"></i></button>
+                      })(event);' class=\"btn btn-sm btn-outline-secondary\" type=\"button\"><i class=\"fa fa-list-ul\"></i></button>
                       <button onclick='(function(event) {
                           event.stopPropagation();
                           editTool($tool->id)
@@ -511,7 +511,7 @@ class Core
                       <button onclick='(function(event) {
                           event.stopPropagation();
                           deleteTool($tool->id)
-                      })(event);' class=\"btn btn-sm btn-outline-danger\" type=\"button\"><i class=\"fa fa-trash\"></i></button>
+                      })(event);' class=\"btn btn-sm btn-outline-danger\" type=\"button\"><i class=\"fa fa-times\"></i></button>
                     </div>
                 </div>
                 </div>

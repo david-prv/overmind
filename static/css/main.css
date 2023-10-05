@@ -39,6 +39,12 @@ body {
     display: inline-block;
 }
 
+#tool-list .btn {
+    height:29px!important;
+    width:29px!important;
+    padding:2px!important;
+}
+
 .btn-check:focus + .btn-primary, .btn-primary:focus, .btn-check:focus + .btn-secondary, .btn-secondary:focus, .dropdown-toggle,
 .btn-outline-secondary {
     box-shadow: none !important;

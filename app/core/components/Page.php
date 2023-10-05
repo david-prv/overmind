@@ -165,13 +165,28 @@ class Page
         $noScript = <<<HTML
             <noscript>
                 <style>
-                    body { position: relative; overflow: hidden!important;}
-                    .no-script { padding: 10px; height:100vh; width:100vw; background:white; position: absolute!important; top:0; left:0; z-index: 3!important}
+                    body {
+                        position: relative;
+                        overflow: hidden!important;
+                    }
+                    .no-script {
+                        padding-top:10%!important;
+                        height:100vh;
+                        width:100vw;
+                        background:white;
+                        position: absolute!important;
+                        z-index: 3!important;
+                        margin: auto;
+                        text-align: center;
+                    }
                 </style>
                 <div class="no-script">
-                    <h2><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16">
-                      <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>
-                    </svg> Please enable JavaScript</h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-exclamation-octagon-fill" viewBox="0 0 16 16">
+                      <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                    <p></p>
+                    <h2>Framework not functional</h2>
+                    <p>Please enable <strong>JavaScript</strong> to enable framework!</p>
                 </div>
             </noscript>
         HTML;
