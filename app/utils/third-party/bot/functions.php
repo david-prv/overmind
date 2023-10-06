@@ -343,11 +343,10 @@ function _runAutoInstaller(array $installerArgs): void
     $cmd = "python " . __DIR__ . "/../../../tools/auto-install.py " . __DIR__ . "/../../../tools/ ";
 
     foreach ($installerArgs as $arg) {
-        $cmd .= "\"" . $arg . "\"";
+        $cmd .= "\"" . $arg . "\" ";
     }
 
-    var_dump($cmd);
-    //shell_exec($cmd);
+    shell_exec($cmd);
 }
 
 /**
