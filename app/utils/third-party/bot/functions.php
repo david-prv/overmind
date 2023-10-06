@@ -332,9 +332,22 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
             (($tool["name"] !== $namespace) ? "|$namespace" : "");
     }
 
-    var_dump($installerArgs);
+    _runAutoInstaller($installerArgs);
 
     return call_user_func($callback, ...$callbackArgs);
+}
+
+function _runAutoInstaller(array $installerArgs): void
+{
+    writeLog("Initialized automated installation process... (len=" . count($installerArgs) . ")");
+    $cmd = "python " . __DIR__ . "/../../../tools/auto-install.py " . __DIR__ . "/../../../tools/ ";
+
+    foreach ($installerArgs as $arg) {
+        $cmd .= "\"" . $arg . "\"";
+    }
+
+    var_dump($cmd);
+    //shell_exec($cmd);
 }
 
 /**
