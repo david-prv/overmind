@@ -155,7 +155,7 @@ class Page
     }
 
     /**
-     * Injects a static noscript component,
+     * Injects a static noscript notice,
      * if needed or requested
      *
      * @return void
@@ -186,7 +186,7 @@ class Page
                     </svg>
                     <p></p>
                     <h2>Framework not functional</h2>
-                    <p>Please enable <strong>JavaScript</strong> to enable framework!</p>
+                    <p>Please enable JavaScript to run framework!</p>
                 </div>
             </noscript>
         HTML;
