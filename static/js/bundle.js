@@ -113,6 +113,7 @@ async function renderGraphs() {
     resetGraphData();
 }
 
+// render american-like school grades for results
 function renderGrades() {
     let grade1 = document.getElementById("grade-1");
     let grade2 = document.getElementById("grade-2");
@@ -371,6 +372,7 @@ function invokeLaunchSelected(event) {
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
     $('#running-alert').removeClass("hidden");
+    $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
 
     for (let i = 0; i < DATA.length; i++) {
         let currentTool = DATA[i];
@@ -461,6 +463,7 @@ function invokeLaunchAll(event) {
 
     $('#exclusion').val("");
     $('#whitelist').val("");
+    $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
 
     alertSuccess(`Running ${queue.length} scanners...`)
 
@@ -544,6 +547,7 @@ function finishedSelected(index, selected) {
         resultModal.show();
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
         $('#running-alert').addClass("hidden");
+        $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
         evalProg.html("");
         counterS = 0;
         finishedIDs = [];
@@ -596,6 +600,7 @@ function finished(index, max) {
         resultModal.show();
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
         $('#running-alert').addClass("hidden");
+        $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
         evalProg.html("");
         counter = 0;
     }
