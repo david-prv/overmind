@@ -197,7 +197,7 @@ def main(debug: bool = True) -> None:
         _toolData = tool.split("|")
         _toolName = _toolData[0]
         _toolEngine = _toolData[1]
-        _toolPath = os.path.abspath(f"{root_dir}/app/tools/{_toolName}") if len(_toolData) <= 2 else os.path.abspath(f"{root_dir}/app/tools/{_toolData[2]}")
+        _toolPath = os.path.abspath(f"{root_dir}/{_toolName}") if len(_toolData) <= 2 else os.path.abspath(f"{root_dir}/{_toolData[2]}")
 
         if debug: print(f"    -> Path={_toolPath}, Engine={_toolEngine}")
 
