@@ -236,7 +236,7 @@ def main() -> None:
     root_dir = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
     sys.stdout = open(f"{root_dir}/logs/snapshot-creator.log", "a")
 
-    print(f"[*] Snapshot Creator started at {time.time()}!")
+    print(f"[*] Snapshot Creator started at {int(time.time())}!")
     print(f"[*] Reading data...")
 
     # reading map data

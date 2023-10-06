@@ -16,24 +16,84 @@ ALIAS = {
 }
 
 def resolve_req_alias(engine: str) -> str:
+    """A helper function looking up the indicator(s) of an engine's possible alias
+
+    Parameters
+    ----------
+    engine: str
+        The engine currently interested in
+
+    Returns
+    ----------
+    str|list
+        Returns either the indicator(s) of the unaliased engine or an empty string
+    """
     for x in ALIAS:
         if engine in ALIAS[x]:
             return REQUIREMENTS[x]
     return ""
 
-def resolve_shell_alias(engine: str) -> str:
+def resolve_shell_alias(engine: str) -> str|list:
+    """A helper function looking up the shell(s) of an engine's possible alias
+
+    Parameters
+    ----------
+    engine: str
+        The engine currently interested in
+
+    Returns
+    ----------
+    str|list
+        Returns either the instruction(s) of the unaliased engine or an empty string
+    """
     for x in ALIAS:
         if engine in ALIAS[x]:
             return SHELL[x]
     return ""
 
 def get_req_files(engine: str) -> str|list:
+    """A helper function looking up an engine's install indicators (files)
+
+    Parameters
+    ----------
+    engine: str
+        The engine currently interested in
+
+    Returns
+    ----------
+    str|list
+        Either a single file or a list of indicators
+    """
     return REQUIREMENTS[engine.lower()] if engine.lower() in REQUIREMENTS else resolve_req_alias(engine.lower())
 
 def get_req_shell(engine: str) -> str|list:
+    """A helper function looking up an engine's install shell cmd
+
+    Parameters
+    ----------
+    engine: str
+        The engine currently interested in
+
+    Returns
+    ----------
+    str|list
+        Either a single command or a list of instructions
+    """
     return SHELL[engine.lower()] if engine.lower() in SHELL else resolve_shell_alias(engine.lower())
 
-def esc_argument(argument):
+def esc_argument(argument) -> str:
+    """A helper function escaping shell arguments
+
+    Parameters
+    ----------
+    argument: str
+        The argument to escape
+
+    Returns
+    ----------
+    str
+        The escaped argument
+    """
     return '"%s"' % (
         argument
         .replace('\\', '\\\\')
@@ -43,6 +103,21 @@ def esc_argument(argument):
     )
 
 def has_requirements(path: str, engine: str) -> bool:
+    """A helper function scanning for known requirement indications
+
+    Parameters
+    ----------
+    path: str
+        The tools path in the folder structure
+    engine: str
+        The tools engine which empowers it
+
+    Returns
+    ----------
+    bool
+        Flag to show if requirement was found and exists
+    """
+
     if not os.path.isdir(path): return False
 
     req = get_req_files(engine)
@@ -55,6 +130,22 @@ def has_requirements(path: str, engine: str) -> bool:
         return os.path.isfile(f"{path}/{req}")
 
 def install_requirements(path: str, engine: str) -> bool:
+    """Tries to install requirements of a single tool
+
+    Parameters
+    ----------
+    path: str
+        The tools path in the folder structure
+    engine: str
+        The tools engine which empowers it
+
+    Returns
+    ----------
+    bool
+        Indicated whether the installation was
+        successful (exit-code = 0) or not (non-zero exit-code)
+    """
+
     if not (os.path.isdir(path) and os.path.isabs(path)):
         print(f"[!] Tool information could not be accessed!")
         return False
@@ -72,6 +163,14 @@ def install_requirements(path: str, engine: str) -> bool:
         return os.system(_shell) == 0
 
 def main(debug: bool = True) -> None:
+    """The main section of the script
+
+    Parameters
+    ----------
+    debug: bool
+        Enables or disables the debug output
+    """
+
     # tool information: "<toolName>|<toolEngine>[|<altToolNamespace>]"
     # run from \app\core\components: python ..\..\tools\auto-install.py "SSL-Verify|python"
 
@@ -81,7 +180,7 @@ def main(debug: bool = True) -> None:
 
     toolList = sys.argv[2:] if len(sys.argv) > 2 else None
 
-    print(f"[*] Auto-Installer started at {time.time()}!")
+    print(f"[*] Auto-Installer started at {int(time.time())}!")
 
     if toolList == None:
         print("[*] No tools to setup. Quitting...")
