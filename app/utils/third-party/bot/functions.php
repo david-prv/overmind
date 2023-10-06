@@ -337,6 +337,14 @@ function _integrateArray(array $tools, callable $callback, ...$callbackArgs): bo
     return call_user_func($callback, ...$callbackArgs);
 }
 
+/**
+ * Calls the auto-installer.py script of the
+ * scanner-bundle framework for automated and clean
+ * dependency installation, if possible
+ *
+ * @param array $installerArgs
+ * @return void
+ */
 function _runAutoInstaller(array $installerArgs): void
 {
     writeLog("Initialized automated installation process... (len=" . count($installerArgs) . ")");
