@@ -82,13 +82,26 @@ function __displayReport(data, ref_txt) {
 function executeTool(btn_icon, btn_caption, ref_txt) {
     // select last added tool from DATA
     let currentTool = DATA[DATA.length - 1];
-    let query = "?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\""
-        + currentTool["args"].replace("%URL%", TEST_TARGET) + "\"&id=" + currentTool["id"] + "&target=" + TEST_TARGET;
+    let clean_target = TEST_TARGET.replace("http://", "").replace("https://", "");
 
-    console.log(query);
+    $.get("http://ip-api.com/json/" + clean_target, function(data, status) {
+        if (status === "success") {
+            let ip_addr = data.query;
+            console.log("[DEBUG] Resolved IP: " + ip_addr);
 
-    $.get("/index.php" + query, function (data, status, xhr, callback = __callback, id = currentTool["id"], a = btn_icon, b = btn_caption, c = ref_txt) {
-        callback(id, a, b, c);
+            let query = "?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\""
+                + currentTool["args"]
+                    .replace("%URL%", TEST_TARGET)
+                    .replace("%RAW%", clean_target)
+                    .replace("%IP%", ip_addr)
+                + "\"&id=" + currentTool["id"] + "&target=" + TEST_TARGET;
+
+            console.log(query);
+
+            $.get("/index.php" + query, function (data, status, xhr, callback = __callback, id = currentTool["id"], a = btn_icon, b = btn_caption, c = ref_txt) {
+                callback(id, a, b, c);
+            });
+        }
     });
 }
 

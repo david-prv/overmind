@@ -351,6 +351,7 @@ function invokeLaunchSelected(event) {
     }
     if (target.indexOf("://") === -1) target = $("#protocol-alt").val() + "://" + target;
     lastTarget = target;
+    let clean_target = target.replace("https://", "").replace("http://", "");
 
     let inputs = $('#selection-list input');
     let selectedInputs = inputs
@@ -371,34 +372,48 @@ function invokeLaunchSelected(event) {
     $('#running-alert').removeClass("hidden");
     $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
 
-    for (let i = 0; i < DATA.length; i++) {
-        let currentTool = DATA[i];
-        if (!Object.values(selectedInputs).includes(currentTool["id"])) {
-            continue;
-        }
-        $("#state-" + i).innerText = "Waiting...";
-        queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\""
-            + currentTool["args"].replace("%URL%", target).replace("%RAW%", target.replace("http://", "").replace("https://", "")) + "\"&id=" + currentTool["id"] + "&target=" + target);
-    }
+    $.get("http://ip-api.com/json/" + clean_target, function(data, status) {
+        if (status === "success") {
+            let ip_addr = data.query;
+            console.log("[DEBUG] Resolved IP: " + ip_addr);
 
-    alertSuccess(`Running ${queue.length} scanners...`);
-
-    for (let j = 0; j < queue.length; j++) {
-        $("#state-" + selectedInputs[j]).html("<span class='blinking'>Running...</span>");
-        $.get("/index.php" + queue[j], function (data, status, xhr, id = selectedInputs[j], callback = finishedSelected, max = queue.length) {
-            if (data === "done") {
-                $("#state-" + selectedInputs[j]).html("<span style='color:green!important;'>Finished</span>");
-                g_status.success++;
-            } else {
-                $("#state-" + selectedInputs[j]).html("<span style='color:red!important;'>Cancelled</span>");
-                let idx = getToolIndexById(selectedInputs[j]);
-                let name = (idx === -1) ? "Unknown" : DATA[idx]["name"];
-                alertError(`${name} was cancelled!`);
-                g_status.cancelled++;
+            for (let i = 0; i < DATA.length; i++) {
+                let currentTool = DATA[i];
+                if (!Object.values(selectedInputs).includes(currentTool["id"])) {
+                    continue;
+                }
+                $("#state-" + i).innerText = "Waiting...";
+                queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"] + "&args=\""
+                    + currentTool["args"]
+                        .replace("%URL%", target)
+                        .replace("%RAW%", target.replace("http://", "").replace("https://", ""))
+                        .replace("%IP%", ip_addr)
+                    + "\"&id=" + currentTool["id"] + "&target=" + target);
             }
-            callback(id, selectedInputs);
-        });
-    }
+
+            alertSuccess(`Running ${queue.length} scanners...`);
+
+            for (let j = 0; j < queue.length; j++) {
+                $("#state-" + selectedInputs[j]).html("<span class='blinking'>Running...</span>");
+                $.get("/index.php" + queue[j], function (data, status, xhr, id = selectedInputs[j], callback = finishedSelected, max = queue.length) {
+                    if (data === "done") {
+                        $("#state-" + selectedInputs[j]).html("<span style='color:green!important;'>Finished</span>");
+                        g_status.success++;
+                    } else {
+                        $("#state-" + selectedInputs[j]).html("<span style='color:red!important;'>Cancelled</span>");
+                        let idx = getToolIndexById(selectedInputs[j]);
+                        let name = (idx === -1) ? "Unknown" : DATA[idx]["name"];
+                        alertError(`${name} was cancelled!`);
+                        g_status.cancelled++;
+                    }
+                    callback(id, selectedInputs);
+                });
+            }
+        } else {
+            console.error("Could not resolve IP address!");
+            alertError("Could not resolve IP address!")
+        }
+    });
 }
 
 // invokes all methods needed for the launchAll event
@@ -412,83 +427,98 @@ function invokeLaunchAll(event) {
     }
     if (target.indexOf("://") === -1) target = $("#protocol").val() + "://" + target;
     lastTarget = target;
+    let clean_target = target.replace("https://", "").replace("http://", "");
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
     $('#running-alert').removeClass("hidden");
 
-    for (let i = 0; i < DATA.length; i++) {
-        let currentTool = DATA[i];
-        $("#state-" + i).innerText = "Waiting...";
-        queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"]
-            + "&args=\"" + currentTool["args"].replace("%URL%", target).replace("%RAW%", target.replace("http://", "").replace("https://", "")) + "\"&id=" + currentTool["id"]
-            + "&target=" + target);
-    }
+    $.get("http://ip-api.com/json/" + clean_target, function(data, status) {
+        if (status === "success") {
+            let ip_addr = data.query;
+            console.log("[DEBUG] Resolved IP: " + ip_addr);
 
-    let skip = [];
-    let exclusion = $('#exclusion').val();
-    let whitelist = $('#whitelist').val();
-    if (exclusion.trim() === '*' && whitelist.indexOf(",") !== -1) {
-        whitelist = whitelist.split(",").map(i => {
-            return parseInt(i);
-        });
-    } else {
-        whitelist = [parseInt(whitelist)];
-    }
-
-    if (exclusion.trim() === "*") {
-        for (let i = 0; i < DATA.length; i++) {
-            if (!whitelist.includes(parseInt(DATA[i]["id"]))) skip.push(parseInt(DATA[i]["id"]));
-        }
-    } else {
-        if (exclusion.indexOf(",") !== -1) {
-            skip = exclusion.split(",").map(i => {
-                return parseInt(i);
-            });
-        } else {
-            if (exclusion !== "" && exclusion !== undefined) {
-                skip.push(parseInt(exclusion));
+            for (let i = 0; i < DATA.length; i++) {
+                let currentTool = DATA[i];
+                $("#state-" + i).innerText = "Waiting...";
+                queue.push("?run&engine=" + currentTool["engine"] + "&index=" + currentTool["index"]
+                    + "&args=\"" + currentTool["args"]
+                        .replace("%URL%", target)
+                        .replace("%RAW%", target.replace("http://", "").replace("https://", ""))
+                        .replace("%IP%", ip_addr)
+                    + "\"&id=" + currentTool["id"]
+                    + "&target=" + target);
             }
-        }
-    }
 
-    if (skip.length === queue.length) {
-        console.error("[ERROR] All tools skipped...");
-        alertError("No tool could be executed!");
-        $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
-        return;
-    }
-
-    $('#exclusion').val("");
-    $('#whitelist').val("");
-    $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
-
-    alertSuccess(`Running ${queue.length} scanners...`)
-
-    for (let j = 0; j < queue.length; j++) {
-        let id = DATA[j]["id"];
-        let name = DATA[j]["name"];
-
-        if (skip.includes(parseInt(id))) {
-            finished(j, queue.length);
-            continue;
-        }
-
-        console.log("[DEBUG] Running Tool with ID", id);
-
-        $("#state-" + id).html("<span class='blinking'>Running...</span>");
-        $.get("/index.php" + queue[j], function (data, status, xhr, identity = id, callback = finished, max = queue.length, display = name) {
-            if (data === "done") {
-                $("#state-" + identity).html("<span style='color:green!important;'>Finished</span>");
-                g_status.success++;
+            let skip = [];
+            let exclusion = $('#exclusion').val();
+            let whitelist = $('#whitelist').val();
+            if (exclusion.trim() === '*' && whitelist.indexOf(",") !== -1) {
+                whitelist = whitelist.split(",").map(i => {
+                    return parseInt(i);
+                });
             } else {
-                $("#state-" + identity).html("<span style='color:red!important;'>Cancelled</span>");
-                alertError(`${display} was cancelled!`)
-                g_status.cancelled++;
+                whitelist = [parseInt(whitelist)];
             }
-            temp.push(identity);
-            callback(identity, max);
-        });
-    }
+
+            if (exclusion.trim() === "*") {
+                for (let i = 0; i < DATA.length; i++) {
+                    if (!whitelist.includes(parseInt(DATA[i]["id"]))) skip.push(parseInt(DATA[i]["id"]));
+                }
+            } else {
+                if (exclusion.indexOf(",") !== -1) {
+                    skip = exclusion.split(",").map(i => {
+                        return parseInt(i);
+                    });
+                } else {
+                    if (exclusion !== "" && exclusion !== undefined) {
+                        skip.push(parseInt(exclusion));
+                    }
+                }
+            }
+
+            if (skip.length === queue.length) {
+                console.error("[ERROR] All tools skipped...");
+                alertError("No tool could be executed!");
+                $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
+                return;
+            }
+
+            $('#exclusion').val("");
+            $('#whitelist').val("");
+            $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
+
+            alertSuccess(`Running ${queue.length} scanners...`)
+
+            for (let j = 0; j < queue.length; j++) {
+                let id = DATA[j]["id"];
+                let name = DATA[j]["name"];
+
+                if (skip.includes(parseInt(id))) {
+                    finished(j, queue.length);
+                    continue;
+                }
+
+                console.log("[DEBUG] Running Tool with ID", id);
+
+                $("#state-" + id).html("<span class='blinking'>Running...</span>");
+                $.get("/index.php" + queue[j], function (data, status, xhr, identity = id, callback = finished, max = queue.length, display = name) {
+                    if (data === "done") {
+                        $("#state-" + identity).html("<span style='color:green!important;'>Finished</span>");
+                        g_status.success++;
+                    } else {
+                        $("#state-" + identity).html("<span style='color:red!important;'>Cancelled</span>");
+                        alertError(`${display} was cancelled!`)
+                        g_status.cancelled++;
+                    }
+                    temp.push(identity);
+                    callback(identity, max);
+                });
+            }
+        } else {
+            console.error("Could not resolve IP address!");
+            alertError("Could not resolve IP address!");
+        }
+    });
 }
 
 // handles the current progress state for launchSelected event
