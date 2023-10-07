@@ -23,11 +23,12 @@ have given me express permission to do so! You are responsible for all your deci
 
 ## Roadmap
 
+- FIX final report layout
+- FIX cloned interactions (integration bot, big snapshot)
 - FIX json single quote-sign parser issue
 - ADD advanced search params (e.g. `not:wordpress`, `engine:php`)
 - ADD more tools (also own ideas)
 - ADD sonar mode
-- ADD AbuseIPDB support
 - ADD website auto-detection (selects e.g. "wordpress" automatically)
 - ADD more dependencies (components) for single pages
 - ADD customization option for engines (add own runners with corresponding requirements)
