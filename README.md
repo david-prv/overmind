@@ -25,7 +25,6 @@ have given me express permission to do so! You are responsible for all your deci
 
 - FIX final report layout
 - FIX cloned interactions (integration bot, big snapshot)
-- FIX json single quote-sign parser issue
 - ADD advanced search params (e.g. `not:wordpress`, `engine:php`)
 - ADD more tools (also own ideas)
 - ADD sonar mode
