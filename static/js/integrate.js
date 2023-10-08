@@ -21,7 +21,8 @@ function submitIntegration(event) {
 
     _submitForm();
 
-    /*_submitFiles(function(html) {
+    /* NOTE: stalled feature
+    _submitFiles(function(html) {
         alertSuccess("Submitted files for investigation!");
         $(submitButton).html(html);
         setTimeout(_submitForm, 1000);
@@ -50,9 +51,9 @@ function _submitForm() {
     $(ghostSubmitButton).click();
 }
 
+/* NOTE: stalled feature
 function _submitFiles(callback) {
-    // TODO
     let html = $(submitButton).html();
     $(submitButton).html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Uploading for analysis...");
     setTimeout(function(x = html) { callback(x); }, 1500);
-}
+}*/
