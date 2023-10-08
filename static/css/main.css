@@ -149,14 +149,17 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
 
 .search-bar-icon {
-    border: 1px solid #dee2e6 !important;
+    border: 2px solid #dee2e6 !important;
     border-left: none !important;
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
+
+    height:100%!important;
 }
 
 #search-bar-input:focus {
     box-shadow: none !important;
+    border-color: #dee2e6!important;
 }
 
 .search-bar-icon:hover {

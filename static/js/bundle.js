@@ -264,10 +264,8 @@ function submitEdit() {
 
     $.get('index.php?edit&json=' + JSON.stringify(json), function (data) {
         if (data === "done") {
-            document.getElementById("edit-result").innerHTML = "<span style='color:green;'>Successfully saved.</span>";
             alertSuccess("Successfully saved edited information!");
         } else {
-            document.getElementById("edit-result").innerHTML = "<span style='color:red;'>Could not be saved.</span>";
             alertError("Could not save edited information!");
         }
     });

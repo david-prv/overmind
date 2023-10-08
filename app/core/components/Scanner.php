@@ -429,11 +429,11 @@ class Scanner implements Runnable, Integrable
 
         $newTool = array(
             "id" => $newID,
-            "name" => $this->name,
+            "name" => htmlentities($this->name),
             "engine" => Engine::valueOf($this->engine),
             "index" => $namespace . "/" . $this->path,
             "args" => $this->cmdline,
-            "description" => $this->description,
+            "description" => htmlentities($this->description),
             "version" => $this->version,
             "author" => $this->creator,
             "url" => $this->creatorURL,
