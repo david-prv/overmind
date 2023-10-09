@@ -30,7 +30,7 @@ class Core
     private string $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of web pages.";
-    private string $PROJECT_LOGO = "<img style='transform: translateY(-2px);' src='/static/img/etage4-logo.png' width='35'>"; //"<i class=\"fa fa-shield\" aria-hidden=\"true\"></i>";
+    private string $PROJECT_LOGO = "<img style='transform: translateY(-2px);' src='/static/img/etage4-logo.png' width='35'>";
 
     ////////////////////
     // HELPER METHODS //
