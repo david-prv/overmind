@@ -13,7 +13,7 @@
 </p>
 
 ![image](https://github.com/david-prv/scanner-bundle/assets/66866223/cdbc08d0-5608-48fe-bad1-f686d2e9290f)
-![image](https://github.com/david-prv/scanner-bundle/assets/66866223/13b802ea-a76d-419a-928c-82e6dd94c454)
+![image](https://github.com/david-prv/scanner-bundle/assets/66866223/fe1b4f6e-c582-46f8-b084-eaa5c0639db6)
 
 ## Disclaimer
 
