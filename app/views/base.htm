@@ -98,7 +98,8 @@
         <button id="cmd-edit" onclick="editTools();" class="btn btn-navbar btn-secondary" type="button">
             <i class="fa fa-cog"></i> Configure Tools
         </button>
-        <button id="cmd-integrate" onclick="window.location.href = 'index.php?page=integrate';" class="btn btn-navbar btn-secondary"
+        <button id="cmd-integrate" onclick="window.location.href = 'index.php?page=integrate';"
+                class="btn btn-navbar btn-secondary"
                 type="button">
             <i class="fa fa-plug"></i> Integrate Tool
         </button>
@@ -292,7 +293,8 @@
                 <label for="help-offer"></label>
                 <button onclick="(function(event) {
                     event.preventDefault();
-                })(event);" id="help-offer" type="button" data-bs-toggle="modal" data-bs-target="#offerModal" data-bs-dismiss="modal" class="btn btn-primary"><i
+                })(event);" id="help-offer" type="button" data-bs-toggle="modal" data-bs-target="#offerModal"
+                        data-bs-dismiss="modal" class="btn btn-primary"><i
                         class="fa fa-volume-control-phone"></i>
                     Help Offer
                 </button>
@@ -300,7 +302,8 @@
                 <button onclick="(function(event) {
                     event.preventDefault();
                     collectInfoAndRedirect();
-                })(event);" id="print-summary" type="button" class="btn btn-outline-secondary"><i class="fa fa-print"></i>&nbsp;
+                })(event);" id="print-summary" type="button" class="btn btn-outline-secondary"><i
+                        class="fa fa-print"></i>&nbsp;
                     Print Summary
                 </button>
             </div>
@@ -381,12 +384,13 @@
                     </div>
                 </div>
 
-               <h6>Comment:</h6>
+                <h6>Comment:</h6>
                 <textarea rows="10" style="width:100%;" id="comment" class="txt-comment"></textarea>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resModal" data-bs-dismiss="modal"><i class="fa fa-download"></i>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resModal"
+                        data-bs-dismiss="modal"><i class="fa fa-download"></i>
                     Save
                 </button>
                 <button type="button" class="btn btn-secondary" onclick="(function() {dropHistory.undo();})();">
