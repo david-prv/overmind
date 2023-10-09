@@ -736,12 +736,24 @@ function selectSearch() {
         let keywords = searchText.replace(/ /g, "").split(",");
 
         for (let j = 0; j < keywords.length; j++) {
-            if (tool["keywords"].indexOf(keywords[j]) !== -1) {
-                let toolEl = $('#tool-' + tool["id"]);
-                if (!toolEl) continue;
+            let _element = $('#tool-' + tool["id"]);
+            let _keyword = keywords[j];
+            let _explode = _keyword.split(":");
+            let _prefix = (_explode.length > 1) ? _explode[0] : undefined;
+            _keyword = (_explode.length > 1) ? _explode[1] : _explode[0];
 
-                $(toolEl).click();
+            if (!_element) continue;
 
+            if (_prefix !== undefined && _prefix === "not") {
+                if (tool["keywords"].indexOf(_keyword) === -1) {
+                    $(_element).click();
+                    break;
+                }
+                continue;
+            }
+
+            if (tool["keywords"].indexOf(_keyword) !== -1) {
+                $(_element).click();
                 break;
             }
         }
