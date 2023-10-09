@@ -149,10 +149,10 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
 
 .search-bar-icon {
-    border: 2px solid #dee2e6 !important;
+    border: 1px solid #dee2e6 !important;
     border-left: none !important;
-    border-top-left-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
 
     height:100%!important;
 }
@@ -302,4 +302,21 @@ kbd {
 
 .overlay h3 {
     font-size:50px!important;
+}
+
+.no-mobile-notice {
+    display:none;
+}
+
+@media (max-width: 992px) {
+    .no-mobile {
+        display:none !important
+    }
+    .no-mobile-notice {
+        display:block !important;
+    }
+    body {
+        position: relative;
+        overflow: hidden!important;
+    }
 }

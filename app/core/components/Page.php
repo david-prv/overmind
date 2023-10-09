@@ -18,17 +18,20 @@ class Page
     private array $placeholders;
     private bool $error;
     private bool $noScript;
+    private bool $noMobile;
 
     /**
      * Page constructor.
      *
      * @param string $viewPath
      * @param bool $noScript
+     * @param bool $noMobile
      */
-    function __construct(string $viewPath, bool $noScript = false)
+    function __construct(string $viewPath, bool $noScript = false, bool $noMobile = true)
     {
         $this->viewPath = $viewPath;
         $this->noScript = $noScript;
+        $this->noMobile = $noMobile;
         $this->error = false;
     }
 
@@ -53,6 +56,7 @@ class Page
         }
 
         if ($view->requiresNoScript()) $view->_injectNoScript();
+        if ($view->requiresNoMobile()) $view->_injectNoMobile();
         print_r($html);
 
         return $html != false;
@@ -155,6 +159,20 @@ class Page
     }
 
     /**
+     * Returns true if the rendered view does have a
+     * certain priority/use, for which a no mobile alert
+     * is crucial (e.g. main view). For some other pages, this
+     * might not be the case.
+     *
+     * @return bool
+     */
+    public function requiresNoMobile(): bool
+    {
+        return $this->noMobile;
+    }
+
+
+    /**
      * Injects a static noscript notice,
      * if needed or requested
      *
@@ -189,6 +207,42 @@ class Page
                     <p>Please enable JavaScript to run framework!</p>
                 </div>
             </noscript>
+        HTML;
+
+        print_r($noScript);
+    }
+
+    /**
+     * Injects a static no mobile notice,
+     * if needed or requested
+     *
+     * @return void
+     */
+    public function _injectNoMobile(): void
+    {
+        $noScript = <<<HTML
+            <div class="no-mobile-notice">
+                <style>
+                    .no-script {
+                        padding-top:10%!important;
+                        height:100vh;
+                        width:100vw;
+                        background:white;
+                        position: absolute!important;
+                        z-index: 3!important;
+                        margin: auto;
+                        text-align: center;
+                    }
+                </style>
+                <div class="no-script">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-exclamation-octagon-fill" viewBox="0 0 16 16">
+                      <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                    <p></p>
+                    <h2>Framework not functional</h2>
+                    <p>View not available on mobile devices!</p>
+                </div>
+            </div>
         HTML;
 
         print_r($noScript);

@@ -10,21 +10,21 @@
 })();
 
 // handles searchbar hotkey
-function showSearchBar() {
+/*function showSearchBar() {
     let el = $('#keyword-search-bar');
     if (!el) console.error("[ERROR] Could not find search-bar");
     else {
         if (!$(el).is(':visible')) $(el).slideDown();
         else $(el).slideUp();
     }
-}
+}*/
 
 // detects the hotkeys and invokes handlers
 function handle(evt) {
-    console.log(evt.keyCode);
+    //console.log(evt.keyCode);
     if (!evt) evt = event;
     else if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 83) { // Ctrl + Shift + S
-        showSearchBar();
+        //showSearchBar();
     } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 90) { // Ctrl + Shift + Z
         deselectTools();
     } else if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 65) { // Ctrl + Shift + A

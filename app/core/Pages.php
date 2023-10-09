@@ -49,12 +49,13 @@ class Pages
      * @param string $name
      * @param array $placeholders
      * @param bool $usesJS
+     * @param bool $mobile
      */
-    public function add(string $name, array $placeholders, bool $usesJS = true): void
+    public function add(string $name, array $placeholders, bool $usesJS = true, bool $mobile = false): void
     {
         $this->placeholders[strtoupper($name)] = $placeholders;
         $this->pages[] = strtoupper($name);
-        $this->dependencies[strtoupper($name)] = ['js' => $usesJS]; // TODO
+        $this->dependencies[strtoupper($name)] = ['js' => $usesJS, 'mobile' => $mobile]; // TODO
     }
 
     /**

@@ -292,10 +292,6 @@ function resetStatesAndOffers() {
 
 // show edit tools
 function editTools() {
-    let alertNotice = document.getElementById("edit-mode-alert");
-    if (alertNotice.classList.contains("hidden")) alertNotice.classList.remove("hidden");
-    else alertNotice.classList.add("hidden");
-
     $('#cmd-edit').find("i").toggleClass("fa-spin");
 
     $('#launchAll, #launchOptions, #cmd-integrate, #cmd-exec-bot').prop('disabled', (i, v) => !v);
@@ -367,7 +363,7 @@ function invokeLaunchSelected(event) {
     }
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
-    $('#running-alert').removeClass("hidden");
+    //$('#running-alert').removeClass("hidden");
     $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
 
     $.get("http://ip-api.com/json/" + clean_target, function(data, status) {
@@ -428,7 +424,7 @@ function invokeLaunchAll(event) {
     let clean_target = target.replace("https://", "").replace("http://", "");
 
     $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
-    $('#running-alert').removeClass("hidden");
+    //$('#running-alert').removeClass("hidden");
 
     $.get("http://ip-api.com/json/" + clean_target, function(data, status) {
         if (status === "success") {
@@ -525,7 +521,7 @@ function finishedSelected(index, selected) {
     counterS++;
     console.log("[INFO] Finished task (" + counterS + " / " + selected.length + ")");
     evalProg.html("(" + counterS + "/" + selected.length + ")");
-    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching... (" + counterS + "/" + selected.length + ")");
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
 
     if (counterS === selected.length) {
         let resContent = document.getElementById("result-content");
@@ -571,7 +567,7 @@ function finishedSelected(index, selected) {
         });
         resultModal.show();
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
-        $('#running-alert').addClass("hidden");
+        //$('#running-alert').addClass("hidden");
         $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
         evalProg.html("");
         counterS = 0;
@@ -585,7 +581,7 @@ function finished(index, max) {
     counter++;
     console.log("[INFO] Finished task (" + counter + " / " + max + ")");
     evalProg.html("(" + counter + "/" + max + ")");
-    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching... (" + counter + "/" + max + ")");
+    $("#launchAll").html("<i class=\"fa fa-circle-o-notch fa-spin\"></i> Launching...");
 
     if (counter === max) {
         let resContent = document.getElementById("result-content");
@@ -624,7 +620,7 @@ function finished(index, max) {
         let resultModal = new bootstrap.Modal(document.getElementById("resModal"), {});
         resultModal.show();
         $("#launchAll").html("<i class=\"fa fa-forward\"></i> Launch All");
-        $('#running-alert').addClass("hidden");
+        //$('#running-alert').addClass("hidden");
         $('#launchAll, #launchOptions, #cmd-integrate, #cmd-edit, #cmd-exec-bot').prop('disabled', (i, v) => !v);
         evalProg.html("");
         counter = 0;
