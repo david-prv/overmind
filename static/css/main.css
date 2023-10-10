@@ -2,23 +2,9 @@ body {
     padding-bottom: 20px;
 }
 
-.jumbotron {
-    background: #E9ECEF !important;
-    padding: 2rem 2rem;
-    position: relative;
-    /*border-radius: .3rem;*/
-}
-
-.jumbotron-close {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-}
-
-.disclaimer h1 {
-    font-size: 2.5rem !important;
-    line-height: 1.2 !important;
-    font-weight: 300 !important;
+#target-url, #target-url-alt {
+    border-top-left-radius: 0px!important;
+    border-bottom-left-radius: 0px !important;
 }
 
 #tool-list a, #integration a {
