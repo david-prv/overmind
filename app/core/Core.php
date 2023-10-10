@@ -26,7 +26,7 @@ class Core
 
     private string $PROJECT_NAME = "Scanner Bundle";
     private string $PROJECT_AUTHOR = "David Dewes";
-    private string $PROJECT_VERSION = "1.2.4";
+    private string $PROJECT_VERSION = "1.3.0";
     private string $PROJECT_DESCRIPTION =
         "A small collection of open-source tools out there to " .
         "inspect and scan any kind of web pages.";

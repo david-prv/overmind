@@ -21,13 +21,13 @@ body {
     font-weight: 300 !important;
 }
 
-#tool-list a {
+#tool-list a, #integration a {
     font-weight: 500;
     color: black;
     text-decoration: none;
 }
 
-#tool-list a:after {
+#tool-list a:after, #integration a:after {
     content: "";
     width: 11px;
     height: 11px;
