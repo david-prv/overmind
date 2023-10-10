@@ -5,7 +5,7 @@ require_once "../../../core/wrappers/Reference.php";
 $maxFileSize = 1000000;
 $uploadTargetDir = "/tmp";
 $uploadFileName = "integrationFile";
-$logToPrint = "<h1>Bot Log</h1>
+$logToPrint = "<h1>Bot Log <button onclick='window.location.href=\"/index.php\"' type='button' class='btn btn-outline-secondary'><i class='fa fa-home'></i> Return Home</button></h1>
                <hr/>
                <small>Integration Bot has started!</small><br />
                <small>Maximum Filesize: $maxFileSize</small><br />

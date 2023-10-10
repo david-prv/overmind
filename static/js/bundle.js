@@ -62,6 +62,7 @@ var g_overview = {ok: 0, suspicious: 0, critical: 0, unverified: 0};
     });
 
     showToolListAnimated();
+    redirectIfEmpty();
 })();
 
 // renders graphs
@@ -182,6 +183,14 @@ function showToolListAnimated() {
     }
 }
 
+// if tool list is empty: redirect to wizard
+function redirectIfEmpty() {
+    if (($('#tool-list').children()).length <= 0) {
+        // redirect to integration process when empty
+        window.location.href = "/index.php?page=integrate";
+    }
+}
+
 // helper method to get the right index from json map
 function getToolIndexById(id) {
     for (let i = 0; i < DATA.length; i++) {
@@ -199,10 +208,7 @@ function deleteTool(id, debug = false) {
         if (data === "done" || debug) {
             $('#tool-' + id).remove();
             alertSuccess("Tool with ID=" + id + " was deleted successfully!");
-            if (($('#tool-list').children()).length <= 0) {
-                // redirect to integration process when empty
-                window.location.href = "/index.php?page=integrate";
-            }
+            redirectIfEmpty();
         } else {
             alertError("Could not delete tool!");
         }

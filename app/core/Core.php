@@ -484,8 +484,6 @@ class Core
      */
     public function renderToolsAsHtml(): string
     {
-        if (count($this->getToolsObject()) === 0) header("Location: /index.php?page=integrate");
-
         $html = "";
         foreach ($this->getToolsObject() as $tool) {
             if ($tool->ignore) continue;
