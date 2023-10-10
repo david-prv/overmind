@@ -40,13 +40,17 @@ body {
 }
 
 #tool-list .btn {
-    height:29px!important;
-    width:29px!important;
-    padding:2px!important;
+    height: 29px !important;
+    width: 29px !important;
+    padding: 2px !important;
+}
+
+.tool-state {
+    height: 29px;
 }
 
 .tool-description {
-    width:100%;
+    width: 100%;
     text-align: justify;
 }
 
@@ -159,12 +163,12 @@ input[type="search"]:focus::-webkit-search-cancel-button {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
 
-    height:100%!important;
+    height: 100% !important;
 }
 
 #search-bar-input:focus {
     box-shadow: none !important;
-    border-color: #dee2e6!important;
+    border-color: #dee2e6 !important;
 }
 
 .search-bar-icon:hover {
@@ -267,7 +271,7 @@ kbd {
     margin-left: 4px;
 }
 
-#toast-container>div {
+#toast-container > div {
     opacity: 1;
 }
 
@@ -275,23 +279,26 @@ kbd {
     /*background: whitesmoke;*/
 }
 
-.canvasjs-chart-credit {display:none!important;}
+.canvasjs-chart-credit {
+    display: none !important;
+}
 
 .chart-row {
     /*box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;*/
-    padding:10px;
+    padding: 10px;
 }
 
 .chart-row.right {
-    border-left: 1px solid rgba(0,0,0,.2);
+    border-left: 1px solid rgba(0, 0, 0, .2);
 }
 
 .modal-body {
-    max-height: 70vh; overflow-y: auto;
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
 .modal-footer label {
-    font-size:1.2rem;
+    font-size: 1.2rem;
 }
 
 .wrapper {
@@ -306,18 +313,34 @@ kbd {
 }
 
 .overlay h3 {
-    font-size:50px!important;
+    font-size: 50px !important;
+}
+
+.blurred {
+    color: transparent;
+    text-shadow: 0 0 5px #d63384;
+    -webkit-transition: text-shadow 0s;
+    -moz-transition: text-shadow 0s;
+}
+
+.blurred:hover {
+    color: #d63384;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 1);
+    -webkit-transition: text-shadow 0.1s;
+    -moz-transition: text-shadow 0.1s;
 }
 
 @media (max-width: 992px) {
     .no-mobile {
-        display:none !important
+        display: none !important
     }
+
     .no-mobile-notice {
-        display:block !important;
+        display: block !important;
     }
+
     body {
         position: relative;
-        overflow: hidden!important;
+        overflow: hidden !important;
     }
 }

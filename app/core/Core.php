@@ -497,7 +497,7 @@ class Core
             $html .= "<div onclick='$(this).toggleClass(`selection`)' id='tool-$tool->id' class=\"list-group-item list-group-item-action tool\" aria-current=\"true\">
             <div class=\"d-flex w-100 justify-content-between\">
                 <h5 class=\"mb-1\"><span id=\"title-$tool->id\">$tool->name</span> $interactive</h5>
-                <small id='state-$tool->id' class='fst-italic'>Idling...</small>
+                <small id='state-$tool->id' class='fst-italic tool-state'>Idling...</small>
                 <div class='hidden' id='options-tool-$tool->id'>
                     <div class=\"d-grid gap-2 d-md-block\">
                      <button onclick='(function(event) {
