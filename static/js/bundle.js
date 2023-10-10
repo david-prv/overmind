@@ -201,10 +201,7 @@ function deleteTool(id, debug = false) {
             alertSuccess("Tool with ID=" + id + " was deleted successfully!");
             if (($('#tool-list').children()).length <= 0) {
                 // write empty message
-                $('#tool-list').html("<h2 class='text-muted text-center'>No tools found</h2>\n" +
-                    "                                                          <a class='no-cursor' title='Vector by https://vecteezy.com'>\n" +
-                    "                                                            <img class='img-center' src='/static/img/sleep.jpg' />\n" +
-                    "                                                          </a>");
+                $('#tool-list').html("<img class='img-center' src='/static/img/sleep.jpg' />");
             }
         } else {
             alertError("Could not delete tool!");
