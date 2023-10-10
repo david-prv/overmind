@@ -496,7 +496,7 @@ class Core
 
             $html .= "<div onclick='$(this).toggleClass(`selection`)' id='tool-$tool->id' class=\"list-group-item list-group-item-action tool\" aria-current=\"true\">
             <div class=\"d-flex w-100 justify-content-between\">
-                <h5 class=\"mb-1\"><span id=\"title-$tool->id\">$tool->name</span> $interactive &middot; <small class='text-muted'>$engine</small></h5>
+                <h5 class=\"mb-1\"><span id=\"title-$tool->id\">$tool->name</span> $interactive</h5>
                 <small id='state-$tool->id' class='fst-italic'>Idling...</small>
                 <div class='hidden' id='options-tool-$tool->id'>
                     <div class=\"d-grid gap-2 d-md-block\">
@@ -515,7 +515,7 @@ class Core
                     </div>
                 </div>
                 </div>
-                <p id='description-$tool->id' class=\"mb-1\">$tool->description</p>
+                <p id='description-$tool->id' class=\"mb-1 tool-description\">$tool->description</p>
                 <div class=\"d-flex w-100 justify-content-between\">
                     <small>Author: <a href='$tool->url'>$tool->author</a></small>
                     <small id='scanner-$tool->id'>ID: $tool->id</small>
