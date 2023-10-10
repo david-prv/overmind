@@ -484,11 +484,11 @@ class Core
      */
     public function renderToolsAsHtml(): string
     {
-        $html = (count($this->getToolsObject()) === 0) ? "<img class='img-center' src='/static/img/sleep.jpg' />" : "";
+        if (count($this->getToolsObject()) === 0) header("Location: /index.php?page=integrate");
+
+        $html = "";
         foreach ($this->getToolsObject() as $tool) {
             if ($tool->ignore) continue;
-            $engine = Engine::valueOf($tool->engine);
-            // $engine = Engine::toHTML($tool->engine);
             $interactive = (Schedule::isPresent($this->APP_PATH, $tool->id)) ? "<i title=\"Interactive Script\" class=\"fa fa-magic\"></i>" : "";
 
             $html .= "<div onclick='$(this).toggleClass(`selection`)' id='tool-$tool->id' class=\"list-group-item list-group-item-action tool\" aria-current=\"true\">

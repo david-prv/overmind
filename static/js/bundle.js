@@ -200,8 +200,8 @@ function deleteTool(id, debug = false) {
             $('#tool-' + id).remove();
             alertSuccess("Tool with ID=" + id + " was deleted successfully!");
             if (($('#tool-list').children()).length <= 0) {
-                // write empty message
-                $('#tool-list').html("<img class='img-center' src='/static/img/sleep.jpg' />");
+                // redirect to integration process when empty
+                window.location.href = "/index.php?page=integrate";
             }
         } else {
             alertError("Could not delete tool!");
