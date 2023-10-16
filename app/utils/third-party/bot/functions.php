@@ -354,6 +354,10 @@ function _runAutoInstaller(array $installerArgs): void
         $cmd .= "\"" . $arg . "\" ";
     }
 
+    // will run the auto-install script in background
+    // compare: https://www.php.net/manual/en/function.shell-exec.php#118495
+    $cmd .= strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? ' > NUL' : ' > /dev/null 2>&1 &';
+
     shell_exec($cmd);
 }
 
