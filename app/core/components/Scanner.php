@@ -150,14 +150,17 @@ class Scanner implements Runnable, Integrable
      */
     public function run(int $timeout = 20): bool
     {
+        // run scanners in parallel, depending on host system
+        $gadget = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? ' > NUL' : ' > /dev/null 2>&1 &';
+
         if (Schedule::isPresent($this->cwd, $this->id)) {
             return ($this->runWithTimeout("python3 " . $this->cwd . "/app/tools/interactive.py " .
                 $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
-                " " . $this->cmdline . " " . $this->id . " " . $this->target, $timeout))->isOk();
+                " " . $this->cmdline . " " . $this->id . " " . $this->target . $gadget, $timeout))->isOk();
         }
         return ($this->runWithTimeout("python3 " . $this->cwd . "/app/tools/runner.py " .
             $this->engine . " " . $this->cwd . "/app/tools/" . $this->path .
-            " " . $this->cmdline . " " . $this->id . " " . $this->target, $timeout))->isOk();
+            " " . $this->cmdline . " " . $this->id . " " . $this->target . $gadget, $timeout))->isOk();
     }
 
     ////////////////////////
