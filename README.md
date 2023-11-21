@@ -3,17 +3,16 @@
  Control Framework
 </h1>
 <p align="center">
- <a href="https://github.com/david-prv/scanner-bundle" title="Go to GitHub repo"><img src="https://img.shields.io/static/v1?label=david-prv&amp;message=scanner-bundle&amp;color=blue&amp;logo=github" alt="david-prv - scanner-bundle"></a>
+ <a href="https://github.com/david-prv/overmind" title="Go to GitHub repo"><img src="https://img.shields.io/static/v1?label=david-prv&amp;message=overmind&amp;color=blue&amp;logo=github" alt="david-prv - overmind"></a>
  <img src="https://img.shields.io/badge/maintained-yes-blue" alt="maintained - yes">
- <a href="https://github.com/david-prv/scanner-bundle/issues"><img src="https://img.shields.io/github/issues/david-prv/scanner-bundle" alt="issues - scanner-bundle"></a>
- <a href="https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml"><img src="https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml/badge.svg" alt="PHP Composer"></a>
+ <a href="https://github.com/david-prv/overmind/issues"><img src="https://img.shields.io/github/issues/david-prv/overmind" alt="issues - overminde"></a>
+ <a href="https://github.com/david-prv/overmind/actions/workflows/php.yml"><img src="https://github.com/david-prv/overmind/actions/workflows/php.yml/badge.svg" alt="PHP Composer"></a>
 </p>
 <p align="center">
  A small framework capable of running open-source vulnerability scanners to inspect and scan any kind of webpage<br>
 </p>
 
-![image](https://github.com/david-prv/scanner-bundle/assets/66866223/3de178e7-37d9-4a07-9a83-0e17fb38caad)
-![image](https://github.com/david-prv/scanner-bundle/assets/66866223/40231ffe-5ab4-4371-9ffb-f220fc977138)
+![image](https://github.com/david-prv/overmind/assets/66866223/55146a5a-9ae0-4e08-8dcf-acff8898c298)
 
 ## Disclaimer
 
@@ -31,7 +30,7 @@ have given me express permission to do so! You are responsible for all your deci
 - ADD AI-assistant for report analysis
 
 *Don't forget issues, that should be
-re-opened: [label:willreopen](https://github.com/david-prv/scanner-bundle/issues?q=is%3Aissue+label%3Awillreopen)*
+re-opened: [label:willreopen](https://github.com/david-prv/overmind/issues?q=is%3Aissue+label%3Awillreopen)*
 
 ## Requirements
 
@@ -66,13 +65,13 @@ snapshot.zip/
 Clone repository:
 
 ```bash
-git clone https://github.com/david-prv/scanner-bundle.git
+git clone https://github.com/david-prv/overmind.git
 ```
 
 Navigate into project's root folder:
 
 ```bash
-cd scanner-bundle
+cd overmind
 ```
 
 Install dependencies:
@@ -108,4 +107,4 @@ the [github wiki](/#).
 
 Released under [GPL](/LICENSE) by [@david-prv](https://github.com/david-prv).  
 
-![image](https://github.com/david-prv/scanner-bundle/assets/66866223/385b8bb1-4dc1-48f9-bfc7-e58be51823f1)
+![image](https://github.com/david-prv/overmind/assets/66866223/385b8bb1-4dc1-48f9-bfc7-e58be51823f1)
