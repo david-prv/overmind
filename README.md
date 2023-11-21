@@ -98,7 +98,7 @@ server.
 php -S localhost:8080
 ```
 
-Now open a web browser and navigate to `http://localhost:8080/`. The scanner-bundle framework should appear.
+Now open a web browser and navigate to `http://localhost:8080/`. The Overmind framework should appear.
 
 Information about what to do next will be
 provided [here](https://wiki.etage-4.de/books/eigenentwicklung/chapter/scanner-bundle). For guests, check out
