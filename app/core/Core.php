@@ -24,12 +24,12 @@ class Core
     private Pages $pages;
     private Analyzer $analyzer;
 
-    private string $PROJECT_NAME = "Scanner Bundle";
+    private string $PROJECT_NAME = "Overmind";
     private string $PROJECT_AUTHOR = "David Dewes";
-    private string $PROJECT_VERSION = "1.3.0";
+    private string $PROJECT_VERSION = "1.4.0";
     private string $PROJECT_DESCRIPTION =
-        "A small collection of open-source tools out there to " .
-        "inspect and scan any kind of web pages.";
+        "A small framework capable of running open-source vulnerability scanners " .
+        "to inspect and scan any kind of webpage.";
     private string $PROJECT_LOGO = "<img style='transform: translateY(-2px);' src='/static/img/etage4-logo.png' width='35'>";
 
     ////////////////////

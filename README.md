@@ -1,5 +1,5 @@
 <h1 align="center">
- Scanner-Bundle<br/>
+ Overmind<br/>
  Control Framework
 </h1>
 <p align="center">
@@ -9,7 +9,7 @@
  <a href="https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml"><img src="https://github.com/david-prv/scanner-bundle/actions/workflows/php.yml/badge.svg" alt="PHP Composer"></a>
 </p>
 <p align="center">
- A small framework to run open-source tools that inspect and scan any kind of webpages for vulnerabilities.<br>
+ A small framework capable of running open-source vulnerability scanners to inspect and scan any kind of webpage<br>
 </p>
 
 ![image](https://github.com/david-prv/scanner-bundle/assets/66866223/3de178e7-37d9-4a07-9a83-0e17fb38caad)
@@ -23,8 +23,6 @@ have given me express permission to do so! You are responsible for all your deci
 ## Roadmap
 
 - FIX final report layout
-- FIX cloned interactions (integration bot, big snapshot)
-- ADD more tools (also own ideas)
 - ADD sonar mode
 - ADD website auto-detection (selects e.g. "wordpress" automatically)
 - ADD more dependencies (components) for single pages
