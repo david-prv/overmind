@@ -833,12 +833,13 @@ function collectInfoAndRedirect() {
     let resultContent = document.getElementById("result-content");
     let status_chart = document.getElementsByClassName("canvasjs-chart-canvas")[1];
     let overview_chart = document.getElementsByClassName("canvasjs-chart-canvas")[3];
+    let printer = document.getElementById("printer");
     let comment = document.getElementById("comment");
 
     if (dropZone === null || resultContent === null || status_chart === null
-        || overview_chart === null || comment === null) {
+        || overview_chart === null || comment === null || printer === null) {
         console.error("[ERROR] dropzone, result-content, comment or any chart could not be found!");
-        alertError("Dropzone, result content, comment or any chart is not available!");
+        alertError("Dropzone, result content, comment, printer or any chart is not available!");
         return -1;
     }
 
@@ -855,9 +856,16 @@ function collectInfoAndRedirect() {
         overview_img: overview_chart.toDataURL("image/jpeg"),
         offer_comment: $(comment).val()
     }).escapeSpecialChars());
+ 
+    $(printer).toggleClass("hidden");
 
-    let handle = window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, 'pdf-generator', 'menubar=1,resizable=0,width=350,height=250');
-    setTimeout(function (h = handle) { h.close(); }, 5000);
+    let data_url = "/app/utils/third-party/html2pdf/index.php?data=" + result_information;
+    printer.src = data_url;
+
+    setTimeout(function (h = printer) { $(h).toggleClass("hidden"); }, 5000);
+
+    // let handle = window.open("/app/utils/third-party/html2pdf/index.php?data=" + result_information, 'pdf-generator', 'menubar=1,resizable=0,width=350,height=250');
+    // setTimeout(function (h = handle) { h.close(); }, 5000);
 }
 
 // triggers snapshot backend endpoint

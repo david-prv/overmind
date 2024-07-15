@@ -18,6 +18,7 @@ if (!isset($data["target_url"]) || !isset($data["scanner_results"])
 }
 
 $targetUrl = $data["target_url"];
+$targetHost = parse_url($targetUrl, PHP_URL_HOST);
 $scannerResults = $data["scanner_results"];
 $ourOffers = $data["our_offers"];
 $badWords = $data["bad_words"];
@@ -67,9 +68,12 @@ $offerComment = $data["offer_comment"];
         }
 
         .loader-h1 {
-            margin-bottom: 100px;
+            /* margin-bottom: 100px;
             margin-left: 120px;
-            margin-top: 60px;
+            margin-top: 60px; */
+            position: absolute;
+            left: 0;
+            top: 0;
         }
 
         @keyframes rotation {
@@ -89,7 +93,7 @@ $offerComment = $data["offer_comment"];
             box-sizing: content-box;
             width: 100%;
             height: 100%;
-            padding: 30px;
+            /* padding: 30px; */
             border:none!important;
             background-color: white;
             border-radius:0!important;
@@ -174,9 +178,10 @@ $offerComment = $data["offer_comment"];
 </head>
 
 <body>
-<div class="container print-container p-3">
-    <h1 class="loader-h1"><span id="loader-spinner" class="loader"></span></h1>
 
+<!-- <h1 class="loader-h1"><span id="loader-spinner" class="loader"></span></h1> -->
+
+<div class="container print-container p-3">
     <div class="card" id="makepdf">
         <img class="logo" src="https://etage-4.de/etage4_wp/wp-content/uploads/2020/05/Logo_3000_dark.png"/>
 
@@ -211,19 +216,19 @@ $offerComment = $data["offer_comment"];
         <h5>Reference/Actual Dist.</h5>
         <table class="tg">
             <thead>
-            <tr>
-                <th class="tg-fymr">Component</th>
-                <th class="tg-fymr">Distance</th>
-                <th class="tg-fymr">Significance</th>
+            <tr class="">
+                <th class="tg-fymr ">Component</th>
+                <th class="tg-fymr ">Distance</th>
+                <th class="tg-fymr ">Significance</th>
             </tr>
             </thead>
             <tbody>
             <?php
             if (count($scannerResults) === 0) {
-                echo "<tr>
-                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
-                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
-                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
+                echo "<tr class=''>
+                            <td contenteditable class=\"tg-c3ow \">&mdash;</td>
+                            <td contenteditable class=\"tg-c3ow \">&mdash;</td>
+                            <td contenteditable class=\"tg-c3ow \">&mdash;</td>
                           </tr>";
             } else {
                 foreach ($scannerResults as $result) {
@@ -232,10 +237,10 @@ $offerComment = $data["offer_comment"];
                     $testDistance = (isset($result["distance"])) ? $result["distance"] : "&mdash;";
                     $testNormalized = (isset($result["normalized"])) ? $result["normalized"] . "%" : "&mdash;";
 
-                    echo "<tr>
-                             <td contenteditable class=\"tg-c3ow\">{$testName}</td>
-                             <td contenteditable class=\"tg-c3ow\">{$testDistance}</td>
-                             <td contenteditable class=\"tg-c3ow\">{$testNormalized}</td>
+                    echo "<tr class=''>
+                             <td contenteditable class=\"tg-c3ow \">{$testName}</td>
+                             <td contenteditable class=\"tg-c3ow \">{$testDistance}</td>
+                             <td contenteditable class=\"tg-c3ow \">{$testNormalized}</td>
                           </tr>";
                 }
             }
@@ -243,32 +248,32 @@ $offerComment = $data["offer_comment"];
             </tbody>
         </table>
 
-        <br>
+        <br class="break-here">
 
         <h5>Recommended Action</h5>
         <table class="tg">
             <thead>
-            <tr>
-                <th class="tg-fymr">Offer</th>
-                <th class="tg-fymr">Price</th>
-                <th class="tg-fymr">Comment</th>
+            <tr class="">
+                <th class="tg-fymr ">Offer</th>
+                <th class="tg-fymr ">Price</th>
+                <th class="tg-fymr ">Comment</th>
             </tr>
             </thead>
             <tbody>
             <?php
             if (count($ourOffers) === 0) {
-                echo "<tr>
-                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
-                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
-                            <td contenteditable class=\"tg-c3ow\">&mdash;</td>
+                echo "<tr class=''>
+                            <td contenteditable class=\"tg-c3ow \">&mdash;</td>
+                            <td contenteditable class=\"tg-c3ow \">&mdash;</td>
+                            <td contenteditable class=\"tg-c3ow \">&mdash;</td>
                          </tr>";
             } else {
                 foreach ($ourOffers as $offer) {
                     $comment = (isset($offer["comment"]) && $offer["comment"] !== "") ? $offer["comment"] : "&mdash;";
-                    echo "<tr>
-                                <td contenteditable class=\"tg-c3ow\">{$offer["caption"]}</td>
-                                <td contenteditable class=\"tg-c3ow\">{$offer["price"]}</td>
-                                <td contenteditable class=\"tg-c3ow\">{$comment}</td>
+                    echo "<tr class=''>
+                                <td contenteditable class=\"tg-c3ow \">{$offer["caption"]}</td>
+                                <td contenteditable class=\"tg-c3ow \">{$offer["price"]}</td>
+                                <td contenteditable class=\"tg-c3ow \">{$comment}</td>
                              </tr>";
                 }
             }
@@ -276,10 +281,10 @@ $offerComment = $data["offer_comment"];
             </tbody>
         </table>
 
-        <br>
+        <br class="break-here">
 
         <h5>Comment</h5>
-        <textarea rows="10" class="txt-comment"><?php echo $offerComment; ?></textarea>
+        <textarea rows="5" class="txt-comment "><?php echo $offerComment; ?></textarea>
 
         <p class="bottom">
             Report generated at <span id="timestamp"></span><br/>
@@ -297,21 +302,21 @@ $offerComment = $data["offer_comment"];
     let spinner = document.getElementById("loader-spinner");
 
     let options = {
-        margin: 1,
+        margin: 8,
+        pagebreak: {
+            mode: 'avoid-all'
+        },
+        filename: 'automated_report_<?php echo urlencode($targetHost); ?>.pdf',
         html2canvas: {
-            scale: 3,
+            scale: 10,
             dpi: 300,
             letterRendering: true,
-            width: 850,
             useCORS: true
         },
         jsPDF: {
             unit: 'mm',
-            format: 'a4',
+            format: 'A4',
             orientation: 'portrait'
-        },
-        pagebreak: {
-            mode: ['avoid-all', 'css']
         }
     }
 
@@ -320,10 +325,10 @@ $offerComment = $data["offer_comment"];
 
     window.onload = async function () {
         await html2pdf().set(options).from(makepdf).save();
-        makepdf.style.display = "none";
-        spinner.parentElement.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"50\" height=\"50\" fill=\"currentColor\" class=\"bi bi-check-lg\" viewBox=\"0 0 16 16\">\n" +
-            "  <path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/>\n" +
-            "</svg>";
+        // makepdf.style.display = "none";
+        // spinner.parentElement.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"50\" height=\"50\" fill=\"currentColor\" class=\"bi bi-check-lg\" viewBox=\"0 0 16 16\">\n" +
+        //     "  <path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/>\n" +
+        //     "</svg>";
     };
 </script>
 </body>

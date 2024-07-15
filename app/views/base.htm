@@ -277,6 +277,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <iframe id="printer" width="1px" height="1px" class="hidden"></iframe>
                 <label for="help-offer"></label>
                 <button onclick="(function(event) {
                     event.preventDefault();
@@ -285,7 +286,6 @@
                         class="fa fa-volume-control-phone"></i>
                     Help Offer
                 </button>
-                <!-- <label for="print-summary"></label> -->
                 <button onclick="(function(event) {
                     event.preventDefault();
                     collectInfoAndRedirect();
