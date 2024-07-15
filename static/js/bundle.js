@@ -109,7 +109,7 @@ async function renderGraphs() {
     });
     await chart2.render();
 
-    //renderGrades();
+    renderGrades();
 
     resetGraphData();
 }
