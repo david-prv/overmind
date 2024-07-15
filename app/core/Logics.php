@@ -7,6 +7,7 @@
  * This class is here to serve as a Logics Manager.
  * Logics are logical operations that the framework can perform
  * which are (mostly) of non-visual nature, e.g. updating data.
+ * They interpret all passed data and compile a proper response to it.
  * </p>
  *
  * <p>
