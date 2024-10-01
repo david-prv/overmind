@@ -10,6 +10,7 @@
 </p>
 <p align="center">
  A small framework capable of running open-source vulnerability scanners to inspect and scan any kind of webpage<br>
+ 👉 Moved to <a href="https://codeberg.org/david-prv/overmind">https://codeberg.org/david-prv/overmind</a>
 </p>
 
 ![image](https://github.com/david-prv/overmind/assets/66866223/55146a5a-9ae0-4e08-8dcf-acff8898c298)
